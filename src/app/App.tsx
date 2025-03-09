@@ -53,6 +53,7 @@ export const App = () => {
     algorithm: theme === THEME.DARK ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
     token: {
       fontFamily: 'Nunito',
+      fontSize: 16
     },
   };
 

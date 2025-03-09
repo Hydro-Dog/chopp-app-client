@@ -15,7 +15,12 @@ export const RootContainer = () => {
         <Outlet />
       </Content>
       <div className="sm:hidden absolute bottom-0 w-full">tabs</div>
-      <Footer style={{ padding: '0 20px' }}>
+      <Footer
+        style={{
+          background: themeToken.colorBgBase,
+          borderTop: `1px solid ${themeToken.colorBorder}`,
+          padding: '0 20px',
+        }}>
         <Flex vertical gap={5} align="end">
           <Button type="link">[Доставка и оплата]</Button>
           <Button type="link">[Описание магазина]</Button>
