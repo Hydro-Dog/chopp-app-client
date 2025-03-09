@@ -1,0 +1,15 @@
+export enum ROUTES {
+  ROOT = '/',
+  USERS = 'users',
+  CHATS = 'chats',
+  ORDERS = 'orders',
+  PAYMENTS = 'payments',
+  SIGN_IN = 'signin',
+  REGISTER = 'register',
+  PRODUCTS = 'products',
+  SETTINGS = 'settings',
+  ANALYTICS = 'analytics',
+  VISUAL_SETTINGS = 'visualSettings',
+  PRICING_SETTINGS = 'pricingSettings',
+  PAYMENT_SETTINGS = 'paymentSettings',
+}

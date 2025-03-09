@@ -1,0 +1,28 @@
+import { Outlet } from 'react-router-dom';
+import { useTheme, useThemeToken } from '@shared/index';
+import { RootHeader } from '@widgets/root-header/root-header';
+import { Button, Flex, Layout } from 'antd';
+
+const { Header, Content, Footer } = Layout;
+
+export const RootContainer = () => {
+  const themeToken = useThemeToken();
+
+  return (
+    <Layout>
+      <RootHeader />
+      <Content style={{ background: themeToken.colorBgBase }} className="px-5">
+        <Outlet />
+      </Content>
+      <div className="sm:hidden absolute bottom-0 w-full">tabs</div>
+      <Footer style={{ padding: '0 20px' }}>
+        <Flex vertical gap={5} align="end">
+          <Button type="link">[Доставка и оплата]</Button>
+          <Button type="link">[Описание магазина]</Button>
+          <Button type="link">[Публичная оферта]</Button>
+          <Button type="link">[Политика конфиденциальности]</Button>
+        </Flex>
+      </Footer>
+    </Layout>
+  );
+};
