@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { ClockCircleOutlined, ShopOutlined } from '@ant-design/icons';
 import { THEME, useTheme } from '@shared/index';
 import { Flex } from 'antd';
@@ -5,7 +6,6 @@ import { Typography } from 'antd';
 import { Space } from 'antd/lib';
 import LogoDark from '../../../../../assets/logo-dark.png';
 import LogoLight from '../../../../../assets/logo-light.png';
-import { useNavigate } from 'react-router-dom';
 
 const { Text } = Typography;
 

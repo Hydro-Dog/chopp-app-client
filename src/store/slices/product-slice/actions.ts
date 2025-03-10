@@ -56,78 +56,78 @@ export const fetchProducts = createAsyncThunk<
   },
 );
 
-export const createProduct = createAsyncThunk<
-  Product,
-  { form: FormData },
-  { rejectValue: ErrorResponse }
->('products/createProduct', async ({ form }, thunkAPI) => {
-  try {
-    const response = await axiosPrivate.post<Product>(`/products`, form, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
-    } else {
-      return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
-    }
-  }
-});
+// export const createProduct = createAsyncThunk<
+//   Product,
+//   { form: FormData },
+//   { rejectValue: ErrorResponse }
+// >('products/createProduct', async ({ form }, thunkAPI) => {
+//   try {
+//     const response = await axiosPrivate.post<Product>(`/products`, form, {
+//       headers: {
+//         'Content-Type': 'multipart/form-data',
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     if (axios.isAxiosError(error) && error.response) {
+//       return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
+//     } else {
+//       return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
+//     }
+//   }
+// });
 
-export const updateProduct = createAsyncThunk<
-  Product,
-  { form: FormData; id: number },
-  { rejectValue: ErrorResponse }
->('products/updateProduct', async ({ form, id }, thunkAPI) => {
-  try {
-    const response = await axiosPrivate.put<Product>(`/products/${id}`, form, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
-    } else {
-      return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
-    }
-  }
-});
+// export const updateProduct = createAsyncThunk<
+//   Product,
+//   { form: FormData; id: number },
+//   { rejectValue: ErrorResponse }
+// >('products/updateProduct', async ({ form, id }, thunkAPI) => {
+//   try {
+//     const response = await axiosPrivate.put<Product>(`/products/${id}`, form, {
+//       headers: {
+//         'Content-Type': 'multipart/form-data',
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     if (axios.isAxiosError(error) && error.response) {
+//       return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
+//     } else {
+//       return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
+//     }
+//   }
+// });
 
-export const updateProductVisibility = createAsyncThunk<
-  Product,
-  UpdateProductVisibilityDTO,
-  { rejectValue: ErrorResponse }
->('products/updateProductState', async ({ state, id }, thunkAPI) => {
-  try {
-    const response = await axiosPrivate.patch<Product>(`/products/${id}/state`, { state });
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
-    } else {
-      return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
-    }
-  }
-});
+// export const updateProductVisibility = createAsyncThunk<
+//   Product,
+//   UpdateProductVisibilityDTO,
+//   { rejectValue: ErrorResponse }
+// >('products/updateProductState', async ({ state, id }, thunkAPI) => {
+//   try {
+//     const response = await axiosPrivate.patch<Product>(`/products/${id}/state`, { state });
+//     return response.data;
+//   } catch (error) {
+//     if (axios.isAxiosError(error) && error.response) {
+//       return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
+//     } else {
+//       return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
+//     }
+//   }
+// });
 
-export const deleteProduct = createAsyncThunk<
-  unknown,
-  { id: number },
-  { rejectValue: ErrorResponse }
->('products/deleteProduct', async ({ id }, thunkAPI) => {
-  try {
-    const response = await axiosPrivate.delete<Product>(`/products/${id}`);
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
-    } else {
-      return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
-    }
-  }
-});
+// export const deleteProduct = createAsyncThunk<
+//   unknown,
+//   { id: number },
+//   { rejectValue: ErrorResponse }
+// >('products/deleteProduct', async ({ id }, thunkAPI) => {
+//   try {
+//     const response = await axiosPrivate.delete<Product>(`/products/${id}`);
+//     return response.data;
+//   } catch (error) {
+//     if (axios.isAxiosError(error) && error.response) {
+//       return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
+//     } else {
+//       return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
+//     }
+//   }
+// });

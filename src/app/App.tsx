@@ -53,7 +53,7 @@ export const App = () => {
     algorithm: theme === THEME.DARK ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
     token: {
       fontFamily: 'Nunito',
-      fontSize: 16
+      fontSize: 14
     },
   };
 
@@ -79,7 +79,7 @@ export const App = () => {
             showSuccessNotification={showSuccessNotification}
             closeNotification={closeNotification}
             closeAllNotifications={closeAllNotifications}>
-            <div className="w-full h-screen overflow-hidden">
+            <div className="w-full h-screen">
               <ChatsContextProvider>
                 <RouterProvider router={router} />
               </ChatsContextProvider>

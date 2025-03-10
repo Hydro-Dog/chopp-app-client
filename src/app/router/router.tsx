@@ -13,7 +13,6 @@ import {
 
 import { OrdersProvider } from '@pages/orders/context';
 import { PaymentsPage } from '@pages/payments';
-import { ProductsProvider } from '@pages/products-old/context';
 import {
   PricingSettingsPage,
   VisualSettingsPage,
@@ -25,6 +24,7 @@ import { InterceptorsWrapper } from './wrappers/interceptors-wrapper';
 import { RootContainer } from '@widgets/root-container/root-container';
 import { ShoppingCartPage } from '@pages/shopping-cart';
 import { BackLayout } from '@widgets/index';
+import { ProductsProvider } from '@pages/products/context';
 
 export const router = createBrowserRouter([
   // {
@@ -48,7 +48,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <ProductsPage />,
+        element: (
+          <ProductsProvider>
+            <ProductsPage />
+          </ProductsProvider>
+        ),
       },
       {
         path: 'user',

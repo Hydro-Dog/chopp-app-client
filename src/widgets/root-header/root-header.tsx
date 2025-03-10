@@ -10,7 +10,7 @@ export const RootHeader = () => {
 
   return (
     <Header
-      className="py-0 px-5 flex justify-between items-center"
+      className="h-16 px-3 flex justify-between items-center"
       style={{
         background: themeToken.colorBgBase,
         borderBottom: `1px solid ${themeToken.colorBorder}`,
