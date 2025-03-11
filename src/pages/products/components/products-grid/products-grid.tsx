@@ -1,23 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useProductsContext } from '@pages/products/context';
 import { PRODUCT_STATE, useSuperDispatch } from '@shared/index';
 import { FETCH_STATUS, PaginationRequestQuery, PaginationResponse, Product } from '@shared/types';
 import { fetchProducts } from '@store/slices';
 import { RootState } from '@store/store';
 import { Col, Flex, Row, Spin } from 'antd';
+import { useBoolean } from 'usehooks-ts';
 import { ProductCard } from './components';
-import { useProductsContext } from '@pages/products/context';
+import { useRootContext } from '@widgets/root-container/root-provider';
 
 export const ProductsGrid = () => {
-  const { products, fetchProductsStatus } = useSelector((state: RootState) => state.products);
-  // const {
-  //   value: isDeleteModalOpen,
-  //   setTrue: openDeleteModal,
-  //   setFalse: closeDeleteModal,
-  // } = useBoolean();
-
-  // const [currentItemData, setCurrentItemData] = useState<Product>();
+  const { fetchProductsStatus } = useSelector((state: RootState) => state.products);
 
   const {
     search,
@@ -61,14 +56,7 @@ export const ProductsGrid = () => {
     <Flex>
       <Row gutter={[16, 16]}>
         {pageProducts?.map((product) => (
-          <Col
-            key={product.id}
-            xs={24} // на самом маленьком экране занимает половину ширины (2 карточки в ряд)
-            sm={12} // на небольших экранах занимает одну треть (3 карточки в ряд)
-            md={8} // на средних экранах аналогично
-            lg={6} // на больших экранах занимает одну четверть (4 карточки в ряд)
-            xl={6} // на очень больших экранах также одну четверть
-          >
+          <Col key={product.id} xs={24} sm={12} md={8} lg={6} xl={6}>
             <ProductCard item={product} />
           </Col>
         ))}

@@ -1,7 +1,17 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { HomeOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  CarOutlined,
+  HomeOutlined,
+  ProfileOutlined,
+  ShoppingCartOutlined,
+  TruckOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { useThemeToken } from '@shared/index';
 import { Button } from 'antd';
+import { RootState } from '@store/store';
+import { useRootContext } from '@widgets/root-container/root-provider';
+import { useSelector } from 'react-redux';
 
 export const Navigation = () => {
   const themeToken = useThemeToken();
@@ -13,11 +23,24 @@ export const Navigation = () => {
     navigate(value);
   };
 
+  const { currentUser } = useSelector((state: RootState) => state.user);
+
   const isEmpty = 0;
+  const hasCurrentOrder = 0;
+
+  const { openLoginModal } = useRootContext();
+
+  const onNavigationClick = (path: string) => {
+    if (!currentUser) {
+      openLoginModal();
+    } else {
+      navigate(path);
+    }
+  };
 
   return (
     <div className="flex justify-end my-2 gap-2">
-      <Button
+      {/* <Button
         shape="circle"
         variant="outlined"
         icon={<HomeOutlined />}
@@ -26,9 +49,9 @@ export const Navigation = () => {
           background: isLocation('/') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
         }}
         onClick={() => {
-          onIconClick('/');
+            navigate('/');
         }}
-      />
+      /> */}
       <Button
         shape="circle"
         variant="outlined"
@@ -37,20 +60,36 @@ export const Navigation = () => {
           background: isLocation('/user') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
         }}
         onClick={() => {
-          onIconClick('user');
+          onNavigationClick('user');
         }}
       />
+
+      {!hasCurrentOrder && (
+        <Button
+          shape={isEmpty ? 'circle' : 'round'}
+          variant="outlined"
+          icon={<ShoppingCartOutlined />}
+          style={{
+            background: isLocation('/cart') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+          }}
+          onClick={() => {
+            onNavigationClick('cart');
+          }}>
+          {!isEmpty && '[100p]'}
+        </Button>
+      )}
+
       <Button
-        shape={isEmpty ? 'circle' : 'round'}
+        shape={hasCurrentOrder ? 'round' : 'circle'}
         variant="outlined"
-        icon={<ShoppingCartOutlined />}
+        icon={hasCurrentOrder ? <TruckOutlined /> : <ProfileOutlined />}
         style={{
-          background: isLocation('/cart') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+          background: isLocation('/order') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
         }}
         onClick={() => {
-          onIconClick('cart');
+          onNavigationClick('order');
         }}>
-        {!isEmpty && '[100p]'}
+        {!!hasCurrentOrder && 'Мой заказ'}
       </Button>
     </div>
   );

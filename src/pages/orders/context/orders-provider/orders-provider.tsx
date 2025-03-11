@@ -1,6 +1,5 @@
 import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { LIMIT } from '@pages/products-old/context';
 import { ORDER_STATUS } from '@shared/enum';
 import { Order, PropsWithChildrenOnly } from '@shared/types';
 
@@ -29,7 +28,7 @@ const OrdersContext = createContext<OrdersContextType | undefined>(undefined);
 
 export const OrdersProvider = ({ children }: PropsWithChildrenOnly) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialLimit = Number(searchParams.get('limit')) || LIMIT;
+  const initialLimit = Number(searchParams.get('limit')) || 20;
   const initialSearch = searchParams.get('search') || '';
   const initialOrdersStatus =
     searchParams.get('status') !== null

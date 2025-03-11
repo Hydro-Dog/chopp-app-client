@@ -249,3 +249,8 @@ table {
   font-weight: 900;
   font-style: italic;
 }
+
+.ant-modal-wrap {
+  backdrop-filter: blur(2px); /* Эффект размытия */
+  background-color: rgba(0, 0, 0, 0.1); /* Затемнение с прозрачностью */
+}

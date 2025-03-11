@@ -25,6 +25,7 @@ import { RootContainer } from '@widgets/root-container/root-container';
 import { ShoppingCartPage } from '@pages/shopping-cart';
 import { BackLayout } from '@widgets/index';
 import { ProductsProvider } from '@pages/products/context';
+import { RootProvider } from '@widgets/root-container/root-provider';
 
 export const router = createBrowserRouter([
   // {
@@ -40,7 +41,9 @@ export const router = createBrowserRouter([
     element: (
       // <GuardedRoute>
       // <InterceptorsWrapper />
-      <RootContainer />
+      <RootProvider>
+        <RootContainer />
+      </RootProvider>
       // <MainMenu />
       //  <Navigate to={ROUTES.ORDERS} replace />
       // </GuardedRoute>
@@ -69,6 +72,10 @@ export const router = createBrowserRouter([
             <ShoppingCartPage />
           </BackLayout>
         ),
+      },
+      {
+        path: 'order',
+        element: <BackLayout>order</BackLayout>,
       },
 
       // {
