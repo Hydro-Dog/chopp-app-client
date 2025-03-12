@@ -138,13 +138,30 @@ export const logoutUser = createAsyncThunk<void, void, { rejectValue: ErrorRespo
 //   }
 // });
 
-export const loginByCode = createAsyncThunk<
+export const getVerificationCode = createAsyncThunk<
   User,
   { phoneNumber: string },
   { rejectValue: ErrorResponse }
->('/loginByCode', async (userData, thunkAPI) => {
+>('/generateCode', async (userData, thunkAPI) => {
   try {
-    const response = await axiosPrivate.post<User>(`/auth/loginByCode`, userData);
+    const response = await axiosPrivate.post<User>(`/auth/generateCode`, userData);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
+    } else {
+      return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
+    }
+  }
+});
+
+export const verifyByCode = createAsyncThunk<
+  UserAuthorization,
+  { code: string; phoneNumber: string },
+  { rejectValue: ErrorResponse }
+>('/verifyByCode', async (body, thunkAPI) => {
+  try {
+    const response = await axiosPrivate.post<UserAuthorization>(`/auth/verify`, body);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

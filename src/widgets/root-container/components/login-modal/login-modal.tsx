@@ -1,17 +1,19 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Flex, Form, Input, Modal, Typography } from 'antd';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { z } from 'zod';
 import InputMask from 'react-input-mask';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSuperDispatch } from '@shared/hooks';
 import { User } from '@shared/types';
-import { loginByCode } from '@store/slices';
+import { Button, Flex, Form, Modal, Typography } from 'antd';
+import { z } from 'zod';
+import { InitialForm } from './components/initial-form/initial-form';
+import { VIEW_MODE } from './enum/view-mode';
+import { TelegramInputCode } from './components/telegram-input-code';
 
 const { Item } = Form;
 
-const { Text, Title } = Typography;
+const { Text, Title, Link } = Typography;
 
 type Props = {
   isOpen: boolean;
@@ -19,12 +21,12 @@ type Props = {
 };
 
 export const LoginModal = ({ isOpen, close }: Props) => {
+  const [viewMode, setViewMode] = useState<VIEW_MODE>(VIEW_MODE.INITIAL);
+  const [phoneNumber, setPhoneNumber] = useState('');
   const { superDispatch } = useSuperDispatch<User, { phoneNumber: string }>();
 
   const phoneSchema = z.object({
-    phoneNumber: z
-      .string()
-      .min(10, 'Введите корректный номер телефона')
+    phoneNumber: z.string().min(10, 'Некорректный номер телефона'),
     //   .regex(/^\+?\d{10,15}$/, 'Некорректный формат номера'),
   });
 
@@ -32,52 +34,30 @@ export const LoginModal = ({ isOpen, close }: Props) => {
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const VIEW = {
+    [VIEW_MODE.INITIAL]: <InitialForm setViewMode={setViewMode} setPhoneNumber={setPhoneNumber} />,
+    [VIEW_MODE.TELEGRAM]: <TelegramInputCode phoneNumber={phoneNumber} />,
+  };
+
   const {
     handleSubmit,
     control,
     formState: { errors },
+    getValues,
     reset,
   } = useForm<PhoneNumberFormType>({
     resolver: zodResolver(phoneSchema),
     defaultValues: { phoneNumber: '' },
   });
 
-  const onSubmitSms: SubmitHandler<PhoneNumberFormType> = ({ phoneNumber }) => {
-    console.log('Отправка номера:', phoneNumber);
-  };
-
-  const onSubmitTelegram: SubmitHandler<PhoneNumberFormType> = ({ phoneNumber }) => {
-    superDispatch({
-        action: loginByCode({ phoneNumber }),
-        thenHandler: (user) => {
-          console.log('user: ', user);
-        },
-      });
-  };
-
-  const onSendTelegram = (phoneNumber: string) => {
-    
-  };
-
-  const handleSms = (phoneNumber: string) => {
-    // onSendSms(phoneNumber);
-    // onClose();
-  };
-
-  const handleTelegram = (phoneNumber: string) => {
-    console.log('handleTelegram: ', phoneNumber);
-    onSendTelegram(phoneNumber);
-    handleClose();
-  };
-
   const handleClose = () => {
     reset();
-    onClose();
+    close();
   };
 
   return (
     <Modal
-      className="max-w-2xs"
+      className="max-w-96"
       title={
         <Title className="!font-bold" level={4}>
           Вход
@@ -87,34 +67,7 @@ export const LoginModal = ({ isOpen, close }: Props) => {
       onClose={handleClose}
       onCancel={handleClose}
       footer={false}>
-      <Text>ПИН-код для входа на сайт будет передан в по СМС или в Telegram</Text>
-      <Form >
-        <Item validateStatus={errors.phoneNumber ? 'error' : ''} help={errors.phoneNumber?.message}>
-          <Controller
-            name="phoneNumber"
-            control={control}
-            render={({ field }) => (
-              <InputMask
-                {...field}
-                ref={inputRef}
-                mask="+7 (999) 999-99-99"
-                maskChar="_"
-                className="w-full p-2 border rounded-md mt-5"
-                placeholder="+7 (___) ___-__-__"
-              />
-            )}
-          />
-        </Item>
-
-        <Flex gap={8} vertical justify="space-between" className=" mt-8">
-          <Button disabled size="large" type="primary" onClick={handleSubmit(onSubmitSms)}>
-            Отправить по СМС
-          </Button>
-          <Button size="large" type="primary" onClick={handleSubmit(onSubmitTelegram)}>
-            Отправить в Телеграм
-          </Button>
-        </Flex>
-      </Form>
+      {VIEW[viewMode]}
     </Modal>
   );
 };

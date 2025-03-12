@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { PlusOutlined } from '@ant-design/icons';
 import { Product } from '@shared/types';
 import { Badge, Button, Flex, Typography, Card } from 'antd';
+import { useThemeToken } from '@shared/index';
 
 const { Text } = Typography;
 
@@ -12,6 +13,7 @@ type Props = {
 export const ProductCard = ({ item }: Props) => {
   const { t } = useTranslation();
   const isShoppingCartItem = 1;
+  const themeToken = useThemeToken();
 
   return (
     <Card
@@ -41,7 +43,10 @@ export const ProductCard = ({ item }: Props) => {
             {item.price}₽
           </Text>
           <Flex justify="space-between" align="center">
-            <Badge offset={[-40, 0]} count={isShoppingCartItem ? 5 : 0}>
+            <Badge
+              color={themeToken.colorTextSecondary}
+              offset={[-40, 0]}
+              count={isShoppingCartItem ? 5 : 0}>
               <Button type="primary" icon={<PlusOutlined />} size="large" />
             </Badge>
           </Flex>

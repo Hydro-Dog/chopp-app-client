@@ -6,7 +6,9 @@ import {
   fetchCurrentUser,
   // loginUser,
   logoutUser,
-  loginByCode,
+  // loginByCode,
+  verifyByCode,
+  getVerificationCode,
   // registerUser,
   // fetchUsers,
   // fetchUser,
@@ -21,8 +23,10 @@ export type UserState = {
   updateCurrentUserError: ErrorResponse | null;
   logoutStatus: FETCH_STATUS;
   logoutError: ErrorResponse | null;
-  loginByCodeStatus: FETCH_STATUS;
-  loginByCodeError: ErrorResponse | null;
+  getVerificationCodeStatus: FETCH_STATUS;
+  getVerificationCodeError: ErrorResponse | null;
+  verifyByCodeStatus: FETCH_STATUS;
+  verifyByCodeError: ErrorResponse | null;
 };
 
 const initialState: UserState = {
@@ -33,8 +37,10 @@ const initialState: UserState = {
   updateCurrentUserError: null,
   logoutStatus: FETCH_STATUS.IDLE,
   logoutError: null,
-  loginByCodeStatus: FETCH_STATUS.IDLE,
-  loginByCodeError: null,
+  getVerificationCodeStatus: FETCH_STATUS.IDLE,
+  getVerificationCodeError: null,
+  verifyByCodeStatus: FETCH_STATUS.IDLE,
+  verifyByCodeError: null,
 };
 
 export const userSlice = createSlice({
@@ -89,8 +95,23 @@ export const userSlice = createSlice({
         state.updateCurrentUserError = action.payload ?? {
           message: 'Failed to fetch user information',
         };
-        state.updateCurrentUserStatus = FETCH_STATUS.IDLE;
       })
+
+      .addCase(verifyByCode.pending, (state) => {
+        state.verifyByCodeStatus = FETCH_STATUS.LOADING;
+      })
+      .addCase(verifyByCode.fulfilled, (state, action: PayloadAction<UserAuthorization>) => {
+        state.verifyByCodeStatus = FETCH_STATUS.SUCCESS;
+        localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, action.payload.accessToken);
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, action.payload.refreshToken);
+      })
+      .addCase(verifyByCode.rejected, (state, action) => {
+        state.verifyByCodeStatus = FETCH_STATUS.ERROR;
+        state.verifyByCodeError = action.payload ?? {
+          message: 'Failed to fetch user information',
+        };
+      })
+
       // .addCase(registerUser.pending, (state) => {
       //   state.registerUserStatus = FETCH_STATUS.LOADING;
       // })
@@ -125,36 +146,38 @@ export const userSlice = createSlice({
         state.logoutStatus = FETCH_STATUS.ERROR;
         state.logoutError = action.payload ?? { message: 'Failed to logout user' };
       })
-      .addCase(loginByCode.pending, (state) => {
-        state.loginByCodeStatus = FETCH_STATUS.LOADING;
+      .addCase(getVerificationCode.pending, (state) => {
+        state.getVerificationCodeStatus = FETCH_STATUS.LOADING;
       })
-      .addCase(loginByCode.fulfilled, (state) => {
-        state.loginByCodeStatus = FETCH_STATUS.SUCCESS;
+      .addCase(getVerificationCode.fulfilled, (state, action) => {
+        state.getVerificationCodeStatus = FETCH_STATUS.SUCCESS;
 
+        // localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, action.payload.accessToken);
+        // localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, action.payload.refreshToken);
       })
-      .addCase(loginByCode.rejected, (state, action) => {
-        state.loginByCodeStatus = FETCH_STATUS.ERROR;
-        state.loginByCodeError = action.payload ?? { message: 'Failed to logout user' };
-      })
-      
-      // .addCase(fetchUsers.pending, (state) => {
-      //   state.fetchUsersStatus = FETCH_STATUS.LOADING;
-      // })
-      // .addCase(fetchUsers.fulfilled, (state, action) => {
-      //   state.fetchUsersStatus = FETCH_STATUS.SUCCESS;
-      //   state.users = {
-      //     items: action.payload.items,
-      //     pageNumber: action.payload.pageNumber,
-      //     limit: action.payload.limit,
-      //     totalItems: action.payload.totalItems,
-      //     totalPages: action.payload.totalPages,
-      //   };
-      // })
-      // .addCase(fetchUsers.rejected, (state, action) => {
-      //   state.fetchUsersStatus = FETCH_STATUS.ERROR;
-      //   state.fetchUsersError = action.payload ?? { message: 'Failed to fetch users' };
-      // });
+      .addCase(getVerificationCode.rejected, (state, action) => {
+        state.getVerificationCodeStatus = FETCH_STATUS.ERROR;
+        state.getVerificationCodeError = action.payload ?? { message: 'Failed to logout user' };
+      });
+
+    // .addCase(fetchUsers.pending, (state) => {
+    //   state.fetchUsersStatus = FETCH_STATUS.LOADING;
+    // })
+    // .addCase(fetchUsers.fulfilled, (state, action) => {
+    //   state.fetchUsersStatus = FETCH_STATUS.SUCCESS;
+    //   state.users = {
+    //     items: action.payload.items,
+    //     pageNumber: action.payload.pageNumber,
+    //     limit: action.payload.limit,
+    //     totalItems: action.payload.totalItems,
+    //     totalPages: action.payload.totalPages,
+    //   };
+    // })
+    // .addCase(fetchUsers.rejected, (state, action) => {
+    //   state.fetchUsersStatus = FETCH_STATUS.ERROR;
+    //   state.fetchUsersError = action.payload ?? { message: 'Failed to fetch users' };
+    // });
   },
 });
 
-export const { setLoginStatus, setLogoutStatus } = userSlice.actions;
+// export const { setLoginStatus, setLogoutStatus } = userSlice.actions;

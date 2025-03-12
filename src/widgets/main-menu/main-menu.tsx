@@ -25,7 +25,7 @@ import { ROUTES } from '@shared/enum';
 import { useFetchChatStats } from '@shared/hooks/use-fetch-chats-stats copy';
 import { useNotificationContext, useTheme } from '@shared/index';
 import { FETCH_STATUS } from '@shared/index';
-import { logoutUser, setLogoutStatus } from '@store/slices';
+import { logoutUser } from '@store/slices';
 import { AppDispatch, RootState } from '@store/store';
 import { Badge, Layout, Menu, Tooltip } from 'antd';
 import { SiderTheme } from 'antd/es/layout/Sider';
@@ -56,7 +56,7 @@ export const MainMenuWidget = ({ children }: PropsWithChildren<Record<never, any
       showNotification({ type: 'error', message: 'Ошибка', description: 'Неудачный логаут' });
     } else if (logoutStatus === FETCH_STATUS.SUCCESS) {
       navigate(ROUTES.SIGN_IN);
-      dispatch(setLogoutStatus(FETCH_STATUS.IDLE));
+      // dispatch(setLogoutStatus(FETCH_STATUS.IDLE));
     }
   }, [dispatch, logoutStatus, navigate, showNotification]);
 
