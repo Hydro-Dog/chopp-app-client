@@ -7,7 +7,7 @@ import {
   TruckOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { useThemeToken } from '@shared/index';
+import { useLoginGuard, useThemeToken } from '@shared/index';
 import { Button } from 'antd';
 import { RootState } from '@store/store';
 import { useRootContext } from '@widgets/root-container/root-provider';
@@ -22,20 +22,12 @@ export const Navigation = () => {
   const onIconClick = (value: string) => {
     navigate(value);
   };
-
-  const { currentUser } = useSelector((state: RootState) => state.user);
-
   const isEmpty = 0;
   const hasCurrentOrder = 0;
-
-  const { openLoginModal } = useRootContext();
+  const { loginGuard } = useLoginGuard();
 
   const onNavigationClick = (path: string) => {
-    if (!currentUser) {
-      openLoginModal();
-    } else {
-      navigate(path);
-    }
+    loginGuard(() => navigate(path));
   };
 
   return (

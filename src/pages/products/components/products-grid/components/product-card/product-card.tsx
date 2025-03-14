@@ -1,22 +1,24 @@
 import { useTranslation } from 'react-i18next';
-import { PlusOutlined } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Product } from '@shared/types';
 import { Badge, Button, Flex, Typography, Card } from 'antd';
 import { useThemeToken } from '@shared/index';
 
-const { Text } = Typography;
+const { Text, Paragraph } = Typography;
 
 type Props = {
   item: Product;
+  onClick: () => void;
 };
 
-export const ProductCard = ({ item }: Props) => {
+export const ProductCard = ({ item, onClick }: Props) => {
   const { t } = useTranslation();
   const isShoppingCartItem = 1;
   const themeToken = useThemeToken();
 
   return (
     <Card
+      onClick={onClick}
       size="small"
       styles={{
         body: { padding: '8px' },
@@ -34,22 +36,42 @@ export const ProductCard = ({ item }: Props) => {
       <Flex gap={2} vertical>
         <Text strong>{item.title}</Text>
 
-        <Text className="h-14 overflow-hidden text-ellipsis line-clamp-3 text-sm">
+        <Paragraph ellipsis={{ rows: 3 }} className="h-14 overflow-hidden text-sm">
           {item.description}
-        </Text>
+        </Paragraph>
 
         <Flex justify="space-between" align="center" className="mt-4">
-          <Text strong className="text-base">
+          <Text strong className="text-base text-xl">
             {item.price}₽
           </Text>
-          <Flex justify="space-between" align="center">
-            <Badge
-              color={themeToken.colorTextSecondary}
-              offset={[-40, 0]}
-              count={isShoppingCartItem ? 5 : 0}>
-              <Button type="primary" icon={<PlusOutlined />} size="large" />
-            </Badge>
-          </Flex>
+          {isShoppingCartItem ? (
+            <Flex justify="space-between" align="center" gap={4}>
+              <Button
+                onClick={(e) => e.stopPropagation()}
+                className="rounded-r-none"
+                type="primary"
+                icon={<MinusOutlined />}
+                size="small"
+              />
+              <Text strong type="secondary">
+                5
+              </Text>
+              <Button
+                onClick={(e) => e.stopPropagation()}
+                className="rounded-l-none"
+                type="primary"
+                icon={<PlusOutlined />}
+                size="small"
+              />
+            </Flex>
+          ) : (
+            <Button
+              onClick={(e) => e.stopPropagation()}
+              type="primary"
+              icon={<PlusOutlined />}
+              size="large"
+            />
+          )}
         </Flex>
       </Flex>
     </Card>

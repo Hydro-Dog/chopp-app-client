@@ -8,11 +8,20 @@ import { fetchProducts } from '@store/slices';
 import { RootState } from '@store/store';
 import { Col, Flex, Row, Spin } from 'antd';
 import { useBoolean } from 'usehooks-ts';
-import { ProductCard } from './components';
+import { ProductCard, ProductDrawer } from './components';
 import { useRootContext } from '@widgets/root-container/root-provider';
+import { ChoppDrawer } from '@shared/components/chopp-drawer/chopp-drawer';
 
 export const ProductsGrid = () => {
   const { fetchProductsStatus } = useSelector((state: RootState) => state.products);
+
+  const {
+    value: isProductDrawerOpened,
+    setTrue: openProductDrawerOpened,
+    setFalse: closeProductDrawerOpened,
+  } = useBoolean();
+
+  const [currentItem, setCurrentItem] = useState<Product>();
 
   const {
     search,
@@ -52,16 +61,28 @@ export const ProductsGrid = () => {
     }
   }, [categoryId]);
 
+  const onProductClick = (item: Product) => {
+    setCurrentItem(item);
+    openProductDrawerOpened();
+  };
+
   return (
-    <Flex>
-      <Row gutter={[16, 16]}>
-        {pageProducts?.map((product) => (
-          <Col key={product.id} xs={24} sm={12} md={8} lg={6} xl={6}>
-            <ProductCard item={product} />
-          </Col>
-        ))}
-      </Row>
-      {fetchProductsStatus === FETCH_STATUS.LOADING && <Spin size="large" />}
-    </Flex>
+    <>
+      <Flex>
+        <Row gutter={[16, 16]}>
+          {pageProducts?.map((product) => (
+            <Col key={product.id} xs={24} sm={12} md={8} lg={6} xl={6}>
+              <ProductCard item={product} onClick={() => onProductClick(product)} />
+            </Col>
+          ))}
+        </Row>
+        {fetchProductsStatus === FETCH_STATUS.LOADING && <Spin size="large" />}
+      </Flex>
+      <ProductDrawer
+        isOpened={isProductDrawerOpened}
+        onClose={closeProductDrawerOpened}
+        product={currentItem}
+      />
+    </>
   );
 };
