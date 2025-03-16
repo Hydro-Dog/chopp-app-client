@@ -36,7 +36,7 @@ export const LoginModal = ({ isOpen, close }: Props) => {
 
   const VIEW = {
     [VIEW_MODE.INITIAL]: <InitialForm setViewMode={setViewMode} setPhoneNumber={setPhoneNumber} />,
-    [VIEW_MODE.TELEGRAM]: <TelegramInputCode phoneNumber={phoneNumber} />,
+    [VIEW_MODE.TELEGRAM]: <TelegramInputCode closeModal={close} phoneNumber={phoneNumber} />,
   };
 
   const {

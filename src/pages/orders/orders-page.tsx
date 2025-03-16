@@ -47,12 +47,6 @@ export const OrdersPage = () => {
       thenHandler: () => {
         changeTableOrders({});
       },
-      catchHandler: (error) => {
-        showErrorNotification({
-          message: t('ERROR'),
-          description: error.message,
-        });
-      },
     });
   };
 

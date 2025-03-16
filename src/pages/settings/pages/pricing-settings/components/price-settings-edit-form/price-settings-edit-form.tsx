@@ -65,12 +65,6 @@ export const PriceSettingsEditForm = ({ toggle }: Props) => {
     superDispatch({
       action: postPricingData(pricingData),
       thenHandler: onCancel,
-      catchHandler: (error) => {
-        showErrorNotification({
-          message: t('ERROR'),
-          description: error.message,
-        });
-      },
     });
   };
 

@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useTheme, useThemeToken } from '@shared/index';
+import { useSuperDispatch, useTheme, useThemeToken } from '@shared/index';
+import { ShoppingCart } from '@shared/types/shopping-cart';
+import { fetchShoppingCart } from '@store/slices/shopping-cart-slice';
 import { RootHeader } from '@widgets/root-header/root-header';
 import { Button, Flex, Layout } from 'antd';
 
@@ -7,6 +10,11 @@ const { Header, Content, Footer } = Layout;
 
 export const RootContainer = () => {
   const themeToken = useThemeToken();
+  const { superDispatch: fetchShoppingCartDispatch } = useSuperDispatch<ShoppingCart, void>();
+
+  useEffect(() => {
+    fetchShoppingCartDispatch({ action: fetchShoppingCart() });
+  }, []);
 
   return (
     <Layout className="h-screen">

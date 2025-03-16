@@ -1,20 +1,44 @@
+import { MouseEventHandler, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { useLoginGuard } from '@shared/index';
 import { Product } from '@shared/types';
-import { Badge, Button, Flex, Typography, Card } from 'antd';
-import { useThemeToken } from '@shared/index';
+import { RootState } from '@store/store';
+import { Button, Flex, Typography, Card } from 'antd';
+import { useDecrementShoppingCartItem, useIncrementShoppingCartItem } from '../../hooks';
 
 const { Text, Paragraph } = Typography;
 
 type Props = {
-  item: Product;
+  product: Product;
   onClick: () => void;
 };
 
-export const ProductCard = ({ item, onClick }: Props) => {
-  const { t } = useTranslation();
-  const isShoppingCartItem = 1;
-  const themeToken = useThemeToken();
+export const ProductCard = ({ product, onClick }: Props) => {
+  const { loginGuard } = useLoginGuard();
+  const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
+  const decrement = useDecrementShoppingCartItem();
+  const increment = useIncrementShoppingCartItem();
+  const [isShoppingCartItem, setIsShoppingCartItem] = useState(false);
+
+  useEffect(() => {
+    if (shoppingCart?.items.find((el) => el.product.id === product.id)) {
+      setIsShoppingCartItem(true);
+    } else {
+      setIsShoppingCartItem(false);
+    }
+  }, [shoppingCart]);
+
+  const onAddToCartClick: MouseEventHandler<HTMLElement> = (e) => {
+    e.stopPropagation();
+    loginGuard(() => increment({ itemId: product.id }));
+  };
+
+  const onRemoveFromCartClick: MouseEventHandler<HTMLElement> = (e) => {
+    e.stopPropagation();
+    loginGuard(() => decrement({ itemId: product.id }));
+  };
 
   return (
     <Card
@@ -28,37 +52,37 @@ export const ProductCard = ({ item, onClick }: Props) => {
         <div className="flex h-40 items-center justify-center overflow-hidden">
           <img
             className="aspect-video object-cover"
-            alt={item.title}
-            src={import.meta.env.VITE_BASE_URL_FILES + item.images[0].path}
+            alt={product.title}
+            src={import.meta.env.VITE_BASE_URL_FILES + product.images[0].path}
           />
         </div>
       }>
       <Flex gap={2} vertical>
-        <Text strong>{item.title}</Text>
+        <Text strong>{product.title}</Text>
 
         <Paragraph ellipsis={{ rows: 3 }} className="h-14 overflow-hidden text-sm">
-          {item.description}
+          {product.description}
         </Paragraph>
 
         <Flex justify="space-between" align="center" className="mt-4">
           <Text strong className="text-base text-xl">
-            {item.price}₽
+            {product.price}₽
           </Text>
           {isShoppingCartItem ? (
             <Flex justify="space-between" align="center" gap={4}>
               <Button
-                onClick={(e) => e.stopPropagation()}
-                className="rounded-r-none"
+                onClick={onRemoveFromCartClick}
+                className="rounded-r-none !w-8 h-10"
                 type="primary"
                 icon={<MinusOutlined />}
                 size="small"
               />
-              <Text strong type="secondary">
-                5
+              <Text strong className="text-lg px-1" type="secondary">
+                {shoppingCart.items.find((el) => el.product.id === product.id)?.quantity}
               </Text>
               <Button
-                onClick={(e) => e.stopPropagation()}
-                className="rounded-l-none"
+                onClick={onAddToCartClick}
+                className="rounded-l-none !w-8 h-10"
                 type="primary"
                 icon={<PlusOutlined />}
                 size="small"
@@ -66,7 +90,7 @@ export const ProductCard = ({ item, onClick }: Props) => {
             </Flex>
           ) : (
             <Button
-              onClick={(e) => e.stopPropagation()}
+              onClick={onAddToCartClick}
               type="primary"
               icon={<PlusOutlined />}
               size="large"

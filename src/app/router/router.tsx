@@ -40,10 +40,12 @@ export const router = createBrowserRouter([
     path: ROUTES.ROOT,
     element: (
       // <GuardedRoute>
-      // <InterceptorsWrapper />
-      <RootProvider>
-        <RootContainer />
-      </RootProvider>
+      <>
+        <InterceptorsWrapper />
+        <RootProvider>
+          <RootContainer />
+        </RootProvider>
+      </>
       // <MainMenu />
       //  <Navigate to={ROUTES.ORDERS} replace />
       // </GuardedRoute>

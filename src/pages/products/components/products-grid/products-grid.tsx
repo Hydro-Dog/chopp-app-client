@@ -72,7 +72,7 @@ export const ProductsGrid = () => {
         <Row gutter={[16, 16]}>
           {pageProducts?.map((product) => (
             <Col key={product.id} xs={24} sm={12} md={8} lg={6} xl={6}>
-              <ProductCard item={product} onClick={() => onProductClick(product)} />
+              <ProductCard product={product} onClick={() => onProductClick(product)} />
             </Col>
           ))}
         </Row>

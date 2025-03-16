@@ -12,9 +12,9 @@ export const BackLayout = ({ children }: PropsWithChildrenOnly) => {
         shape="round"
         type="text"
         icon={<ArrowLeftOutlined />}
-        onClick={() => navigate(-1)} // Навигация на один шаг назад
+        onClick={() => navigate('/')} // Навигация на один шаг назад
       >
-        [Назад]
+        Главная
       </Button>
       {children}
     </div>

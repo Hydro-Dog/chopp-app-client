@@ -18,6 +18,7 @@ export const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLocation = (path: string) => location.pathname === path;
+  const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
 
   const onIconClick = (value: string) => {
     navigate(value);
@@ -67,7 +68,7 @@ export const Navigation = () => {
           onClick={() => {
             onNavigationClick('cart');
           }}>
-          {!isEmpty && '[100p]'}
+          {!isEmpty && `${shoppingCart.totalPrice} ₽`}
         </Button>
       )}
 

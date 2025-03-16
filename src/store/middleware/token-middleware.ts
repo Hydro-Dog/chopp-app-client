@@ -27,7 +27,7 @@ const refreshAccessToken = async () => {
     console.error('Error refreshing access token:', error);
     localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
     localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
-    window.location.href = '/signin'; // Редирект на страницу логина
+    // window.location.href = '/signin'; // Редирект на страницу логина
     throw new Error('Session expired, please log in again');
   }
 };
