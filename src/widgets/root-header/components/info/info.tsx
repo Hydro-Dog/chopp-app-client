@@ -1,6 +1,8 @@
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ClockCircleOutlined, ShopOutlined } from '@ant-design/icons';
 import { THEME, useTheme } from '@shared/index';
+import { RootState } from '@store/index';
 import { Flex } from 'antd';
 import { Typography } from 'antd';
 import { Space } from 'antd/lib';
@@ -12,6 +14,7 @@ const { Text } = Typography;
 export const Info = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
+  const { clientAppConfig } = useSelector((state: RootState) => state.clientAppConfig);
 
   return (
     <div className="w-full flex items-center gap-5">
@@ -24,14 +27,20 @@ export const Info = () => {
 
       <Space className="hidden sm:block">
         <Flex vertical>
-          <Flex gap={5}>
-            <ShopOutlined size={10} />
-            <Text strong>[location]</Text>
-          </Flex>
-          <Flex gap={5}>
-            <ClockCircleOutlined />
-            <Text>[timeStart - timeEnd]</Text>
-          </Flex>
+          {clientAppConfig?.location && (
+            <Flex gap={5}>
+              <ShopOutlined size={10} />
+              <Text strong>[location]</Text>
+            </Flex>
+          )}
+          {clientAppConfig?.openTime && clientAppConfig?.closeTime && (
+            <Flex gap={5}>
+              <ClockCircleOutlined />
+              <Text>
+                {clientAppConfig?.openTime} - {clientAppConfig?.closeTime}
+              </Text>
+            </Flex>
+          )}
         </Flex>
       </Space>
     </div>

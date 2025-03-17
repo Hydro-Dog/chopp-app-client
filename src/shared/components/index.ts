@@ -15,3 +15,4 @@ export * from './chopp-payment-status';
 export * from './chopp-custom-modal';
 export * from './chopp-load-more';
 export * from './chopp-bottom-drawer';
+export * from './add-to-cart-button';

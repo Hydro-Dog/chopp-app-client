@@ -11,12 +11,12 @@ import {
   ProductsState,
   ordersSlice,
   OrderState,
-  PricingState,
+  ClientAppConfigState,
   PaymentsState,
   paymentsSlice,
   NotificationsState,
   notificationsSlice,
-  pricingSlice,
+  clientAppConfigSlice,
 } from './slices/';
 import { productCategorySlice, ProductCategoryState } from './slices/product-category-slice';
 import { shoppingCartSlice, ShoppingCartState } from './slices/shopping-cart-slice';
@@ -29,7 +29,7 @@ export const store = configureStore({
     productCategory: productCategorySlice.reducer,
     products: productSlice.reducer,
     orders: ordersSlice.reducer,
-    pricing: pricingSlice.reducer,
+    clientAppConfig: clientAppConfigSlice.reducer,
     payments: paymentsSlice.reducer,
     notifications: notificationsSlice.reducer,
     shoppingCart: shoppingCartSlice.reducer,
@@ -45,7 +45,7 @@ export type RootState = {
   products: ProductsState;
   orders: OrderState;
   payments: PaymentsState;
-  pricing: PricingState;
+  clientAppConfig: ClientAppConfigState;
   notifications: NotificationsState;
   shoppingCart: ShoppingCartState;
 };

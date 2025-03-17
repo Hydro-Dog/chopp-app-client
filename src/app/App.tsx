@@ -52,8 +52,8 @@ export const App = () => {
   const themeConfig = {
     algorithm: theme === THEME.DARK ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
     token: {
-      colorPrimary: '#cb821d',
-      colorLink: '#cb821d',
+      colorPrimary: '#30b537',
+      colorLink: '#30b537',
       fontFamily: 'Nunito',
       fontSize: 16
     },

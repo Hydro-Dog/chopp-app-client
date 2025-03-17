@@ -25,7 +25,7 @@ export const ChoppBottomDrawer = ({
     <Drawer
       placement="bottom"
       // width={500}
-      height={window.innerHeight * 0.7}
+      height={window.innerHeight * 0.9}
       onClose={onClose}
       open={open}
       className="chopp-drawer-bottom"

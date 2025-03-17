@@ -1,0 +1,92 @@
+import { useState, useEffect, MouseEventHandler } from 'react';
+import { useSelector } from 'react-redux';
+import { DeleteFilled, MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  useDecrementShoppingCartItem,
+  useDeleteShoppingCartPosition,
+  useIncrementShoppingCartItem,
+  useLoginGuard,
+  useThemeToken,
+} from '@shared/hooks';
+import { Product } from '@shared/index';
+import { RootState } from '@store/store';
+import { Flex, Button, Typography } from 'antd';
+
+const { Text } = Typography;
+
+type Props = {
+  product?: Product;
+  showDelete?: boolean;
+};
+
+export const AddToCartButton = ({ product, showDelete }: Props) => {
+  const { loginGuard } = useLoginGuard();
+  const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
+  const decrement = useDecrementShoppingCartItem();
+  const increment = useIncrementShoppingCartItem();
+  const deletePosition = useDeleteShoppingCartPosition();
+  const [isShoppingCartItem, setIsShoppingCartItem] = useState(false);
+  const themeToken = useThemeToken();
+
+  useEffect(() => {
+    if (shoppingCart?.items.find((el) => el.product.id === product?.id)) {
+      setIsShoppingCartItem(true);
+    } else {
+      setIsShoppingCartItem(false);
+    }
+  }, [shoppingCart]);
+
+  const onAddToCartClick: MouseEventHandler<HTMLElement> = (e) => {
+    e.stopPropagation();
+    loginGuard(() => increment({ itemId: product!.id }));
+  };
+
+  const onRemoveFromCartClick: MouseEventHandler<HTMLElement> = (e) => {
+    e.stopPropagation();
+    loginGuard(() => decrement({ itemId: product!.id }));
+  };
+
+  const onDeleteClick: MouseEventHandler<HTMLElement> = (e) => {
+    e.stopPropagation();
+    deletePosition({ itemId: product!.id });
+  };
+
+  if (!product) return;
+
+  return isShoppingCartItem ? (
+    <Flex
+      style={{ background: themeToken.colorBgBase }}
+      justify="space-between"
+      align="center"
+      gap={4}>
+      <Button
+        onClick={onRemoveFromCartClick}
+        className="rounded-r-none !w-8 h-10"
+        type="primary"
+        icon={<MinusOutlined />}
+        size="small"
+      />
+      <Text strong className="text-lg px-2" type="secondary">
+        {shoppingCart.items.find((el) => el.product.id === product.id)?.quantity}
+      </Text>
+      <Button
+        onClick={onAddToCartClick}
+        className="rounded-l-none !w-8 h-10"
+        type="primary"
+        icon={<PlusOutlined />}
+        size="small"
+      />
+      {showDelete && (
+        <Button
+          onClick={onDeleteClick}
+          icon={<DeleteFilled />}
+          size="small"
+          danger
+          className="ml-5"
+        />
+      )}
+    </Flex>
+  ) : (
+    <Button onClick={onAddToCartClick} type="primary" icon={<PlusOutlined />} size="large" />
+  );
+};

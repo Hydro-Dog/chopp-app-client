@@ -9,8 +9,8 @@ import { RootState } from '@store/store';
 import { Col, Flex, Row, Spin } from 'antd';
 import { useBoolean } from 'usehooks-ts';
 import { ProductCard, ProductDrawer } from './components';
-import { useRootContext } from '@widgets/root-container/root-provider';
-import { ChoppDrawer } from '@shared/components/chopp-drawer/chopp-drawer';
+// import { useRootContext } from '@widgets/root-container/root-provider';
+// import { ChoppDrawer } from '@shared/components/chopp-drawer/chopp-drawer';
 
 export const ProductsGrid = () => {
   const { fetchProductsStatus } = useSelector((state: RootState) => state.products);

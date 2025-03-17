@@ -1,14 +1,7 @@
-import { MinusOutlined, PlusOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { ChoppBottomDrawer, Product, useLoginGuard, useThemeToken } from '@shared/index';
-import { RootState } from '@store/store';
-import { Button, Flex, Typography } from 'antd';
-import { createStyles } from 'antd-style';
-import { useState, useEffect, MouseEventHandler } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { useDecrementShoppingCartItem, useIncrementShoppingCartItem } from '../../hooks';
+import { AddToCartButton, ChoppBottomDrawer, Product } from '@shared/index';
+import { Flex, Typography } from 'antd';
 
-const { Paragraph, Text, Title } = Typography;
+const { Paragraph, Title } = Typography;
 
 type Props = {
   isOpened: boolean;
@@ -17,31 +10,6 @@ type Props = {
 };
 
 export const ProductDrawer = ({ isOpened, onClose, product }: Props) => {
-  const { t } = useTranslation();
-  const { loginGuard } = useLoginGuard();
-  const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
-  const decrement = useDecrementShoppingCartItem();
-  const increment = useIncrementShoppingCartItem();
-  const [isShoppingCartItem, setIsShoppingCartItem] = useState(false);
-
-  useEffect(() => {
-    if (shoppingCart?.items.find((el) => el.product.id === product?.id)) {
-      setIsShoppingCartItem(true);
-    } else {
-      setIsShoppingCartItem(false);
-    }
-  }, [shoppingCart]);
-
-  const onAddToCartClick: MouseEventHandler<HTMLElement> = (e) => {
-    e.stopPropagation();
-    loginGuard(() => increment({ itemId: product!.id }));
-  };
-
-  const onRemoveFromCartClick: MouseEventHandler<HTMLElement> = (e) => {
-    e.stopPropagation();
-    loginGuard(() => decrement({ itemId: product!.id }));
-  };
-
   return (
     <ChoppBottomDrawer open={isOpened} onClose={onClose} title={product?.title}>
       <Flex
@@ -56,51 +24,19 @@ export const ProductDrawer = ({ isOpened, onClose, product }: Props) => {
             />
           </div>
         </div>
-        <Flex
-          className="relative w-full md:w-1/2 h-1/2 md:h-full md:wrap"
-          vertical
-          justify="space-between">
+        <Flex className=" w-full md:w-1/2 h-1/2 md:h-full md:wrap" vertical justify="space-between">
           <Paragraph type="secondary" className="font-semibold" rootClassName="pb-20">
             {product?.description}
           </Paragraph>
           <Flex
-            gap={12}
+            gap={20}
             className="w-full "
-            justify="space-between"
             align="center"
-            rootClassName="absolute bottom-0 left-0 pb-10">
+            rootClassName="absolute bottom-0  pb-10">
             <Title className="!font-bold !m-0" level={2}>
               {product?.price}₽
             </Title>
-            {isShoppingCartItem ? (
-              <Flex justify="space-between" align="center" gap={4}>
-                <Button
-                  onClick={onRemoveFromCartClick}
-                  className="rounded-r-none !w-8 h-10"
-                  type="primary"
-                  icon={<MinusOutlined />}
-                  size="small"
-                />
-                <Text strong className="text-lg px-1" type="secondary">
-                  {shoppingCart.items.find((el) => el.product.id === product?.id)?.quantity}
-                </Text>
-                <Button
-                  onClick={onAddToCartClick}
-                  className="rounded-l-none !w-8 h-10"
-                  type="primary"
-                  icon={<PlusOutlined />}
-                  size="small"
-                />
-              </Flex>
-            ) : (
-              <Button
-                onClick={onAddToCartClick}
-                type="primary"
-                icon={<ShoppingCartOutlined />}
-                size="large">
-                Добавить
-              </Button>
-            )}
+            <AddToCartButton product={product} />
           </Flex>
         </Flex>
       </Flex>

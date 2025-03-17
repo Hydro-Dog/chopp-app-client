@@ -13,3 +13,6 @@ export * from './use-auto-focus';
 export * from './use-show-total-pagination';
 export * from './use-show-total-pagination-orders';
 export * from './use-login-guard';
+export * from './use-increment-shopping-cart-item.ts';
+export * from './use-decrement-shopping-cart-item.ts';
+export * from './use-delete-shopping-cart-position.ts';

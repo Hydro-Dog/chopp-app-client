@@ -1,19 +1,25 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useSuperDispatch, useTheme, useThemeToken } from '@shared/index';
+import { ClientAppConfig, useSuperDispatch, useTheme, useThemeToken } from '@shared/index';
 import { ShoppingCart } from '@shared/types/shopping-cart';
+import { fetchClientAppConfig } from '@store/slices';
 import { fetchShoppingCart } from '@store/slices/shopping-cart-slice';
 import { RootHeader } from '@widgets/root-header/root-header';
 import { Button, Flex, Layout } from 'antd';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 export const RootContainer = () => {
   const themeToken = useThemeToken();
   const { superDispatch: fetchShoppingCartDispatch } = useSuperDispatch<ShoppingCart, void>();
+  const { superDispatch: fetchClientAppConfigCartDispatch } = useSuperDispatch<
+    ClientAppConfig,
+    void
+  >();
 
   useEffect(() => {
     fetchShoppingCartDispatch({ action: fetchShoppingCart() });
+    fetchClientAppConfigCartDispatch({ action: fetchClientAppConfig() });
   }, []);
 
   return (

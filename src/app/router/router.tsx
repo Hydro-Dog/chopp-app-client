@@ -70,9 +70,9 @@ export const router = createBrowserRouter([
       {
         path: 'cart',
         element: (
-          <BackLayout>
+          // <BackLayout>
             <ShoppingCartPage />
-          </BackLayout>
+          // </BackLayout>
         ),
       },
       {
