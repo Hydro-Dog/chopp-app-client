@@ -54,11 +54,7 @@ export const AddToCartButton = ({ product, showDelete }: Props) => {
   if (!product) return;
 
   return isShoppingCartItem ? (
-    <Flex
-      style={{ background: themeToken.colorBgBase }}
-      justify="space-between"
-      align="center"
-      gap={4}>
+    <Flex style={{ background: 'transparent' }} justify="space-between" align="center" gap={4}>
       <Button
         onClick={onRemoveFromCartClick}
         className="rounded-r-none !w-8 h-10"
