@@ -5,9 +5,11 @@ import {
   PaginationRequestQuery,
   PaginationResponse,
   User,
+  sanitizePhoneNumber,
 } from '@shared/index';
 import { axiosPrivate } from '@store/middleware';
 import axios from 'axios';
+import { use } from 'node_modules/i18next';
 import { UserAuthorization, UserLoginDTO, UserRegisterDTO } from './types';
 
 export const fetchCurrentUser = createAsyncThunk<User, void, { rejectValue: ErrorResponse }>(
@@ -142,9 +144,11 @@ export const getVerificationCode = createAsyncThunk<
   User,
   { phoneNumber: string },
   { rejectValue: ErrorResponse }
->('/generateCode', async (userData, thunkAPI) => {
+>('/generateCode', async (body, thunkAPI) => {
   try {
-    const response = await axiosPrivate.post<User>(`/auth/generateCode`, userData);
+    const response = await axiosPrivate.post<User>(`/auth/generateCode`, {
+      phoneNumber: sanitizePhoneNumber(body.phoneNumber),
+    });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -161,7 +165,10 @@ export const verifyByCode = createAsyncThunk<
   { rejectValue: ErrorResponse }
 >('/verifyByCode', async (body, thunkAPI) => {
   try {
-    const response = await axiosPrivate.post<UserAuthorization>(`/auth/verify`, body);
+    const response = await axiosPrivate.post<UserAuthorization>(`/auth/verify`, {
+      phoneNumber: sanitizePhoneNumber(body.phoneNumber),
+      code: body.code
+    });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
