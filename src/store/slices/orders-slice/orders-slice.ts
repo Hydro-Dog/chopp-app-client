@@ -1,9 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ErrorResponse, Order, PaginationResponse, FETCH_STATUS } from '@shared/index';
-import { fetchOrders, updateOrderPaymentStatus } from './actions';
+import { createOrder, fetchOrders, updateOrderPaymentStatus } from './actions';
 
 export type OrderState = {
   orders?: PaginationResponse<Order>;
+  currentOrder?: Order | null;
+  createOrderStatus: FETCH_STATUS;
+  createOrderError: ErrorResponse | null;
   fetchOrdersStatus: FETCH_STATUS;
   fetchOrdersError: ErrorResponse | null;
   updateOrderPaymentStatusStatus: FETCH_STATUS;
@@ -12,8 +15,11 @@ export type OrderState = {
 
 const initialState: OrderState = {
   orders: undefined,
+  currentOrder: null,
   fetchOrdersStatus: FETCH_STATUS.IDLE,
   fetchOrdersError: null,
+  createOrderStatus: FETCH_STATUS.IDLE,
+  createOrderError: null,
   updateOrderPaymentStatusStatus: FETCH_STATUS.IDLE,
   updateOrderPaymentStatusError: null,
 };
@@ -47,6 +53,19 @@ export const ordersSlice = createSlice({
         state.updateOrderPaymentStatusStatus = FETCH_STATUS.ERROR;
         state.updateOrderPaymentStatusError = action.payload ?? {
           message: 'Unknown error',
+        };
+      })
+      .addCase(createOrder.pending, (state) => {
+        state.createOrderStatus = FETCH_STATUS.LOADING;
+      })
+      .addCase(createOrder.fulfilled, (state, action: PayloadAction<Order>) => {
+        state.createOrderStatus = FETCH_STATUS.SUCCESS;
+        state.currentOrder = action.payload;
+      })
+      .addCase(createOrder.rejected, (state, action) => {
+        state.createOrderStatus = FETCH_STATUS.ERROR;
+        state.createOrderError = (action.payload as ErrorResponse) ?? {
+          message: 'Failed to fetch user information',
         };
       });
   },

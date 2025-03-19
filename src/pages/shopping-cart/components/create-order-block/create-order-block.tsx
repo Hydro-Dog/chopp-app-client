@@ -1,14 +1,21 @@
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useLoginGuard } from '@shared/hooks';
 import { RootState } from '@store/store';
 import { Card, Flex, Button, Typography } from 'antd';
-import { useSelector } from 'react-redux';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 export const CreateOrderBlock = () => {
   const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
+  const { loginGuard } = useLoginGuard();
+  const navigate = useNavigate();
+  const onNavigationClick = (path: string) => {
+    loginGuard(() => navigate(path));
+  };
 
   return (
-    <Card className="md:w-1/4">
+    <Card className="md:w-1/4 h-36">
       <Flex className="flex-row md:flex-col justify-between align-center" gap={24}>
         <Flex gap={12} className="md:justify-between items-center">
           <Title level={5} type="secondary" className="!m-0">
@@ -19,7 +26,12 @@ export const CreateOrderBlock = () => {
           </Title>
         </Flex>
 
-        <Button type="primary" size="large">
+        <Button
+          onClick={() => {
+            onNavigationClick('createOrder');
+          }}
+          type="primary"
+          size="large">
           Оформить заказ
         </Button>
       </Flex>

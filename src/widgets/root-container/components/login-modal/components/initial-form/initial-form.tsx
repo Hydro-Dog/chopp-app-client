@@ -50,7 +50,7 @@ export const InitialForm = ({ setViewMode, setPhoneNumber }: Props) => {
       action: getVerificationCode({ phoneNumber }),
       thenHandler: (user) => {
         setViewMode(VIEW_MODE.TELEGRAM);
-        setPhoneNumber(phoneNumber);
+        setPhoneNumber(phoneNumber.replace(/\D/g, ''));
         console.log('user: ', user);
       },
     });

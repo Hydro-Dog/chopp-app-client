@@ -144,6 +144,7 @@ export const getVerificationCode = createAsyncThunk<
   { rejectValue: ErrorResponse }
 >('/generateCode', async (userData, thunkAPI) => {
   try {
+    userData.phoneNumber = userData.phoneNumber.replace(/\D/g, '');
     const response = await axiosPrivate.post<User>(`/auth/generateCode`, userData);
     return response.data;
   } catch (error) {
