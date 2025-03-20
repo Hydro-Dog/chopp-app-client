@@ -230,5 +230,6 @@
   "IN_ALL": "Итого:",
   "COMMENT_TO_DELIVERIES": "Комментарий для доставки",
   "REGISTRATION_ORDER": "Оформление заказа",
-  "MAKE_ORDER": "Оформить заказ"
+  "MAKE_ORDER": "Оформить заказ",
+  "NO_CURRENT_ORDER": "Корзина пуста"
 }
