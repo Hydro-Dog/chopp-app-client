@@ -27,7 +27,7 @@ import { RootContainer } from '@widgets/root-container/root-container';
 import { RootProvider } from '@widgets/root-container/root-provider';
 import { GuardedRoute } from './utils/guarded-route';
 import { InterceptorsWrapper } from './wrappers/interceptors-wrapper';
-import { CurrentOrder } from '@pages/current-order';
+import { CurrentOrder } from '@pages/orders/components/current-order';
 
 export const router = createBrowserRouter([
   // {
@@ -89,11 +89,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'order',
-        element: (
-          <BackLayout>
-            <CurrentOrder />
-          </BackLayout>
-        ),
+        element: <OrdersPage />,
       },
 
       // {

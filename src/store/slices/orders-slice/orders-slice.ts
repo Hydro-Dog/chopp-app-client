@@ -13,6 +13,8 @@ export type OrderState = {
   fetchOrdersError: ErrorResponse | null;
   updateOrderPaymentStatusStatus: FETCH_STATUS;
   updateOrderPaymentStatusError: ErrorResponse | null;
+  fetchMyOrdersStatus: FETCH_STATUS;
+  fetchMyOrdersError: ErrorResponse | null;
 };
 
 const initialState: OrderState = {
@@ -26,6 +28,8 @@ const initialState: OrderState = {
   updateOrderPaymentStatusError: null,
   fetchLastOrderStatus: FETCH_STATUS.IDLE,
   fetchLastOrderError: null,
+  fetchMyOrdersStatus: FETCH_STATUS.IDLE,
+  fetchMyOrdersError: null,
 };
 
 export const ordersSlice = createSlice({
@@ -35,16 +39,16 @@ export const ordersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchOrders.pending, (state) => {
-        state.fetchOrdersStatus = FETCH_STATUS.LOADING;
+        state.fetchMyOrdersStatus = FETCH_STATUS.LOADING;
       })
-      .addCase(fetchOrders.fulfilled, (state, action) => {
-        state.fetchOrdersStatus = FETCH_STATUS.SUCCESS;
+      .addCase(fetchOrders.fulfilled, (state, action: PayloadAction<PaginationResponse<Order>>) => {
+        state.fetchMyOrdersStatus = FETCH_STATUS.SUCCESS;
         state.orders = action.payload;
       })
       .addCase(fetchOrders.rejected, (state, action) => {
-        state.fetchOrdersStatus = FETCH_STATUS.ERROR;
-        state.fetchOrdersError = action.payload ?? {
-          message: 'Unknown error',
+        state.fetchMyOrdersStatus = FETCH_STATUS.ERROR;
+        state.fetchMyOrdersError = action.payload ?? {
+          message: 'Failed to fetch user information',
         };
       })
       .addCase(fetchLastOrder.pending, (state) => {
