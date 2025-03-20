@@ -1,26 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ErrorResponse, Order, PaginationRequestQuery, PaginationResponse } from '@shared/types';
+import { ErrorResponse, Order, PaginationRequestQuery } from '@shared/types';
+import { createFetchPaginationListThunkAction } from '@shared/utils';
 import { axiosPrivate } from '@store/middleware';
 import axios from 'axios';
 import { CreateOrderDTO, UpdateOrderDTO } from './types';
 
-export const fetchOrders = createAsyncThunk<
-  PaginationResponse<Order>,
-  void,
-  { rejectValue: ErrorResponse }
->('/fetchOrders', async (_, thunkAPI) => {
-  try {
-    const response = await axiosPrivate.get<PaginationResponse<Order>>('/orders');
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
-    } else {
-      return thunkAPI.rejectWithValue({
-        message: 'An unknown error occurred',
-      });
-    }
-  }
+export const fetchOrders = createFetchPaginationListThunkAction<
+  Order,
+  PaginationRequestQuery,
+  ErrorResponse
+>({
+  actionName: 'orders/fetchOrders',
+  endpoint: '/orders',
 });
 
 export const updateOrderPaymentStatus = createAsyncThunk<

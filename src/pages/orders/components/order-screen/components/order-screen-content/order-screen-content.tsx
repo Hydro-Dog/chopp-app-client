@@ -1,12 +1,20 @@
 import { useTranslation } from 'react-i18next';
 import { Order } from '@shared/types';
-import { Card, Flex, Typography } from 'antd';
+import { Card, Flex, Spin, Typography } from 'antd';
 const { Text } = Typography;
 type Props = {
   order: Order;
 };
 export const OrderScreenContent = ({ order }: Props) => {
   const { t } = useTranslation();
+
+  if (order.items === undefined)
+    return (
+      <div className="flex flex-col items-center mt-5">
+        <Spin size="default" />
+      </div>
+    );
+
   return (
     <Flex gap={5} className=" overflow-x-scroll">
       {order.items.map((item) => (
@@ -16,7 +24,7 @@ export const OrderScreenContent = ({ order }: Props) => {
           className="w-44 shrink-0"
           cover={
             <img
-              className=" object-contain h-40"
+              className=" object-contain aspect-video"
               alt="..."
               src={import.meta.env.VITE_BASE_URL_FILES + item.product.images[0].path}
             />

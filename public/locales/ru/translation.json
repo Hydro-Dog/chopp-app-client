@@ -231,11 +231,11 @@
   "COMMENT_TO_DELIVERIES": "Комментарий для доставки",
   "REGISTRATION_ORDER": "Оформление заказа",
   "MAKE_ORDER": "Оформить заказ",
-  "NO_CURRENT_ORDER": "Корзина пуста",
+  "NO_CURRENT_ORDER": "Текущих заказов нет",
   "RUB_PIECE": " руб./шт ",
   "ORDERS_ID": "Номер заказа: ",
   "TOTAL_COST": "Общая стоимость: ",
   "CURRENCY": "₽",
-  "HISTORY_ORDERS":"История заказов",
-  "CURRENT_ORDER":"Текущий заказ"
+  "HISTORY_ORDERS": "История заказов",
+  "CURRENT_ORDER": "Текущий заказ"
 }
