@@ -3,7 +3,7 @@ import { createFetchPaginationListThunkAction } from '@shared/index';
 import { ErrorResponse, Order, PaginationRequestQuery } from '@shared/types';
 import { axiosPrivate } from '@store/middleware';
 import axios from 'axios';
-import { UpdateOrderDTO } from './types';
+import { CreateOrderDTO, UpdateOrderDTO } from './types';
 
 export const fetchOrders = createFetchPaginationListThunkAction<
   Order,
@@ -33,3 +33,28 @@ export const updateOrderPaymentStatus = createAsyncThunk<
     }
   }
 });
+export const createOrder = createAsyncThunk<Order, CreateOrderDTO>(
+  '/createOrder',
+  async ({ returnUrl = window.location.href, comment, address, name, phoneNumber }, thunkAPI) => {
+    try {
+      const response = await axiosPrivate.post<Order>(`/orders`, {
+        returnUrl,
+        comment,
+        address,
+        name,
+        phoneNumber,
+      });
+
+      return response.data;
+    } catch (error) {
+      console.log('axios error: ', error);
+      if (axios.isAxiosError(error) && error.response) {
+        return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
+      } else {
+        return thunkAPI.rejectWithValue({
+          message: 'An unknown error occurred',
+        });
+      }
+    }
+  },
+);

@@ -13,19 +13,21 @@ import {
 
 import { OrdersProvider } from '@pages/orders/context';
 import { PaymentsPage } from '@pages/payments';
+import { ProductsProvider } from '@pages/products/context';
 import {
   PricingSettingsPage,
   VisualSettingsPage,
   PaymentSettingsPage,
 } from '@pages/settings/pages';
+import { ShoppingCartPage } from '@pages/shopping-cart';
+import { OrderProcess } from '@pages/shopping-cart/components';
+import { OrderAdditionalInfo } from '@pages/shopping-cart/pages/order-additional-info';
 import { MainMenu, ROUTES } from '@shared/index';
+import { BackLayout } from '@widgets/index';
+import { RootContainer } from '@widgets/root-container/root-container';
+import { RootProvider } from '@widgets/root-container/root-provider';
 import { GuardedRoute } from './utils/guarded-route';
 import { InterceptorsWrapper } from './wrappers/interceptors-wrapper';
-import { RootContainer } from '@widgets/root-container/root-container';
-import { ShoppingCartPage } from '@pages/shopping-cart';
-import { BackLayout } from '@widgets/index';
-import { ProductsProvider } from '@pages/products/context';
-import { RootProvider } from '@widgets/root-container/root-provider';
 
 export const router = createBrowserRouter([
   // {
@@ -70,10 +72,20 @@ export const router = createBrowserRouter([
       {
         path: 'cart',
         element: (
-          // <BackLayout>
-            <ShoppingCartPage />
-          // </BackLayout>
+          <OrderProcess>
+            <Outlet />
+          </OrderProcess>
         ),
+        children: [
+          {
+            path: '',
+            element: <ShoppingCartPage />,
+          },
+          {
+            path: 'createOrder',
+            element: <OrderAdditionalInfo />,
+          },
+        ],
       },
       {
         path: 'order',
