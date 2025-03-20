@@ -20,6 +20,7 @@ import {
   PaymentSettingsPage,
 } from '@pages/settings/pages';
 import { ShoppingCartPage } from '@pages/shopping-cart';
+import { OrderProcess } from '@pages/shopping-cart/components';
 import { OrderAdditionalInfo } from '@pages/shopping-cart/pages/order-additional-info';
 import { MainMenu, ROUTES } from '@shared/index';
 import { BackLayout } from '@widgets/index';
@@ -71,9 +72,9 @@ export const router = createBrowserRouter([
       {
         path: 'cart',
         element: (
-          // <BackLayout>
-          <Outlet />
-          // </BackLayout>
+          <OrderProcess>
+            <Outlet />
+          </OrderProcess>
         ),
         children: [
           {
