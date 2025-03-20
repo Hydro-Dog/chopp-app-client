@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLoginGuard } from '@shared/hooks';
@@ -10,6 +11,7 @@ export const CreateOrderBlock = () => {
   const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
   const { loginGuard } = useLoginGuard();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const onNavigationClick = (path: string) => {
     loginGuard(() => navigate(path));
   };
@@ -19,7 +21,7 @@ export const CreateOrderBlock = () => {
       <Flex className="flex-row md:flex-col justify-between align-center" gap={24}>
         <Flex gap={12} className="md:justify-between items-center">
           <Title level={5} type="secondary" className="!m-0">
-            Итого:
+            {t('IN_ALL')}
           </Title>
           <Title level={5} className="!m-0">
             {shoppingCart.totalPrice}₽
@@ -32,7 +34,7 @@ export const CreateOrderBlock = () => {
           }}
           type="primary"
           size="large">
-          Оформить заказ
+          {t('MAKE_ORDER')}
         </Button>
       </Flex>
     </Card>

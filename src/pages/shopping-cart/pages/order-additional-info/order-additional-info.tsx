@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSuperDispatch } from '@shared/hooks';
+import { useLoginGuard, useSuperDispatch } from '@shared/hooks';
 import { Order } from '@shared/types';
 import { formatPhoneNumber } from '@shared/utils';
 import { createOrder } from '@store/slices';
@@ -26,6 +26,7 @@ export const OrderAdditionalInfo = () => {
   const dispatch = useDispatch();
   const [bannerMessage, setBannerMessage] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
+  const { loginGuard } = useLoginGuard();
 
   const {
     control,
@@ -70,7 +71,7 @@ export const OrderAdditionalInfo = () => {
         try {
           if (!order.paymentUrl) throw new Error('URL не передан');
           window.open(order.paymentUrl, '_blank');
-          navigate('/order');
+          loginGuard(() => navigate('/order'));
         } catch (err) {
           console.error('Ошибка открытия ссылки:', err);
         }
