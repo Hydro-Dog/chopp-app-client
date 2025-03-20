@@ -32,7 +32,7 @@ export const OrderProcess = ({ children }: PropsWithChildren<any>) => {
 
   return (
     <div>
-      <Steps current={currentStep} onChange={onChange} items={steps} />
+      <Steps size="small" current={currentStep} onChange={onChange} items={steps} />
       {children}
     </div>
   );
