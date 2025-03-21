@@ -52,7 +52,6 @@ export const InitialForm = ({ setViewMode, setPhoneNumber }: Props) => {
       thenHandler: (user) => {
         setViewMode(VIEW_MODE.TELEGRAM);
         setPhoneNumber(phoneNumber);
-        console.log('user: ', user);
       },
     });
   };

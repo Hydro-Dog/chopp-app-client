@@ -9,7 +9,7 @@ import { fetchOrders } from '@store/slices';
 import { RootState } from '@store/store';
 import { Button, Card, Dropdown, Flex, Space, Spin, Typography } from 'antd';
 import dayjs from 'dayjs';
-import { OrderScreen } from '../order-screen';
+import { CurrentOrderCard } from '../current-order-card';
 
 const { Title } = Typography;
 
@@ -70,7 +70,7 @@ export const AllOrders = ({ arrayOrders, updateOrders, setPage, page }: Props) =
             <Dropdown
               key={item.id}
               menu={{
-                items: [{ type: 'group', label: <OrderScreen order={item} /> }],
+                items: [{ type: 'group', label: <CurrentOrderCard order={item} /> }],
               }}
               getPopupContainer={(triggerNode) => triggerNode.parentElement || document.body}
               overlayStyle={{

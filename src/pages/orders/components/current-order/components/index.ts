@@ -1,1 +1,1 @@
-export * from './empty-card';
+export * from './empty-order-placeholder';

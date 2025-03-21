@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { RootState } from '@store/store';
-import { Alert, Button, Card, Flex, Typography } from 'antd';
 import { ChoppShadowCard } from '@shared/index';
+import { RootState } from '@store/store';
+import { Alert, Button, Flex, Typography } from 'antd';
 
 const { Title } = Typography;
 
@@ -10,9 +10,9 @@ type Props = {
   error: string | undefined;
 };
 
-export const MakePaymentBlock = ({ error }: Props) => {
-  const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
+export const OrderButtonBlock = ({ error }: Props) => {
   const { t } = useTranslation();
+  const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
 
   return (
     <ChoppShadowCard className="md:w-1/4 h-36">
@@ -20,9 +20,9 @@ export const MakePaymentBlock = ({ error }: Props) => {
         <Flex className="flex-row md:flex-col justify-between align-center" gap={24}>
           <Flex gap={12} className="md:justify-between items-center">
             <Title level={5} type="secondary" className="!m-0">
-              {t('IN_ALL')}
+              {t('FINAL_AMOUNT')}
             </Title>
-            <Title level={5} className="!m-0">
+            <Title level={5} className="!m-0 !font-extrabold">
               {shoppingCart.totalPrice}₽
             </Title>
           </Flex>

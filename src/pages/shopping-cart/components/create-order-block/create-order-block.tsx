@@ -9,10 +9,10 @@ import { Flex, Button, Typography } from 'antd';
 const { Title } = Typography;
 
 export const CreateOrderBlock = () => {
+  const { t } = useTranslation();
   const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
   const { loginGuard } = useLoginGuard();
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const onNavigationClick = (path: string) => {
     loginGuard(() => navigate(path));
   };
@@ -22,16 +22,16 @@ export const CreateOrderBlock = () => {
       <Flex className="flex-row md:flex-col justify-between align-center" gap={24}>
         <Flex gap={12} className="md:justify-between items-center">
           <Title level={5} type="secondary" className="!m-0">
-            {t('IN_ALL')}
+            {t('FINAL_AMOUNT')}
           </Title>
-          <Title level={5} className="!m-0">
+          <Title level={5} className="!m-0 !font-extrabold">
             {shoppingCart.totalPrice}₽
           </Title>
         </Flex>
 
         <Button
           onClick={() => {
-            onNavigationClick('createOrder');
+            onNavigationClick('/cart/createOrder');
           }}
           type="primary"
           size="large">

@@ -18,4 +18,5 @@ export * from './chopp-bottom-drawer';
 export * from './add-to-cart-button';
 export * from './chopp-shadow-button';
 export * from './chopp-shadow-card';
-export * from './chopp-back-button'
+export * from './chopp-back-button';
+export * from './chopp-subpage';

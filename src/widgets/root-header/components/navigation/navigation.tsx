@@ -17,7 +17,7 @@ export const Navigation = () => {
   const themeToken = useThemeToken();
   const navigate = useNavigate();
   const location = useLocation();
-  const isLocation = (path: string) => location.pathname === path;
+  const isLocation = (path: string) => location.pathname.includes(path);
   const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
 
   const onIconClick = (value: string) => {
@@ -50,7 +50,7 @@ export const Navigation = () => {
         variant="outlined"
         icon={<UserOutlined />}
         style={{
-          background: isLocation('/user') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+          background: isLocation('user') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
         }}
         onClick={() => {
           onNavigationClick('user');
@@ -63,7 +63,7 @@ export const Navigation = () => {
           variant="outlined"
           icon={<ShoppingCartOutlined />}
           style={{
-            background: isLocation('/cart') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+            background: isLocation('cart') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
           }}
           onClick={() => {
             onNavigationClick('cart');
@@ -77,7 +77,7 @@ export const Navigation = () => {
         variant="outlined"
         icon={hasCurrentOrder ? <TruckOutlined /> : <ProfileOutlined />}
         style={{
-          background: isLocation('/order') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+          background: isLocation('order') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
         }}
         onClick={() => {
           onNavigationClick('order');

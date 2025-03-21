@@ -1,3 +1,3 @@
 export * from './current-order';
 export * from './all-orders';
-export * from './order-screen';
+export * from './current-order-card';

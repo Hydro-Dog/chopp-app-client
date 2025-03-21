@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-export const useOrderAdditionalInfoFormSchema = () => {
+export const useCreateOrderFormSchema = () => {
   const { t } = useTranslation();
+
   return z.object({
     name: z
       .string()

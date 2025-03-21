@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { TitlePage } from '@shared/components';
+import { ChoppSubPage, TitlePage } from '@shared/components';
 import { useSuperDispatch } from '@shared/hooks';
 import { Order, PaginationResponse } from '@shared/types';
 import { fetchLastOrder, fetchOrders } from '@store/slices';
 import { AppDispatch, RootState } from '@store/store';
 import { Flex } from 'antd';
-import { AllOrders, CurrentOrder } from './components';
+import { AllOrders, CurrentOrder, CurrentOrderCard } from './components';
 
 export const OrdersPage = () => {
-  const { currentOrder } = useSelector((state: RootState) => state.orders);
+  // const { currentOrder } = useSelector((state: RootState) => state.orders);
   const dispatch = useDispatch<AppDispatch>();
   const superDispatch = useSuperDispatch();
   const { t } = useTranslation();
@@ -33,9 +33,9 @@ export const OrdersPage = () => {
   }, [dispatch]);
 
   return (
-    <TitlePage title={t('ORDERS')}>
+    <ChoppSubPage title={t('ORDERS')}>
       <Flex vertical gap={5}>
-        <CurrentOrder order={currentOrder} />
+        <CurrentOrder />
         <AllOrders
           updateOrders={updateArrayOfOrders}
           setPage={setPage}
@@ -43,6 +43,6 @@ export const OrdersPage = () => {
           arrayOrders={arrayOfOrders}
         />
       </Flex>
-    </TitlePage>
+    </ChoppSubPage>
   );
 };

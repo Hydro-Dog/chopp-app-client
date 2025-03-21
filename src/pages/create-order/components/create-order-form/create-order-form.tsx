@@ -3,8 +3,9 @@ import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import InputMask from 'react-input-mask';
 import { useThemeToken } from '@shared/hooks';
-import { Card, Flex, Form, Input } from 'antd';
 import { ChoppShadowCard } from '@shared/index';
+import { Flex, Form, Input } from 'antd';
+
 const { Item } = Form;
 
 type Props = {
@@ -29,11 +30,11 @@ type Props = {
       entrance: string;
       floor: string;
     },
-    any
+    unknown
   >;
 };
 
-export const OrderAdditionalInfoForm = ({ errors, control }: Props) => {
+export const CreateOrderForm = ({ errors, control }: Props) => {
   const themeToken = useThemeToken();
   const [numberInputIsFocus, setNumberInputFocus] = useState(false);
   const { t } = useTranslation();
@@ -70,7 +71,6 @@ export const OrderAdditionalInfoForm = ({ errors, control }: Props) => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <InputMask
                   mask="+7 (999) 999-99-99"
-                  placeholder="+7 (999) 999-99-99"
                   value={value}
                   onChange={onChange}
                   onBlur={() => {

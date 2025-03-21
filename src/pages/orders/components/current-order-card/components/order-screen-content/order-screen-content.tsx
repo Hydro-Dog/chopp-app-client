@@ -3,12 +3,12 @@ import { Order } from '@shared/types';
 import { Card, Flex, Spin, Typography } from 'antd';
 const { Text } = Typography;
 type Props = {
-  order: Order;
+  order?: Order;
 };
 export const OrderScreenContent = ({ order }: Props) => {
   const { t } = useTranslation();
 
-  if (order.items === undefined)
+  if (!order?.items)
     return (
       <div className="flex flex-col items-center mt-5">
         <Spin size="default" />
@@ -17,7 +17,7 @@ export const OrderScreenContent = ({ order }: Props) => {
 
   return (
     <Flex gap={5} className=" overflow-x-scroll">
-      {order.items.map((item) => (
+      {order?.items.map((item) => (
         <Card
           key={item.id}
           hoverable

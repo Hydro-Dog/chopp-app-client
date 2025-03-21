@@ -5,19 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLoginGuard, useSuperDispatch } from '@shared/hooks';
+import { ChoppSubPage } from '@shared/index';
 import { Order } from '@shared/types';
 import { formatPhoneNumber } from '@shared/utils';
 import { createOrder } from '@store/slices';
 import { CreateOrderDTO } from '@store/slices/orders-slice/types';
 import { resetShoppingCart } from '@store/slices/shopping-cart-slice';
 import { RootState } from '@store/store';
-import { Button, Flex, Form, Typography } from 'antd';
+import { Flex, Form, Typography } from 'antd';
 import { z } from 'zod';
-import { MakePaymentBlock, OrderAdditionalInfoForm } from './components';
-import { useOrderAdditionalInfoFormSchema } from './hooks';
-import { ArrowLeftOutlined } from '@ant-design/icons';
-import { ChoppBackButton, ChoppShadowButton } from '@shared/index';
-const { Title } = Typography;
+import { OrderButtonBlock, CreateOrderForm } from './components';
+import { useCreateOrderFormSchema } from './hooks';
 
 export const CreateOrder = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -28,16 +26,16 @@ export const CreateOrder = () => {
   const navigate = useNavigate();
   const { loginGuard } = useLoginGuard();
 
-  const orderAdditionalInfoFormSchema = useOrderAdditionalInfoFormSchema();
-  type OrderAdditionalInfoFormType = z.infer<typeof orderAdditionalInfoFormSchema>;
+  const createOrderFormSchema = useCreateOrderFormSchema();
+  type CreateOrderFormType = z.infer<typeof createOrderFormSchema>;
 
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<OrderAdditionalInfoFormType>({
-    resolver: zodResolver(orderAdditionalInfoFormSchema),
+  } = useForm<CreateOrderFormType>({
+    resolver: zodResolver(createOrderFormSchema),
     defaultValues: {
       name: '',
       street: '',
@@ -50,7 +48,7 @@ export const CreateOrder = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<OrderAdditionalInfoFormType> = (data) => {
+  const onSubmit: SubmitHandler<CreateOrderFormType> = (data) => {
     const address =
       'Улица: ' +
       data.street +
@@ -62,6 +60,7 @@ export const CreateOrder = () => {
       data.entrance +
       '; Этаж: ' +
       data.floor;
+
     superDispatch({
       action: createOrder({
         comment: data?.comment,
@@ -84,6 +83,7 @@ export const CreateOrder = () => {
       },
     });
   };
+
   useEffect(() => {
     if (currentUser?.phoneNumber) {
       reset({
@@ -93,17 +93,13 @@ export const CreateOrder = () => {
   }, [currentUser, reset]);
 
   return (
-    <Flex gap={18} vertical>
-      <Title level={3} className="!font-bold !m-0">
-        {t('CREATE_ORDER_TITLE')}
-      </Title>
-      <ChoppBackButton path="/cart" title="Корзина" />
+    <ChoppSubPage title={t('CREATE_ORDER_TITLE')} path="/cart">
       <Form onFinish={handleSubmit(onSubmit)}>
         <Flex gap={32} className="flex-col-reverse  md:flex-row">
-          <OrderAdditionalInfoForm errors={errors} control={control} />
-          <MakePaymentBlock error={bannerMessage} />
+          <CreateOrderForm errors={errors} control={control} />
+          <OrderButtonBlock error={bannerMessage} />
         </Flex>
       </Form>
-    </Flex>
+    </ChoppSubPage>
   );
 };

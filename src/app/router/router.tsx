@@ -27,7 +27,7 @@ import { RootContainer } from '@widgets/root-container/root-container';
 import { RootProvider } from '@widgets/root-container/root-provider';
 import { GuardedRoute } from './utils/guarded-route';
 import { InterceptorsWrapper } from './wrappers/interceptors-wrapper';
-import { CurrentOrder } from '@pages/orders/components/current-order';
+import { CurrentOrderCard } from '@pages/orders/components/current-order';
 
 export const router = createBrowserRouter([
   // {
@@ -71,24 +71,14 @@ export const router = createBrowserRouter([
       },
       {
         path: 'cart',
-        element: (
-          // <BackLayout>
-          <Outlet />
-          // </BackLayout>
-        ),
+        element: <Outlet />,
         children: [
-          {
-            path: '',
-            element: <ShoppingCartPage />,
-          },
-          {
-            path: 'createOrder',
-            element: <CreateOrder />,
-          },
+          { index: true, element: <ShoppingCartPage /> },
+          { path: 'createOrder', element: <CreateOrder /> },
         ],
       },
       {
-        path: 'order',
+        path: 'orders',
         element: <OrdersPage />,
       },
 

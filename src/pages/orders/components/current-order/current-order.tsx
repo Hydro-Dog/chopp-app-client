@@ -1,30 +1,22 @@
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { ChoppShadowCard } from '@shared/components';
 import { ORDER_STATUS } from '@shared/enum';
-import { Order } from '@shared/types';
-import { Card, Typography } from 'antd';
-import { EmptyCard } from './components';
-import { OrderScreen } from '../order-screen';
-const { Title } = Typography;
-type Props = {
-  order: Order | null | undefined;
-};
+import { RootState } from '@store/store';
+import { EmptyOrderPlaceholder } from './components';
+import { CurrentOrderCard } from '../current-order-card';
 
-export const CurrentOrder = ({ order }: Props) => {
-  const [activeOrder, setActiveOrder] = useState<Order>();
-  const { t } = useTranslation();
+export const CurrentOrder = () => {
+  const { currentOrder } = useSelector((state: RootState) => state.orders);
 
-  useEffect(() => {
-    if (order && order?.orderStatus !== ORDER_STATUS.DELIVERED) {
-      setActiveOrder(order);
-    }
-  }, [order]);
+  console.log('currentOrder: ', currentOrder)
 
-  return activeOrder && order ? (
-    <Card title={<Title level={4}>{t('CURRENT_ORDER')}</Title>}>
-      <OrderScreen order={order} />
-    </Card>
-  ) : (
-    <EmptyCard />
+  return (
+    <ChoppShadowCard>
+      {currentOrder && currentOrder?.orderStatus !== ORDER_STATUS.DELIVERED ? (
+        <CurrentOrderCard order={currentOrder} />
+      ) : (
+        <EmptyOrderPlaceholder />
+      )}
+    </ChoppShadowCard>
   );
 };

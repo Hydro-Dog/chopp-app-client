@@ -1,24 +1,25 @@
 import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { ChoppShadowButton } from '../chopp-shadow-button';
+import { Button } from 'antd';
 
 type Props = {
   path: string;
-  title: ReactNode;
+  title?: ReactNode;
 };
 
 export const ChoppBackButton = ({ path, title }: Props) => {
   const navigate = useNavigate();
 
   return (
-    <ChoppShadowButton
-      className="w-fit"
+    <Button
+      shape={title ? 'default' : 'circle'}
+      type="primary"
       icon={<ArrowLeftOutlined />}
       onClick={() => {
         navigate(path);
       }}>
       {title}
-    </ChoppShadowButton>
+    </Button>
   );
 };

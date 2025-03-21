@@ -5,6 +5,7 @@ export type UpdateOrderDTO = {
   orderStatus?: ORDER_STATUS;
   paymentStatus?: PAYMENT_STATUS;
 };
+
 export type CreateOrderDTO = Pick<
   Order,
   'returnUrl' | 'comment' | 'address' | 'name' | 'phoneNumber'
