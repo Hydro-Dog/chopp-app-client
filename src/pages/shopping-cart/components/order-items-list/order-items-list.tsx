@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
 import { ProductDrawer } from '@pages/products/components/products-grid/components';
-import { AddToCartButton } from '@shared/index';
+import { AddToCartButton, ChoppShadowCard } from '@shared/index';
 import { FETCH_STATUS, Product } from '@shared/types';
 import { RootState } from '@store/store';
 import { Typography, Card, Flex } from 'antd';
@@ -35,7 +35,7 @@ export const OrderItemsList = () => {
 
   return (
     <>
-      <Card className="md:w-3/4">
+      <ChoppShadowCard className="md:w-3/4">
         <Flex gap={32} vertical>
           {shoppingCart?.items?.map((item) => (
             <Flex
@@ -64,7 +64,7 @@ export const OrderItemsList = () => {
             </Flex>
           ))}
         </Flex>
-      </Card>
+      </ChoppShadowCard>
       <ProductDrawer
         isOpened={isProductDrawerOpened}
         onClose={onCloseProductDrawer}

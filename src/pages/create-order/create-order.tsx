@@ -11,15 +11,15 @@ import { createOrder } from '@store/slices';
 import { CreateOrderDTO } from '@store/slices/orders-slice/types';
 import { resetShoppingCart } from '@store/slices/shopping-cart-slice';
 import { RootState } from '@store/store';
-import { Flex, Form, Typography } from 'antd';
+import { Button, Flex, Form, Typography } from 'antd';
 import { z } from 'zod';
 import { MakePaymentBlock, OrderAdditionalInfoForm } from './components';
 import { useOrderAdditionalInfoFormSchema } from './hooks';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { ChoppBackButton, ChoppShadowButton } from '@shared/index';
 const { Title } = Typography;
 
-export const OrderAdditionalInfo = () => {
-  const orderAdditionalInfoFormSchema = useOrderAdditionalInfoFormSchema();
-  type OrderAdditionalInfoFormType = z.infer<typeof orderAdditionalInfoFormSchema>;
+export const CreateOrder = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const { t } = useTranslation();
   const { superDispatch } = useSuperDispatch<Order, unknown>();
@@ -27,6 +27,9 @@ export const OrderAdditionalInfo = () => {
   const [bannerMessage, setBannerMessage] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
   const { loginGuard } = useLoginGuard();
+
+  const orderAdditionalInfoFormSchema = useOrderAdditionalInfoFormSchema();
+  type OrderAdditionalInfoFormType = z.infer<typeof orderAdditionalInfoFormSchema>;
 
   const {
     control,
@@ -92,8 +95,9 @@ export const OrderAdditionalInfo = () => {
   return (
     <Flex gap={18} vertical>
       <Title level={3} className="!font-bold !m-0">
-        {t('REGISTRATION_ORDER')}
+        {t('CREATE_ORDER_TITLE')}
       </Title>
+      <ChoppBackButton path="/cart" title="Корзина" />
       <Form onFinish={handleSubmit(onSubmit)}>
         <Flex gap={32} className="flex-col-reverse  md:flex-row">
           <OrderAdditionalInfoForm errors={errors} control={control} />

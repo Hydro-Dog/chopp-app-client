@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import InputMask from 'react-input-mask';
 import { useThemeToken } from '@shared/hooks';
 import { Card, Flex, Form, Input } from 'antd';
+import { ChoppShadowCard } from '@shared/index';
 const { Item } = Form;
 
 type Props = {
@@ -38,7 +39,7 @@ export const OrderAdditionalInfoForm = ({ errors, control }: Props) => {
   const { t } = useTranslation();
 
   return (
-    <Card className="md:w-3/4">
+    <ChoppShadowCard className="md:w-3/4">
       <Flex vertical className="md:w-3/4" gap="small">
         <Flex gap="small" className="flex-col md:flex-row" justify="center" align="center">
           <Item
@@ -201,6 +202,6 @@ export const OrderAdditionalInfoForm = ({ errors, control }: Props) => {
           />
         </Item>
       </Flex>
-    </Card>
+    </ChoppShadowCard>
   );
 };
