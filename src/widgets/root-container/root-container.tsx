@@ -25,8 +25,8 @@ export const RootContainer = () => {
   return (
     <Layout className="h-screen">
       <RootHeader />
-      <div className="overflow-scroll">
-        <Content style={{ background: themeToken.colorBgBase }} className="px-3 pt-4">
+      <div className="overflow-scroll h-[90%]">
+        <Content style={{ background: themeToken.colorBgBase }} className="px-3 pt-4 h-full">
           <Outlet />
         </Content>
         <div className="sm:hidden absolute bottom-0 w-full">tabs</div>

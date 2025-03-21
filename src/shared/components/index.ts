@@ -16,3 +16,6 @@ export * from './chopp-custom-modal';
 export * from './chopp-load-more';
 export * from './chopp-bottom-drawer';
 export * from './add-to-cart-button';
+export * from './chopp-shadow-button';
+export * from './chopp-shadow-card';
+export * from './chopp-back-button'

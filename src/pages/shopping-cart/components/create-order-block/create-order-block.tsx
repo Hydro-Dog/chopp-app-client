@@ -2,8 +2,9 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLoginGuard } from '@shared/hooks';
+import { ChoppShadowCard } from '@shared/index';
 import { RootState } from '@store/store';
-import { Card, Flex, Button, Typography } from 'antd';
+import { Flex, Button, Typography } from 'antd';
 
 const { Title } = Typography;
 
@@ -17,7 +18,7 @@ export const CreateOrderBlock = () => {
   };
 
   return (
-    <Card className="md:w-1/4 h-36">
+    <ChoppShadowCard className="md:w-1/4 h-36">
       <Flex className="flex-row md:flex-col justify-between align-center" gap={24}>
         <Flex gap={12} className="md:justify-between items-center">
           <Title level={5} type="secondary" className="!m-0">
@@ -37,6 +38,6 @@ export const CreateOrderBlock = () => {
           {t('MAKE_ORDER')}
         </Button>
       </Flex>
-    </Card>
+    </ChoppShadowCard>
   );
 };

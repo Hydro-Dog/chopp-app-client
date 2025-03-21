@@ -20,7 +20,7 @@ import {
   PaymentSettingsPage,
 } from '@pages/settings/pages';
 import { ShoppingCartPage } from '@pages/shopping-cart';
-import { OrderAdditionalInfo } from '@pages/shopping-cart/pages/order-additional-info';
+import { CreateOrder } from '@pages/create-order';
 import { MainMenu, ROUTES } from '@shared/index';
 import { BackLayout } from '@widgets/index';
 import { RootContainer } from '@widgets/root-container/root-container';
@@ -83,7 +83,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'createOrder',
-            element: <OrderAdditionalInfo />,
+            element: <CreateOrder />,
           },
         ],
       },
