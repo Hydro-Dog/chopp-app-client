@@ -7,7 +7,7 @@ import {
   TruckOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { useLoginGuard, useThemeToken } from '@shared/index';
+import { ChoppShadowButton, useLoginGuard, useThemeToken } from '@shared/index';
 import { Button } from 'antd';
 import { RootState } from '@store/store';
 import { useRootContext } from '@widgets/root-container/root-provider';
@@ -45,7 +45,7 @@ export const Navigation = () => {
             navigate('/');
         }}
       /> */}
-      <Button
+      <ChoppShadowButton
         shape="circle"
         variant="outlined"
         icon={<UserOutlined />}
@@ -58,7 +58,7 @@ export const Navigation = () => {
       />
 
       {!hasCurrentOrder && (
-        <Button
+        <ChoppShadowButton
           shape={isEmpty ? 'circle' : 'round'}
           variant="outlined"
           icon={<ShoppingCartOutlined />}
@@ -69,10 +69,10 @@ export const Navigation = () => {
             onNavigationClick('cart');
           }}>
           {!isEmpty && `${shoppingCart.totalPrice} ₽`}
-        </Button>
+        </ChoppShadowButton>
       )}
 
-      <Button
+      <ChoppShadowButton
         shape={hasCurrentOrder ? 'round' : 'circle'}
         variant="outlined"
         icon={hasCurrentOrder ? <TruckOutlined /> : <ProfileOutlined />}
@@ -83,7 +83,7 @@ export const Navigation = () => {
           onNavigationClick('order');
         }}>
         {!!hasCurrentOrder && 'Мой заказ'}
-      </Button>
+      </ChoppShadowButton>
     </div>
   );
 };

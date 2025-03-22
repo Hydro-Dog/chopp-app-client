@@ -5,7 +5,7 @@ const { Title } = Typography;
 
 export const ShoppingCartPage = () => {
   return (
-    <Flex gap={18} vertical>
+    <Flex gap={18} vertical className="pb-5">
       <Title level={3} className="!font-bold !m-0">
         Корзина
       </Title>
