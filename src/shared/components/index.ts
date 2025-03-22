@@ -20,3 +20,5 @@ export * from './chopp-shadow-button';
 export * from './chopp-shadow-card';
 export * from './chopp-back-button';
 export * from './chopp-subpage';
+export * from './product-drawer';
+export * from './chopp-shadow-collapse';

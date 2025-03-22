@@ -7,7 +7,7 @@ import { Order, PaginationResponse } from '@shared/types';
 import { fetchLastOrder, fetchOrders } from '@store/slices';
 import { AppDispatch, RootState } from '@store/store';
 import { Flex } from 'antd';
-import { AllOrders, CurrentOrder, CurrentOrderCard } from './components';
+import { AllOrders, CurrentOrder, OrderCard } from './components';
 
 export const OrdersPage = () => {
   // const { currentOrder } = useSelector((state: RootState) => state.orders);
@@ -34,7 +34,7 @@ export const OrdersPage = () => {
 
   return (
     <ChoppSubPage title={t('ORDERS')}>
-      <Flex vertical gap={5}>
+      <Flex vertical gap={24}>
         <CurrentOrder />
         <AllOrders
           updateOrders={updateArrayOfOrders}

@@ -5,12 +5,14 @@ import { Navigation } from './components/navigation';
 
 const { Header } = Layout;
 
-export const RootHeader = () => {
+type Props = { className?: string };
+
+export const RootHeader = ({ className }: Props) => {
   const themeToken = useThemeToken();
 
   return (
     <Header
-      className="h-[10%] px-3 flex justify-between items-center"
+      className={`flex items-center px-4 ${className}`}
       style={{
         background: themeToken.colorBgBase,
         borderBottom: `1px solid ${themeToken.colorBorder}`,

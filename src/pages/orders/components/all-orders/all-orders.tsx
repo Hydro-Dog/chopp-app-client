@@ -2,14 +2,13 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
-import { DownOutlined } from '@ant-design/icons';
 import { useSuperDispatch } from '@shared/hooks';
 import { Order } from '@shared/types';
 import { fetchOrders } from '@store/slices';
 import { RootState } from '@store/store';
-import { Button, Card, Dropdown, Flex, Space, Spin, Typography } from 'antd';
-import dayjs from 'dayjs';
-import { CurrentOrderCard } from '../current-order-card';
+import { Card, Collapse, Dropdown, Flex, Spin, Typography } from 'antd';
+import { OrderCard } from '../order-card';
+import { ChoppShadowCard, ChoppShadowCollapse } from '@shared/index';
 
 const { Title } = Typography;
 
@@ -53,42 +52,31 @@ export const AllOrders = ({ arrayOrders, updateOrders, setPage, page }: Props) =
   }
 
   return (
-    <Card title={<Title level={4}>{t('HISTORY_ORDERS')}</Title>}>
-      <InfiniteScroll
-        initialScrollY={0}
-        next={loadMore}
-        hasMore={!isLoading && (arrayOrders?.length || 0) < (orders?.totalItems || 0)}
-        loader={null}
-        dataLength={arrayOrders?.length || 0}
-        scrollableTarget="scrollable-container">
-        <Flex
-          id="scrollable-container"
-          vertical
-          gap={5}
-          style={{ overflowY: 'auto', maxHeight: '300px' }}>
-          {arrayOrders?.map((item) => (
-            <Dropdown
-              key={item.id}
-              menu={{
-                items: [{ type: 'group', label: <CurrentOrderCard order={item} /> }],
-              }}
-              getPopupContainer={(triggerNode) => triggerNode.parentElement || document.body}
-              overlayStyle={{
-                width: '80%',
-                overflowX: 'auto',
-                whiteSpace: 'nowrap',
-              }}>
-              <Button>
-                <Space>
-                  {t('ORDERS_ID')}
-                  {item.id} {dayjs(item.createdAt).format('YYYY-MM-DD')}
-                  <DownOutlined />
-                </Space>
-              </Button>
-            </Dropdown>
-          ))}
-        </Flex>
-      </InfiniteScroll>
-    </Card>
+    // <ChoppShadowCard>
+    <ChoppShadowCollapse
+      items={[
+        {
+          key: '1',
+          label: 'История заказов',
+          children: (
+            <InfiniteScroll
+              initialScrollY={0}
+              next={loadMore}
+              hasMore={!isLoading && (arrayOrders?.length || 0) < (orders?.totalItems || 0)}
+              loader={null}
+              dataLength={arrayOrders?.length || 0}
+              scrollableTarget="scrollable-container">
+              <Flex
+                id="scrollable-container"
+                vertical
+                gap={5}
+                style={{ overflowY: 'auto', maxHeight: '300px' }}>
+                {arrayOrders?.map((item) => <OrderCard key={item.id} order={item} />)}
+              </Flex>
+            </InfiniteScroll>
+          ),
+        },
+      ]}></ChoppShadowCollapse>
+    // </ChoppShadowCard>
   );
 };

@@ -3,7 +3,7 @@ import { ORDER_STATUS, ORDER_STATUS_MAP } from '@shared/index';
 import { Tag, Tooltip } from 'antd';
 
 type Props = {
-  status: ORDER_STATUS;
+  status?: ORDER_STATUS;
 };
 
 export const ChoppOrderStatus = ({ status }: Props) => {

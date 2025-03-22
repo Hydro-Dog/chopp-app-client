@@ -10,6 +10,7 @@ type Props = {
 };
 
 export const ProductDrawer = ({ isOpened, onClose, product }: Props) => {
+
   return (
     <ChoppBottomDrawer open={isOpened} onClose={onClose} title={product?.title}>
       <Flex

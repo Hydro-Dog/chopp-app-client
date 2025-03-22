@@ -13,7 +13,7 @@ export enum ORDER_STATUS {
   // FINISHED = 'finished',
 }
 
-type OrderItem = {
+export type OrderItem = {
   id: number;
   orderId: number;
   productId: number;

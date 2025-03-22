@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ProductDrawer } from '@pages/products/components/products-grid/components';
-import { AddToCartButton, ChoppShadowCard } from '@shared/index';
+import { AddToCartButton, ChoppShadowCard, ProductDrawer } from '@shared/index';
 import { Product } from '@shared/types';
 import { RootState } from '@store/store';
 import { Typography, Flex } from 'antd';

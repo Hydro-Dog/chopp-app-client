@@ -259,3 +259,16 @@ table {
   border-start-start-radius: 16px;
   border-start-end-radius: 16px;
 }
+
+.chopp-card > .ant-card-body {
+  padding: 8px;
+}
+
+.chopp-collapse .ant-collapse-content {
+  border: none;
+}
+
+.chopp-collapse .ant-collapse-header-text {
+  font-weight: 600;
+}
+
