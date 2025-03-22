@@ -1,19 +1,15 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CircularProgress } from '@mui/material';
-import { ProductDrawer } from '@pages/products/components/products-grid/components';
-import { AddToCartButton } from '@shared/index';
-import { FETCH_STATUS, Product } from '@shared/types';
+import { AddToCartButton, ChoppShadowCard, ProductDrawer } from '@shared/index';
+import { Product } from '@shared/types';
 import { RootState } from '@store/store';
-import { Typography, Card, Flex } from 'antd';
+import { Typography, Flex } from 'antd';
 import { useBoolean } from 'usehooks-ts';
 
 const { Title } = Typography;
 
 export const OrderItemsList = () => {
-  const { shoppingCart, fetchShoppingCartStatus } = useSelector(
-    (state: RootState) => state.shoppingCart,
-  );
+  const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
 
   const {
     value: isProductDrawerOpened,
@@ -35,11 +31,10 @@ export const OrderItemsList = () => {
 
   return (
     <>
-      <Card className="md:w-3/4">
+      <ChoppShadowCard className="md:w-3/4">
         <Flex gap={32} vertical>
           {shoppingCart?.items?.map((item) => (
             <Flex
-              className=""
               key={item.product.id}
               justify="space-between"
               onClick={() => {
@@ -64,7 +59,8 @@ export const OrderItemsList = () => {
             </Flex>
           ))}
         </Flex>
-      </Card>
+      </ChoppShadowCard>
+
       <ProductDrawer
         isOpened={isProductDrawerOpened}
         onClose={onCloseProductDrawer}

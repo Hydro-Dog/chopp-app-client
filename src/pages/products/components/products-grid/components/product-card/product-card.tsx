@@ -15,9 +15,9 @@ type Props = {
 };
 
 export const ProductCard = ({ product, onClick }: Props) => {
-
   return (
     <Card
+      className="border-none shadow-md"
       onClick={onClick}
       size="small"
       styles={{

@@ -3,7 +3,7 @@ import { ORDER_STATUS, ORDER_STATUS_MAP } from '@shared/index';
 import { Tag, Tooltip } from 'antd';
 
 type Props = {
-  status: ORDER_STATUS;
+  status?: ORDER_STATUS;
 };
 
 export const ChoppOrderStatus = ({ status }: Props) => {
@@ -11,7 +11,9 @@ export const ChoppOrderStatus = ({ status }: Props) => {
 
   return (
     <Tooltip title={t(ORDER_STATUS_MAP[status]?.tooltip)}>
-      <Tag className="cursor-pointer" color={ORDER_STATUS_MAP[status]?.color}>
+      <Tag
+        className="border-none !m-0 w-fit cursor-pointer"
+        color={ORDER_STATUS_MAP[status]?.color}>
         {t(ORDER_STATUS_MAP[status]?.title)}
       </Tag>
     </Tooltip>
