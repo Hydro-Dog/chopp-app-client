@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ import { createOrder } from '@store/slices';
 import { CreateOrderDTO } from '@store/slices/orders-slice/types';
 import { resetShoppingCart } from '@store/slices/shopping-cart-slice';
 import { RootState } from '@store/store';
-import { Flex, Form, Typography } from 'antd';
+import { Flex, Form, message } from 'antd';
 import { z } from 'zod';
 import { OrderButtonBlock, CreateOrderForm } from './components';
 import { useCreateOrderFormSchema } from './hooks';
@@ -22,9 +22,9 @@ export const CreateOrder = () => {
   const { t } = useTranslation();
   const { superDispatch } = useSuperDispatch<Order, unknown>();
   const dispatch = useDispatch();
-  const [bannerMessage, setBannerMessage] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
   const { loginGuard } = useLoginGuard();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const createOrderFormSchema = useCreateOrderFormSchema();
   type CreateOrderFormType = z.infer<typeof createOrderFormSchema>;
@@ -79,7 +79,10 @@ export const CreateOrder = () => {
         }
       },
       catchHandler: (err) => {
-        setBannerMessage(err.message);
+        messageApi.open({
+          type: 'error',
+          content: err.message,
+        });
       },
     });
   };
@@ -93,13 +96,16 @@ export const CreateOrder = () => {
   }, [currentUser, reset]);
 
   return (
-    <ChoppSubPage title={t('CREATE_ORDER_TITLE')} path="/cart">
-      <Form onFinish={handleSubmit(onSubmit)}>
-        <Flex gap={32} className="flex-col-reverse  md:flex-row">
-          <CreateOrderForm errors={errors} control={control} />
-          <OrderButtonBlock error={bannerMessage} />
-        </Flex>
-      </Form>
-    </ChoppSubPage>
+    <>
+      {contextHolder}
+      <ChoppSubPage title={t('CREATE_ORDER_TITLE')} path="/cart">
+        <Form onFinish={handleSubmit(onSubmit)}>
+          <Flex gap={32} className="flex-col-reverse  md:flex-row">
+            <CreateOrderForm errors={errors} control={control} />
+            <OrderButtonBlock />
+          </Flex>
+        </Form>
+      </ChoppSubPage>
+    </>
   );
 };

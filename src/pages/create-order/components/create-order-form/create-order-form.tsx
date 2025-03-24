@@ -107,11 +107,12 @@ export const CreateOrderForm = ({ errors, control }: Props) => {
             )}
           />
         </Item>
-        <Flex justify="space-between" gap="small" align="center">
+
+        <Flex className="sm:flex-row flex-col" justify="space-between" gap="small" align="center">
           <Item
             validateStatus={errors.house ? 'error' : ''}
             help={errors.house?.message}
-            style={{ flex: 1 }}>
+            className="w-full">
             <Controller
               control={control}
               name="house"
@@ -130,7 +131,7 @@ export const CreateOrderForm = ({ errors, control }: Props) => {
           <Item
             validateStatus={errors.apartment ? 'error' : ''}
             help={errors.apartment?.message}
-            style={{ flex: 1 }}>
+            className="w-full">
             <Controller
               control={control}
               name="apartment"
@@ -149,7 +150,7 @@ export const CreateOrderForm = ({ errors, control }: Props) => {
           <Item
             validateStatus={errors.entrance ? 'error' : ''}
             help={errors.entrance?.message}
-            style={{ flex: 1 }}>
+            className="w-full">
             <Controller
               control={control}
               name="entrance"
@@ -168,7 +169,7 @@ export const CreateOrderForm = ({ errors, control }: Props) => {
           <Item
             validateStatus={errors.floor ? 'error' : ''}
             help={errors.floor?.message}
-            style={{ flex: 1 }}>
+            className="w-full">
             <Controller
               control={control}
               name="floor"

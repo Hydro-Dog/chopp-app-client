@@ -19,7 +19,7 @@ export const CreateOrderBlock = () => {
 
   return (
     <ChoppShadowCard className="md:w-1/4 h-36">
-      <Flex className="flex-row md:flex-col justify-between align-center" gap={24}>
+      <Flex className="flex-col justify-between align-center" gap={24}>
         <Flex gap={12} className="md:justify-between items-center">
           <Title level={5} type="secondary" className="!m-0">
             {t('FINAL_AMOUNT')}

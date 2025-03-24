@@ -27,7 +27,7 @@ export const useCreateOrderFormSchema = () => {
     floor: z
       .string()
       .min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`)
-      .max(100, `${t('FORM_ERRORS.MAX_LENGTH', { count: 100 })}`),
+      .max(15, `${t('FORM_ERRORS.MAX_LENGTH', { count: 15 })}`),
     comment: z.string().max(2048, `${t('FORM_ERRORS.MAX_LENGTH', { count: 2048 })}`),
     phoneNumber: z
       .string()
