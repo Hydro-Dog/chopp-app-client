@@ -56,7 +56,7 @@ export const TelegramInputCode = ({ closeModal, phoneNumber }: Props) => {
     <Flex vertical gap={20}>
       <Flex vertical gap={4}>
         <Text>
-          1. Перейдите в нашего <Link>Телеграм-бота</Link>
+          1. Перейдите в нашего <Link target='_blank' href={`https://t.me/${import.meta.env.VITE_TELEGRAM_BOT_LINK}`}>Телеграм-бота</Link>
         </Text>
         <Text>2. Нажминте /start</Text>
         <Text>3. Предоставьте доступ номеру телефона</Text>
