@@ -1,11 +1,17 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { ClientAppConfig, useSuperDispatch, useTheme, useThemeToken } from '@shared/index';
+import {
+  ClientAppConfig,
+  Order,
+  useSuperDispatch,
+  useThemeToken,
+  useWsNotification,
+} from '@shared/index';
 import { ShoppingCart } from '@shared/types/shopping-cart';
 import { fetchClientAppConfig } from '@store/slices';
 import { fetchShoppingCart } from '@store/slices/shopping-cart-slice';
 import { RootHeader } from '@widgets/root-header/root-header';
-import { Button, Flex, Layout } from 'antd';
+import { Button, Flex, Layout, message } from 'antd';
 
 const { Content, Footer } = Layout;
 
@@ -17,24 +23,42 @@ export const RootContainer = () => {
     void
   >();
 
+  const [messageApi, contextHolder] = message.useMessage();
+  const { lastMessage: orderStatusChangeNotification } = useWsNotification<Order>('orderStatus');
+
+  // TODO: вынести нотификации в отдельный компонент
+  // TODO: сделать обработку разных видов нотификаций
+
+  useEffect(() => {
+    if (orderStatusChangeNotification) {
+      messageApi.open({
+        type: 'success',
+        content: `Статус заказа обновлен - ${orderStatusChangeNotification.payload?.orderStatus}`,
+      });
+    }
+  }, [messageApi, orderStatusChangeNotification]);
+
   useEffect(() => {
     fetchShoppingCartDispatch({ action: fetchShoppingCart() });
     fetchClientAppConfigCartDispatch({ action: fetchClientAppConfig() });
   }, []);
 
   return (
-    <Layout className="h-screen">
-      <RootHeader />
-      <div className="overflow-scroll">
-        <Content style={{ background: themeToken.colorBgBase }} className="px-3 pt-4">
+    <>
+      <Flex vertical className="min-h-screen">
+        <div className="sticky top-0 z-50">
+          <RootHeader className="h-14" />
+        </div>
+
+        <Content style={{ background: themeToken.colorBgBase }} className="px-4 pt-6 flex-auto">
           <Outlet />
         </Content>
-        <div className="sm:hidden absolute bottom-0 w-full">tabs</div>
+
         <Footer
+          className="px-4"
           style={{
             background: themeToken.colorBgBase,
             borderTop: `1px solid ${themeToken.colorBorder}`,
-            padding: '0 20px',
           }}>
           <Flex vertical gap={5} align="end">
             <Button type="link">[Доставка и оплата]</Button>
@@ -43,7 +67,10 @@ export const RootContainer = () => {
             <Button type="link">[Политика конфиденциальности]</Button>
           </Flex>
         </Footer>
-      </div>
-    </Layout>
+      </Flex>
+
+      {/* TODO: вынести нотификации в отдельный компонент */}
+      {contextHolder}
+    </>
   );
 };

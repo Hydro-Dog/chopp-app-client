@@ -7,7 +7,7 @@ import {
   TruckOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { useLoginGuard, useThemeToken } from '@shared/index';
+import { ChoppShadowButton, useLoginGuard, useThemeToken } from '@shared/index';
 import { Button } from 'antd';
 import { RootState } from '@store/store';
 import { useRootContext } from '@widgets/root-container/root-provider';
@@ -17,7 +17,7 @@ export const Navigation = () => {
   const themeToken = useThemeToken();
   const navigate = useNavigate();
   const location = useLocation();
-  const isLocation = (path: string) => location.pathname === path;
+  const isLocation = (path: string) => location.pathname.includes(path);
   const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
 
   const onIconClick = (value: string) => {
@@ -45,12 +45,12 @@ export const Navigation = () => {
             navigate('/');
         }}
       /> */}
-      <Button
+      <ChoppShadowButton
         shape="circle"
         variant="outlined"
         icon={<UserOutlined />}
         style={{
-          background: isLocation('/user') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+          background: isLocation('user') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
         }}
         onClick={() => {
           onNavigationClick('user');
@@ -58,32 +58,32 @@ export const Navigation = () => {
       />
 
       {!hasCurrentOrder && (
-        <Button
+        <ChoppShadowButton
           shape={isEmpty ? 'circle' : 'round'}
           variant="outlined"
           icon={<ShoppingCartOutlined />}
           style={{
-            background: isLocation('/cart') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+            background: isLocation('cart') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
           }}
           onClick={() => {
             onNavigationClick('cart');
           }}>
           {!isEmpty && `${shoppingCart.totalPrice} ₽`}
-        </Button>
+        </ChoppShadowButton>
       )}
 
-      <Button
+      <ChoppShadowButton
         shape={hasCurrentOrder ? 'round' : 'circle'}
         variant="outlined"
         icon={hasCurrentOrder ? <TruckOutlined /> : <ProfileOutlined />}
         style={{
-          background: isLocation('/order') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+          background: isLocation('order') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
         }}
         onClick={() => {
           onNavigationClick('order');
         }}>
         {!!hasCurrentOrder && 'Мой заказ'}
-      </Button>
+      </ChoppShadowButton>
     </div>
   );
 };

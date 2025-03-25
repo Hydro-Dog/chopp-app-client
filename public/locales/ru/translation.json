@@ -93,7 +93,7 @@
   "CURRENT_STATUS": "Текущий сатус",
   "NEW_STATUS": "Новый сатус",
   "PICK_STATUS": "Выбрать статус",
-  "ORDERS_PAGE":{
+  "ORDERS_PAGE": {
     "ENTER_ID": "Введите ID заказа",
     "END_DATE": "До",
     "START_DATE": "От",
@@ -153,7 +153,7 @@
   },
   "PAYMENT_SETTINGS": "Платежная информация",
   "PAYMENT_SETTINGS_DATA": "Данные для настройки системы платежей",
-  "SHOP_ID": "Shop Id", 
+  "SHOP_ID": "Shop Id",
   "SHOP_ID_TOOLTIP": "Id вашего магазина в 'ЮКассе",
   "ENTER_SHOP_ID": "Введите Shop Id",
   "DELIVERY": "Доставка",
@@ -205,5 +205,38 @@
   "TOTAL_PAGINATION_ITEMS": "Товаров",
   "TOTAL_PAGINATION_ITEMS_ORDER": "Заказов",
   "TOTAL_PAGES": "Страниц",
-  "REVERT_MOVE_TO_TRASH": "Восстановить"
+  "REVERT_MOVE_TO_TRASH": "Восстановить",
+  "FORM_ERRORS": {
+    "REQUIRED_FIELD": "Обязательное поле",
+    "EMPTY_TEXT": "Введите текст",
+    "MAX_LENGTH": "Превышен лимит символов: {{count}}",
+    "MIN_LENGTH": "Минимальная длина: {{count}}",
+    "INVALID_PHONE_NUMBER": "Некорректный номер телефона",
+    "INVALID_EMAIL": "Некорректный email",
+    "MUST_ACCEPT": "Необходимо принять условия"
+  },
+  "FORM_INFO": {
+    "NAME": "Имя",
+    "STREET": "Улица",
+    "HOUSE": "Дом",
+    "APARTMENT": "Квартира",
+    "ENTRANCE": "Подъезд",
+    "FLOOR": "Этаж",
+    "COMMENT": "Коментарий"
+  },
+  "ABOUT_YOU": "Информация о вас",
+  "PLACE_DELIVERY": "Место доставки",
+  "MAKE_PAYMENT": "Оплатить",
+  "FINAL_AMOUNT": "Итого:",
+  "COMMENT_TO_DELIVERIES": "Комментарий для доставки",
+  "CREATE_ORDER_TITLE": "Оформление заказа",
+  "MAKE_ORDER": "Оформить заказ",
+  "NO_CURRENT_ORDER": "Нет текущих заказов",
+  "RUB_PIECE": " руб./шт ",
+  "ORDERS_ID": "Номер заказа ",
+  "ORDER": "Заказ",
+  "TOTAL_COST": "Общая стоимость: ",
+  "CURRENCY": "₽",
+  "HISTORY_ORDERS": "История заказов",
+  "CURRENT_ORDER": "Текущий заказ"
 }

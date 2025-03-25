@@ -5,6 +5,7 @@ import InputMask from 'react-input-mask';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAutoFocus, useSuperDispatch } from '@shared/hooks';
 import { User } from '@shared/types';
+import { sanitizePhoneNumber } from '@shared/utils';
 import { getVerificationCode } from '@store/slices';
 import { Button, Flex, Form, Modal, Typography } from 'antd';
 import { z } from 'zod';

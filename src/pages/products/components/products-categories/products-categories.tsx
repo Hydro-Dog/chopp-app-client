@@ -28,7 +28,7 @@ export const ProductsCategories = () => {
       },
     });
   }, []);
-
+  
   return (
     <Flex gap={4} wrap={false} className="overflow-scroll">
       {categories?.map((item) => (
