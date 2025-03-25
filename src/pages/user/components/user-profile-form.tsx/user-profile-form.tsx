@@ -1,16 +1,25 @@
-import { Controller, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import InputMask from 'react-input-mask';
 import { useSelector } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useUserProfileFormSchema } from '@pages/user/hooks';
+import { useSuperDispatch, useThemeToken } from '@shared/hooks';
+import { User } from '@shared/types';
+import { updateCurrentUser } from '@store/slices';
 import { RootState } from '@store/store';
-import { Form, Input } from 'antd';
-import Item from 'antd/es/descriptions/Item';
+import { Button, Form, Input } from 'antd';
 import { z } from 'zod';
+const { Item } = Form;
 
 export const UserProfileForm = () => {
   const { t } = useTranslation();
   const { currentUser } = useSelector((state: RootState) => state.user);
+  const themeToken = useThemeToken();
+  const [numberInputIsFocus, setNumberInputFocus] = useState(false);
+
+  const { superDispatch } = useSuperDispatch<User, unknown>();
 
   const userProfileFormSchema = useUserProfileFormSchema();
   type userProfileFormSchemaType = z.infer<typeof userProfileFormSchema>;
@@ -19,7 +28,6 @@ export const UserProfileForm = () => {
     handleSubmit,
     control,
     formState: { errors },
-    reset,
   } = useForm<userProfileFormSchemaType>({
     resolver: zodResolver(userProfileFormSchema),
     defaultValues: {
@@ -28,21 +36,39 @@ export const UserProfileForm = () => {
       email: currentUser?.email,
     },
   });
+  const onSubmit: SubmitHandler<userProfileFormSchemaType> = (data) => {
+    superDispatch({
+      action: updateCurrentUser({ ...data, id: currentUser?.id }),
+      thenHandler: () => {
+        console.log('ok');
+      },
+    });
+  };
   return (
     <Form>
       <Item validateStatus={errors.phoneNumber ? 'error' : ''} help={errors.phoneNumber?.message}>
         <Controller
           name="phoneNumber"
           control={control}
-          render={({ field }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <InputMask
-              {...field}
-              ref={inputRef}
               mask="+7 (999) 999-99-99"
+              value={value}
+              onChange={onChange}
+              onBlur={() => {
+                setNumberInputFocus(false);
+                onBlur();
+              }}
+              onFocus={() => setNumberInputFocus(true)}
               maskChar="_"
-              className="w-full p-2 border rounded-md mt-5"
-              placeholder="+7 (___) ___-__-__"
-            />
+              //Я понимаю что практика не очень хорошая, но чтоб стили были одинаковые - пришлось
+              className="w-full outline-none text-[18px] px-[11px] py-[6px] rounded-lg"
+              style={{
+                background: themeToken.colorBgBase,
+                // eslint-disable-next-line max-len
+                border: `1px solid ${errors.phoneNumber ? themeToken.colorError : numberInputIsFocus ? themeToken.colorPrimary : themeToken.colorBorder}`,
+                transition: 'border-color 0.7s ease',
+              }}></InputMask>
           )}
         />
       </Item>
@@ -50,8 +76,13 @@ export const UserProfileForm = () => {
         <Controller
           name="name"
           control={control}
-          render={({ value, onChange, onBlur }) => (
-            <Input placeholder={t('NAME')} value={value} onChange={onChange} onBlur={onBlur} />
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              placeholder={t('NAME')}
+              value={value ?? ''}
+              onChange={onChange}
+              onBlur={onBlur}
+            />
           )}
         />
       </Item>
@@ -59,11 +90,17 @@ export const UserProfileForm = () => {
         <Controller
           name="email"
           control={control}
-          render={({ value, onChange, onBlur }) => (
-            <Input placeholder={t('BY_EMAIL')} value={value} onChange={onChange} onBlur={onBlur} />
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              placeholder={t('BY_EMAIL')}
+              value={value ?? ''}
+              onChange={onChange}
+              onBlur={onBlur}
+            />
           )}
         />
       </Item>
+      <Button onClick={handleSubmit(onSubmit)}>{t('ACCEPT')}</Button>
     </Form>
   );
 };
