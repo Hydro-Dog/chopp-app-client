@@ -1,6 +1,7 @@
 {
   "translateJ": "translateJ",
   "PROFILE": "Профиль",
+  "PERSONAL_INFO": "Персональная инфоормация",
   "MONITORING": "Мониторинг",
   "EXIT": "Выход",
   "COPYRIGHT": "Разработали hydrodog и lechiffre",
@@ -93,7 +94,7 @@
   "CURRENT_STATUS": "Текущий сатус",
   "NEW_STATUS": "Новый сатус",
   "PICK_STATUS": "Выбрать статус",
-  "ORDERS_PAGE":{
+  "ORDERS_PAGE": {
     "ENTER_ID": "Введите ID заказа",
     "END_DATE": "До",
     "START_DATE": "От",
@@ -153,7 +154,7 @@
   },
   "PAYMENT_SETTINGS": "Платежная информация",
   "PAYMENT_SETTINGS_DATA": "Данные для настройки системы платежей",
-  "SHOP_ID": "Shop Id", 
+  "SHOP_ID": "Shop Id",
   "SHOP_ID_TOOLTIP": "Id вашего магазина в 'ЮКассе",
   "ENTER_SHOP_ID": "Введите Shop Id",
   "DELIVERY": "Доставка",
@@ -205,5 +206,15 @@
   "TOTAL_PAGINATION_ITEMS": "Товаров",
   "TOTAL_PAGINATION_ITEMS_ORDER": "Заказов",
   "TOTAL_PAGES": "Страниц",
-  "REVERT_MOVE_TO_TRASH": "Восстановить"
+  "REVERT_MOVE_TO_TRASH": "Восстановить",
+  "FORM_ERRORS": {
+    "REQUIRED_FIELD": "Обязательное поле",
+    "EMPTY_TEXT": "Введите текст",
+    "MAX_LENGTH": "Превышен лимит символов: {{count}}",
+    "MIN_LENGTH": "Минимальная длина: {{count}}",
+    "INVALID_PHONE_NUMBER": "Некорректный номер телефона",
+    "INVALID_EMAIL": "Некорректный email",
+    "MUST_ACCEPT": "Необходимо принять условия",
+    "INVALID_DATE": "Некорректная дата"
+  }
 }
