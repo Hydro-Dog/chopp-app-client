@@ -66,22 +66,29 @@ export const wsMiddleware: Middleware = (store) => {
           });
 
           socket.on('tokenExpired', async (data) => {
-            console.log('%c Token expired message!', 'color: red; font-weight: bold; font-size: 16px;', data);
-          
+            console.log(
+              '%c Token expired message!',
+              'color: red; font-weight: bold; font-size: 16px;',
+              data,
+            );
+
             const dispatch: AppDispatch = store.dispatch;
-          
+
             try {
               await dispatch(fetchCurrentUser()).unwrap();
               dispatch(
                 wsConnect({
                   url: `${import.meta.env.VITE_BASE_WS}`,
-                })
+                }),
               );
             } catch (error) {
-              console.error('%c Failed to refresh token, user will be logged out!', 'color: red; font-weight: bold; font-size: 14px;', error);
+              console.error(
+                '%c Failed to refresh token, user will be logged out!',
+                'color: red; font-weight: bold; font-size: 14px;',
+                error,
+              );
             }
           });
-          
 
           break;
 
