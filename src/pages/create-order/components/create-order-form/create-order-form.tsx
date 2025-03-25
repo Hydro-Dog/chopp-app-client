@@ -79,7 +79,6 @@ export const CreateOrderForm = ({ errors, control }: Props) => {
                   }}
                   onFocus={() => setNumberInputFocus(true)}
                   maskChar="_"
-                  //Я понимаю что практика не очень хорошая, но чтоб стили были одинаковые - пришлось
                   className="w-full outline-none text-[18px] px-[11px] py-[6px] rounded-lg"
                   style={{
                     background: themeToken.colorBgBase,

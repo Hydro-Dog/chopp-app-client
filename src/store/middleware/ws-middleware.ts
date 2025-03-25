@@ -24,6 +24,8 @@ export const wsMiddleware: Middleware = (store) => {
 
   return (next) => (action: WsAction) => {
     if (action) {
+      console.log('action: ', action);
+
       switch (action?.type) {
         case wsConnect.toString():
           if (socket !== null) {
@@ -37,8 +39,10 @@ export const wsMiddleware: Middleware = (store) => {
           }
 
           socket = io(action.payload.url, {
-            transports: ['websocket'], // Используем только WebSocket транспорт
-            auth: { accessToken: localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN) }, // Передача авторизационных данных, если требуется
+            // Используем только WebSocket транспорт
+            transports: ['websocket'],
+            // Передача авторизационных данных, если требуется
+            auth: { accessToken: localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN) },
           });
 
           socket.on('connect', () => {
@@ -48,7 +52,7 @@ export const wsMiddleware: Middleware = (store) => {
 
           socket.on('connect_error', (error) => {
             console.error('Socket.IO connection error:', error);
-            store.dispatch(setWsError(error));
+            store.dispatch(setWsError(String(error)));
           });
 
           socket.on('disconnect', () => {
