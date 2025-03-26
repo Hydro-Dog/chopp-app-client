@@ -260,8 +260,12 @@ table {
   border-start-end-radius: 16px;
 }
 
-.chopp-card > .ant-card-body {
+.chopp-card-p2 > .ant-card-body {
   padding: 8px;
+}
+
+.chopp-card-p4 > .ant-card-body {
+  padding: 16px;
 }
 
 .chopp-collapse .ant-collapse-content {

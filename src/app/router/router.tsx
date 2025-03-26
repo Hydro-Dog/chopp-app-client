@@ -9,6 +9,9 @@ import {
   UserPage,
   ProductsPage,
   SettingsPage,
+  DeliveryPage,
+  DescriptionPage,
+  PublicOfferPage,
 } from '@pages/index';
 
 import { OrdersProvider } from '@pages/orders/context';
@@ -21,13 +24,14 @@ import {
 } from '@pages/settings/pages';
 import { ShoppingCartPage } from '@pages/shopping-cart';
 import { CreateOrder } from '@pages/create-order';
-import { MainMenu, ROUTES } from '@shared/index';
+import { ChoppBackButton, ChoppSubPage, MainMenu, ROUTES } from '@shared/index';
 import { BackLayout } from '@widgets/index';
 import { RootContainer } from '@widgets/root-container/root-container';
 import { RootProvider } from '@widgets/root-container/root-provider';
 import { GuardedRoute } from './utils/guarded-route';
 import { InterceptorsWrapper } from './wrappers/interceptors-wrapper';
 import { CurrentOrderCard } from '@pages/orders/components/current-order';
+import { HomeOutlined } from '@ant-design/icons';
 
 export const router = createBrowserRouter([
   // {
@@ -80,6 +84,30 @@ export const router = createBrowserRouter([
       {
         path: 'orders',
         element: <OrdersPage />,
+      },
+      {
+        path: 'delivery',
+        element: (
+          <ChoppSubPage path={'/'} icon={<HomeOutlined />} title="Доставка и оплата">
+            <DeliveryPage />
+          </ChoppSubPage>
+        ),
+      },
+      {
+        path: 'description',
+        element: (
+          <ChoppSubPage path={'/'} icon={<HomeOutlined />} title="О нас">
+            <DescriptionPage />
+          </ChoppSubPage>
+        ),
+      },
+      {
+        path: 'publicOffer',
+        element: (
+          <ChoppSubPage path={'/'} icon={<HomeOutlined />} title="Публичная оферта">
+            <PublicOfferPage />
+          </ChoppSubPage>
+        ),
       },
 
       // {

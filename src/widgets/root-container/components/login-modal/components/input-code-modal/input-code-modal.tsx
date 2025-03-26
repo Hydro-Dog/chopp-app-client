@@ -6,6 +6,7 @@ import { fetchCurrentUser, UserAuthorization, verifyByCode, wsConnect } from '@s
 import { Button, Flex, Input, Typography } from 'antd';
 import { AppDispatch } from '@store/index';
 import { useDispatch } from 'react-redux';
+import { fetchShoppingCart } from '@store/slices/shopping-cart-slice';
 
 const { Text, Title, Link } = Typography;
 
@@ -14,7 +15,7 @@ type Props = {
   closeModal: () => void;
 };
 
-export const TelegramInputCode = ({ closeModal, phoneNumber }: Props) => {
+export const InputCodeModal = ({ closeModal, phoneNumber }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   //   TODO: выяснить почему не работает автофокус
@@ -44,7 +45,7 @@ export const TelegramInputCode = ({ closeModal, phoneNumber }: Props) => {
           action: fetchCurrentUser(),
           thenHandler: () => {
             closeModal();
-
+            dispatch(fetchShoppingCart());
             showSuccessNotification({ message: 'success login' });
           },
         });
@@ -54,14 +55,6 @@ export const TelegramInputCode = ({ closeModal, phoneNumber }: Props) => {
 
   return (
     <Flex vertical gap={20}>
-      <Flex vertical gap={4}>
-        <Text>
-          1. Перейдите в нашего <Link target='_blank' href={`https://t.me/${import.meta.env.VITE_TELEGRAM_BOT_LINK}`}>Телеграм-бота</Link>
-        </Text>
-        <Text>2. Нажминте /start</Text>
-        <Text>3. Предоставьте доступ номеру телефона</Text>
-        <Text>4. Получите код и введите в поле ниже</Text>
-      </Flex>
       <Flex justify="center">
         <Input.OTP onChange={setCode} />
       </Flex>

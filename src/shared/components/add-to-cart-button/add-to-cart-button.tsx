@@ -54,35 +54,41 @@ export const AddToCartButton = ({ product, showDelete }: Props) => {
   if (!product) return;
 
   return isShoppingCartItem ? (
-    <Flex style={{ background: 'transparent' }} justify="space-between" align="center" gap={4}>
-      <Button
-        onClick={onRemoveFromCartClick}
-        className="rounded-r-none !w-8 h-10"
-        type="primary"
-        icon={<MinusOutlined />}
-        size="small"
-      />
-      <Text strong className="text-lg px-2" type="secondary">
-        {shoppingCart.items.find((el) => el.product.id === product.id)?.quantity}
-      </Text>
-      <Button
-        onClick={onAddToCartClick}
-        className="rounded-l-none !w-8 h-10"
-        type="primary"
-        icon={<PlusOutlined />}
-        size="small"
-      />
+    <Flex style={{ background: 'transparent' }} justify="space-between" align="center" gap={16}>
+      <Flex gap={4}>
+        <Button
+          onClick={onRemoveFromCartClick}
+          className="rounded-r-none !w-6 h-8"
+          type="primary"
+          icon={<MinusOutlined style={{ fontSize: 12 }} />}
+          size="small"
+        />
+        <Text strong className="text-lg px-2" type="secondary">
+          {shoppingCart.items.find((el) => el.product.id === product.id)?.quantity}
+        </Text>
+        <Button
+          onClick={onAddToCartClick}
+          className="rounded-l-none !w-6 h-8"
+          type="primary"
+          icon={<PlusOutlined style={{ fontSize: 12 }} />}
+          size="small"
+        />
+      </Flex>
+
       {showDelete && (
         <Button
           onClick={onDeleteClick}
-          icon={<DeleteFilled />}
+          icon={<DeleteFilled style={{ fontSize: 12 }} />}
           size="small"
           danger
-          className="ml-5"
         />
       )}
     </Flex>
   ) : (
-    <Button onClick={onAddToCartClick} type="primary" icon={<PlusOutlined />} size="large" />
+    <Button
+      onClick={onAddToCartClick}
+      type="primary"
+      icon={<PlusOutlined style={{ fontSize: 12 }} />}
+    />
   );
 };

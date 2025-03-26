@@ -61,10 +61,16 @@ export const RootContainer = () => {
             borderTop: `1px solid ${themeToken.colorBorder}`,
           }}>
           <Flex vertical gap={5} align="end">
-            <Button type="link">[Доставка и оплата]</Button>
-            <Button type="link">[Описание магазина]</Button>
-            <Button type="link">[Публичная оферта]</Button>
-            <Button type="link">[Политика конфиденциальности]</Button>
+            <Button type="link" href="/delivery">
+              Доставка и оплата
+            </Button>
+            <Button type="link" href="/description">
+              О нас
+            </Button>
+            <Button type="link" href="/publicOffer">
+              Публичная оферта
+            </Button>
+            {/* <Button type="link">[Политика конфиденциальности]</Button> */}
           </Flex>
         </Footer>
       </Flex>

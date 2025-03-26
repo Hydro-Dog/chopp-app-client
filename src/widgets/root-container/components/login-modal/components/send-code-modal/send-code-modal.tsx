@@ -20,9 +20,9 @@ type Props = {
   setPhoneNumber: Dispatch<SetStateAction<string>>;
 };
 
-export const InitialForm = ({ setViewMode, setPhoneNumber }: Props) => {
+export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
   const phoneSchema = z.object({
-    phoneNumber: z.string().min(10, 'Некорректный номер телефона'),
+    phoneNumber: z.string().min(18, 'Некорректный номер телефона'),
     //   .regex(/^\+?\d{10,15}$/, 'Некорректный формат номера'),
   });
 
@@ -35,12 +35,17 @@ export const InitialForm = ({ setViewMode, setPhoneNumber }: Props) => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
     reset,
+    watch
   } = useForm<PhoneNumberFormType>({
     resolver: zodResolver(phoneSchema),
     defaultValues: { phoneNumber: '' },
   });
+
+  const a = watch('phoneNumber')
+  console.log('a: ', a)
+  console.log('isValid: ', isValid)
 
   const onSubmitSms: SubmitHandler<PhoneNumberFormType> = ({ phoneNumber }) => {
     console.log('Отправка номера:', phoneNumber);
@@ -60,7 +65,22 @@ export const InitialForm = ({ setViewMode, setPhoneNumber }: Props) => {
 
   return (
     <Flex vertical>
-      <Text>ПИН-код для входа на сайт будет передан в по СМС или в Telegram</Text>
+      <Flex vertical gap={12}>
+        <Text>ПИН-код для входа на сайт будет передан в Telegram</Text>
+
+        <Flex vertical gap={4}>
+          <Text>
+            1. Перейдите в нашего{' '}
+            <Link target="_blank" href={`https://t.me/${import.meta.env.VITE_TELEGRAM_BOT_LINK}`}>
+              Телеграм-бота
+            </Link>
+          </Text>
+          <Text>2. Нажминте /start</Text>
+          <Text>3. Предоставьте доступ номеру телефона</Text>
+          <Text>4. Получите код и введите в поле ниже</Text>
+        </Flex>
+      </Flex>
+
       <Form>
         <Item validateStatus={errors.phoneNumber ? 'error' : ''} help={errors.phoneNumber?.message}>
           <Controller
@@ -69,6 +89,10 @@ export const InitialForm = ({ setViewMode, setPhoneNumber }: Props) => {
             render={({ field }) => (
               <InputMask
                 {...field}
+                onChange={val => {
+                  console.log('val', val)
+                  field.onChange(val)
+                }}
                 ref={inputRef}
                 mask="+7 (999) 999-99-99"
                 maskChar="_"
@@ -80,9 +104,9 @@ export const InitialForm = ({ setViewMode, setPhoneNumber }: Props) => {
         </Item>
 
         <Flex gap={8} vertical justify="space-between" className=" my-8">
-          <Button disabled size="large" type="primary" onClick={handleSubmit(onSubmitSms)}>
+          {/* <Button disabled size="large" type="primary" onClick={handleSubmit(onSubmitSms)}>
             Отправить по СМС
-          </Button>
+          </Button> */}
           <Button size="large" type="primary" onClick={handleSubmit(onSubmitTelegram)}>
             Отправить в Телеграм
           </Button>

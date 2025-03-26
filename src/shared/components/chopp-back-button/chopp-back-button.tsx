@@ -6,16 +6,17 @@ import { Button } from 'antd';
 type Props = {
   path: string;
   title?: ReactNode;
+  icon?: ReactNode;
 };
 
-export const ChoppBackButton = ({ path, title }: Props) => {
+export const ChoppBackButton = ({ path, title, icon }: Props) => {
   const navigate = useNavigate();
 
   return (
     <Button
       shape={title ? 'default' : 'circle'}
       type="primary"
-      icon={<ArrowLeftOutlined />}
+      icon={icon || <ArrowLeftOutlined />}
       onClick={() => {
         navigate(path);
       }}>
