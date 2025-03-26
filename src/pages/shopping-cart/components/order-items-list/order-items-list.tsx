@@ -58,7 +58,7 @@ export const OrderItemsList = () => {
                 <Flex className="justify-between w-full flex-col sm:flex-row">
                   <Title
                     level={5}
-                    className="max-w-40 !text-sm md:!text-lg md:max-w-60 lg:max-w-xl overflow-hidden overflow-hidden text-ellipsis whitespace-nowrap">
+                    className="max-w-40 !text-sm md:!text-lg md:max-w-60 lg:max-w-96 overflow-hidden text-ellipsis whitespace-nowrap">
                     {item?.product.title}
                   </Title>
 
