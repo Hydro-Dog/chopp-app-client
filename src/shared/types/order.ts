@@ -13,7 +13,7 @@ export enum ORDER_STATUS {
   // FINISHED = 'finished',
 }
 
-type OrderItem = {
+export type OrderItem = {
   id: number;
   orderId: number;
   productId: number;
@@ -36,4 +36,9 @@ export type Order = {
   items: OrderItem[];
   createdAt: string;
   updatedAt: string;
+  returnUrl: string;
+  comment: string;
+  address: string;
+  name: string;
+  phoneNumber: string;
 };

@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useProductsContext } from '@pages/products/context';
-import { PRODUCT_STATE, useSuperDispatch } from '@shared/index';
+import { PRODUCT_STATE, ProductDrawer, useSuperDispatch } from '@shared/index';
 import { FETCH_STATUS, PaginationRequestQuery, PaginationResponse, Product } from '@shared/types';
 import { fetchProducts } from '@store/slices';
 import { RootState } from '@store/store';
 import { Col, Flex, Row, Spin } from 'antd';
 import { useBoolean } from 'usehooks-ts';
-import { ProductCard, ProductDrawer } from './components';
+import { ProductCard } from './components';
 // import { useRootContext } from '@widgets/root-container/root-provider';
 // import { ChoppDrawer } from '@shared/components/chopp-drawer/chopp-drawer';
 

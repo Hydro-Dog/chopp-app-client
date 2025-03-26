@@ -1,10 +1,11 @@
 export type ClientAppConfig = {
-  id: number;
-  averageDeliveryCost?: number;
+  averageDeliveryCost?: number | null;
   freeDeliveryIncluded?: boolean;
-  freeDeliveryThreshold?: number;
+  freeDeliveryThreshold?: number | null;
   openTime?: string;
   closeTime?: string;
   disabled?: boolean;
-  location?: string;
+  deliveryAndPaymentsVerbose?: string;
+  publicOfferVerbose?: string;
+  description?: string;
 };

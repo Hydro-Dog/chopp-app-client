@@ -7,8 +7,8 @@ import {
   TruckOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { useLoginGuard, useThemeToken } from '@shared/index';
-import { Button } from 'antd';
+import { ChoppShadowButton, useLoginGuard, useThemeSwitcher, useThemeToken } from '@shared/index';
+import { Button, Flex } from 'antd';
 import { RootState } from '@store/store';
 import { useRootContext } from '@widgets/root-container/root-provider';
 import { useSelector } from 'react-redux';
@@ -17,7 +17,7 @@ export const Navigation = () => {
   const themeToken = useThemeToken();
   const navigate = useNavigate();
   const location = useLocation();
-  const isLocation = (path: string) => location.pathname === path;
+  const isLocation = (path: string) => location.pathname.includes(path);
   const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
 
   const onIconClick = (value: string) => {
@@ -30,6 +30,8 @@ export const Navigation = () => {
   const onNavigationClick = (path: string) => {
     loginGuard(() => navigate(path));
   };
+
+  const { themeSwitcher } = useThemeSwitcher();
 
   return (
     <div className="flex justify-end my-2 gap-2">
@@ -45,45 +47,48 @@ export const Navigation = () => {
             navigate('/');
         }}
       /> */}
-      <Button
-        shape="circle"
-        variant="outlined"
-        icon={<UserOutlined />}
-        style={{
-          background: isLocation('/user') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
-        }}
-        onClick={() => {
-          onNavigationClick('user');
-        }}
-      />
-
-      {!hasCurrentOrder && (
-        <Button
-          shape={isEmpty ? 'circle' : 'round'}
+      <Flex align="center" gap={12}>
+        {themeSwitcher}
+        <ChoppShadowButton
+          shape="circle"
           variant="outlined"
-          icon={<ShoppingCartOutlined />}
+          icon={<UserOutlined />}
           style={{
-            background: isLocation('/cart') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+            background: isLocation('user') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
           }}
           onClick={() => {
-            onNavigationClick('cart');
-          }}>
-          {!isEmpty && `${shoppingCart.totalPrice} ₽`}
-        </Button>
-      )}
+            onNavigationClick('user');
+          }}
+        />
 
-      <Button
-        shape={hasCurrentOrder ? 'round' : 'circle'}
-        variant="outlined"
-        icon={hasCurrentOrder ? <TruckOutlined /> : <ProfileOutlined />}
-        style={{
-          background: isLocation('/order') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
-        }}
-        onClick={() => {
-          onNavigationClick('order');
-        }}>
-        {!!hasCurrentOrder && 'Мой заказ'}
-      </Button>
+        {!hasCurrentOrder && (
+          <ChoppShadowButton
+            shape={isEmpty ? 'circle' : 'round'}
+            variant="outlined"
+            icon={<ShoppingCartOutlined />}
+            style={{
+              background: isLocation('cart') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+            }}
+            onClick={() => {
+              onNavigationClick('cart');
+            }}>
+            {!isEmpty && `${shoppingCart.totalPrice} ₽`}
+          </ChoppShadowButton>
+        )}
+
+        <ChoppShadowButton
+          shape={hasCurrentOrder ? 'round' : 'circle'}
+          variant="outlined"
+          icon={hasCurrentOrder ? <TruckOutlined /> : <ProfileOutlined />}
+          style={{
+            background: isLocation('order') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
+          }}
+          onClick={() => {
+            onNavigationClick('order');
+          }}>
+          {!!hasCurrentOrder && 'Мой заказ'}
+        </ChoppShadowButton>
+      </Flex>
     </div>
   );
 };

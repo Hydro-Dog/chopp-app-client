@@ -2,7 +2,7 @@ import { MouseEventHandler, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { AddToCartButton, useLoginGuard, useThemeToken } from '@shared/index';
+import { AddToCartButton, ChoppShadowCard, useLoginGuard, useThemeToken } from '@shared/index';
 import { Product } from '@shared/types';
 import { RootState } from '@store/store';
 import { Button, Flex, Typography, Card } from 'antd';
@@ -15,9 +15,8 @@ type Props = {
 };
 
 export const ProductCard = ({ product, onClick }: Props) => {
-
   return (
-    <Card
+    <ChoppShadowCard
       onClick={onClick}
       size="small"
       styles={{
@@ -34,9 +33,11 @@ export const ProductCard = ({ product, onClick }: Props) => {
         </div>
       }>
       <Flex gap={2} vertical>
-        <Text strong>{product.title}</Text>
+        <Text className="w-full text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap">
+          {product.title}
+        </Text>
 
-        <Paragraph ellipsis={{ rows: 3 }} className="h-14 overflow-hidden text-sm">
+        <Paragraph type='secondary' ellipsis={{ rows: 3 }} className="h-14 overflow-hidden text-sm">
           {product.description}
         </Paragraph>
 
@@ -47,6 +48,6 @@ export const ProductCard = ({ product, onClick }: Props) => {
           <AddToCartButton product={product} />
         </Flex>
       </Flex>
-    </Card>
+    </ChoppShadowCard>
   );
 };

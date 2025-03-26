@@ -1,19 +1,15 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CircularProgress } from '@mui/material';
-import { ProductDrawer } from '@pages/products/components/products-grid/components';
-import { AddToCartButton } from '@shared/index';
-import { FETCH_STATUS, Product } from '@shared/types';
+import { AddToCartButton, ChoppShadowCard, ProductDrawer } from '@shared/index';
+import { Product } from '@shared/types';
 import { RootState } from '@store/store';
-import { Typography, Card, Flex } from 'antd';
+import { Typography, Flex } from 'antd';
 import { useBoolean } from 'usehooks-ts';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export const OrderItemsList = () => {
-  const { shoppingCart, fetchShoppingCartStatus } = useSelector(
-    (state: RootState) => state.shoppingCart,
-  );
+  const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
 
   const {
     value: isProductDrawerOpened,
@@ -35,36 +31,50 @@ export const OrderItemsList = () => {
 
   return (
     <>
-      <Card className="md:w-3/4">
+      <ChoppShadowCard className="md:w-3/4">
         <Flex gap={32} vertical>
           {shoppingCart?.items?.map((item) => (
             <Flex
-              className=""
               key={item.product.id}
               justify="space-between"
               onClick={() => {
                 onProductClick(item.product);
               }}>
-              <Flex justify="space-between" align="center" className="w-full cursor-pointer">
+              <Flex
+                justify="space-between"
+                align="center"
+                className="w-full cursor-pointer"
+                gap={16}>
                 <Flex align="center" gap={24}>
-                  <div className="rounded-lg overflow-hidden">
+                  <div className="w-32 h-20 rounded-lg overflow-hidden flex-shrink-0">
                     <img
-                      className="h-20 aspect-video object-cover"
+                      className="w-full h-full object-cover"
                       alt={item.product?.title}
                       src={import.meta.env.VITE_BASE_URL_FILES + item.product?.images[0].path}
                     />
                   </div>
-                  <Title level={5} className="!font-bold">
-                    {item?.product.title}
-                  </Title>
                 </Flex>
 
-                <AddToCartButton product={item?.product} showDelete />
+                <Flex className="justify-between w-full flex-col sm:flex-row">
+                  <Title
+                    level={5}
+                    className="max-w-40 !text-sm md:!text-lg md:max-w-60 lg:max-w-96 overflow-hidden text-ellipsis whitespace-nowrap">
+                    {item?.product.title}
+                  </Title>
+
+                  <Flex gap={16} align="center" className="justify-between">
+                    <Text className="!font-bold !text-sm md:!text-lg min-w-20">
+                      {item.product.price}₽
+                    </Text>
+                    <AddToCartButton product={item?.product} showDelete />
+                  </Flex>
+                </Flex>
               </Flex>
             </Flex>
           ))}
         </Flex>
-      </Card>
+      </ChoppShadowCard>
+
       <ProductDrawer
         isOpened={isProductDrawerOpened}
         onClose={onCloseProductDrawer}

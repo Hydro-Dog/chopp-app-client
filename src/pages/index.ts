@@ -5,3 +5,6 @@ export * from './user';
 export * from './analytics';
 export * from './settings';
 export * from './products';
+export * from './delivery';
+export * from './description';
+export * from './public-offer';

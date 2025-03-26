@@ -7,9 +7,9 @@ import { useSuperDispatch } from '@shared/hooks';
 import { User } from '@shared/types';
 import { Button, Flex, Form, Modal, Typography } from 'antd';
 import { z } from 'zod';
-import { InitialForm } from './components/initial-form/initial-form';
+import { SendCodeModal } from './components/send-code-modal/send-code-modal';
 import { VIEW_MODE } from './enum/view-mode';
-import { TelegramInputCode } from './components/telegram-input-code';
+import { InputCodeModal } from './components/input-code-modal';
 
 const { Item } = Form;
 
@@ -35,8 +35,8 @@ export const LoginModal = ({ isOpen, close }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const VIEW = {
-    [VIEW_MODE.INITIAL]: <InitialForm setViewMode={setViewMode} setPhoneNumber={setPhoneNumber} />,
-    [VIEW_MODE.TELEGRAM]: <TelegramInputCode closeModal={close} phoneNumber={phoneNumber} />,
+    [VIEW_MODE.INITIAL]: <SendCodeModal setViewMode={setViewMode} setPhoneNumber={setPhoneNumber} />,
+    [VIEW_MODE.TELEGRAM]: <InputCodeModal closeModal={close} phoneNumber={phoneNumber} />,
   };
 
   const {

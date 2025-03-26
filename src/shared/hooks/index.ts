@@ -1,7 +1,7 @@
 export * from './use-throttle';
 export * from './use-notification-api';
 export * from './use-theme-token';
-export * from './use-filter-ws-message';
+export * from './use-ws-notification.ts';
 export * from './use-connection';
 export * from './use-fetch-messages';
 export * from './use-clear-chat-messages-store-on-leave';
@@ -16,3 +16,4 @@ export * from './use-login-guard';
 export * from './use-increment-shopping-cart-item.ts';
 export * from './use-decrement-shopping-cart-item.ts';
 export * from './use-delete-shopping-cart-position.ts';
+export * from './use-theme-switcher.tsx'
