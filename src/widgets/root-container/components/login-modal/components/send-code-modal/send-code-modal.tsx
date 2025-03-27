@@ -79,8 +79,8 @@ export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
             </Link>
           </Text>
           <Text>2. Нажминте /start</Text>
-          <Text>3. Предоставьте доступ номеру телефона</Text>
-          <Text>4. Получите код и введите в поле ниже</Text>
+          <Text>3. Предоставьте боту доступ к номеру телефона</Text>
+          <Text>4. Введите номер в поле ниже</Text>
         </Flex>
       </Flex>
 
