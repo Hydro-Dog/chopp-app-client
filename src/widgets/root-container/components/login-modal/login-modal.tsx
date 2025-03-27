@@ -24,18 +24,21 @@ export const LoginModal = ({ isOpen, close }: Props) => {
   const [viewMode, setViewMode] = useState<VIEW_MODE>(VIEW_MODE.INITIAL);
   const [phoneNumber, setPhoneNumber] = useState('');
   const { superDispatch } = useSuperDispatch<User, { phoneNumber: string }>();
+  const { t } = useTranslation();
 
   const phoneSchema = z.object({
-    phoneNumber: z.string().min(10, 'Некорректный номер телефона'),
-    //   .regex(/^\+?\d{10,15}$/, 'Некорректный формат номера'),
+    phoneNumber: z
+      .string()
+      .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, `${t('FORM_ERRORS.INVALID_PHONE_NUMBER')}`),
   });
 
   type PhoneNumberFormType = z.infer<typeof phoneSchema>;
-  const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const VIEW = {
-    [VIEW_MODE.INITIAL]: <SendCodeModal setViewMode={setViewMode} setPhoneNumber={setPhoneNumber} />,
+    [VIEW_MODE.INITIAL]: (
+      <SendCodeModal setViewMode={setViewMode} setPhoneNumber={setPhoneNumber} />
+    ),
     [VIEW_MODE.TELEGRAM]: <InputCodeModal closeModal={close} phoneNumber={phoneNumber} />,
   };
 

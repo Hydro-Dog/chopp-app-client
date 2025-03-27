@@ -21,13 +21,16 @@ type Props = {
 };
 
 export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
+  const { t } = useTranslation();
   const phoneSchema = z.object({
-    phoneNumber: z.string().min(18, 'Некорректный номер телефона'),
+    phoneNumber: z
+      .string()
+      .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, `${t('FORM_ERRORS.INVALID_PHONE_NUMBER')}`),
     //   .regex(/^\+?\d{10,15}$/, 'Некорректный формат номера'),
   });
 
   type PhoneNumberFormType = z.infer<typeof phoneSchema>;
-  const { t } = useTranslation();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { superDispatch } = useSuperDispatch<User, { phoneNumber: string }>();
@@ -37,15 +40,15 @@ export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
     control,
     formState: { errors, isValid },
     reset,
-    watch
+    watch,
   } = useForm<PhoneNumberFormType>({
     resolver: zodResolver(phoneSchema),
     defaultValues: { phoneNumber: '' },
   });
 
-  const a = watch('phoneNumber')
-  console.log('a: ', a)
-  console.log('isValid: ', isValid)
+  const a = watch('phoneNumber');
+  console.log('a: ', a);
+  console.log('isValid: ', isValid);
 
   const onSubmitSms: SubmitHandler<PhoneNumberFormType> = ({ phoneNumber }) => {
     console.log('Отправка номера:', phoneNumber);
@@ -89,9 +92,9 @@ export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
             render={({ field }) => (
               <InputMask
                 {...field}
-                onChange={val => {
-                  console.log('val', val)
-                  field.onChange(val)
+                onChange={(val) => {
+                  console.log('val', val);
+                  field.onChange(val);
                 }}
                 ref={inputRef}
                 mask="+7 (999) 999-99-99"
