@@ -53,9 +53,7 @@ export const Navigation = () => {
           shape="circle"
           variant="outlined"
           icon={<UserOutlined />}
-          style={{
-            background: isLocation('user') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
-          }}
+          selected={isLocation('user')}
           onClick={() => {
             onNavigationClick('user');
           }}
@@ -66,9 +64,7 @@ export const Navigation = () => {
             shape={isEmpty ? 'circle' : 'round'}
             variant="outlined"
             icon={<ShoppingCartOutlined />}
-            style={{
-              background: isLocation('cart') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
-            }}
+            selected={isLocation('cart')}
             onClick={() => {
               onNavigationClick('cart');
             }}>
@@ -80,9 +76,7 @@ export const Navigation = () => {
           shape={hasCurrentOrder ? 'round' : 'circle'}
           variant="outlined"
           icon={hasCurrentOrder ? <TruckOutlined /> : <ProfileOutlined />}
-          style={{
-            background: isLocation('order') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
-          }}
+          selected={isLocation('order')}
           onClick={() => {
             onNavigationClick('order');
           }}>
