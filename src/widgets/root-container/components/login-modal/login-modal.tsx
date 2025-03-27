@@ -33,7 +33,6 @@ export const LoginModal = ({ isOpen, close }: Props) => {
   });
 
   type PhoneNumberFormType = z.infer<typeof phoneSchema>;
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const VIEW = {
     [VIEW_MODE.INITIAL]: (
@@ -42,13 +41,7 @@ export const LoginModal = ({ isOpen, close }: Props) => {
     [VIEW_MODE.TELEGRAM]: <InputCodeModal closeModal={close} phoneNumber={phoneNumber} />,
   };
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-    getValues,
-    reset,
-  } = useForm<PhoneNumberFormType>({
+  const { reset } = useForm<PhoneNumberFormType>({
     resolver: zodResolver(phoneSchema),
     defaultValues: { phoneNumber: '' },
   });
@@ -56,6 +49,7 @@ export const LoginModal = ({ isOpen, close }: Props) => {
   const handleClose = () => {
     reset();
     close();
+    setViewMode(VIEW_MODE.INITIAL)
   };
 
   return (

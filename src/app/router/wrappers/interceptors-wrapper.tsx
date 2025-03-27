@@ -14,7 +14,7 @@ export const InterceptorsWrapper = ({ children }: PropsWithChildrenOnly) => {
   useEffect(() => {
     //TODO: Добавить проверку на истекший токен, если истек то повторно соединиться через 1c
     // if (pathname !== ROUTES.SIGN_IN && pathname !== ROUTES.REGISTER) {
-      dispatch(fetchCurrentUser());
+      // dispatch(fetchCurrentUser());
     // }
     dispatch(
       wsConnect({

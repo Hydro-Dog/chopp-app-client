@@ -3,15 +3,18 @@ import { Outlet } from 'react-router-dom';
 import {
   ClientAppConfig,
   Order,
+  STORAGE_KEYS,
   useSuperDispatch,
   useThemeToken,
   useWsNotification,
 } from '@shared/index';
 import { ShoppingCart } from '@shared/types/shopping-cart';
-import { fetchClientAppConfig } from '@store/slices';
+import { fetchClientAppConfig, fetchCurrentUser } from '@store/slices';
 import { fetchShoppingCart } from '@store/slices/shopping-cart-slice';
 import { RootHeader } from '@widgets/root-header/root-header';
 import { Button, Flex, Layout, message } from 'antd';
+import { AppDispatch } from '@store/store';
+import { useDispatch } from 'react-redux';
 
 const { Content, Footer } = Layout;
 
@@ -22,6 +25,7 @@ export const RootContainer = () => {
     ClientAppConfig,
     void
   >();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [messageApi, contextHolder] = message.useMessage();
   const { lastMessage: orderStatusChangeNotification } = useWsNotification<Order>('orderStatus');
@@ -39,8 +43,11 @@ export const RootContainer = () => {
   }, [messageApi, orderStatusChangeNotification]);
 
   useEffect(() => {
-    fetchShoppingCartDispatch({ action: fetchShoppingCart() });
-    fetchClientAppConfigCartDispatch({ action: fetchClientAppConfig() });
+    if (localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN)) {
+      fetchShoppingCartDispatch({ action: fetchShoppingCart() });
+      fetchClientAppConfigCartDispatch({ action: fetchClientAppConfig() });
+      dispatch(fetchCurrentUser());
+    }
   }, []);
 
   return (
