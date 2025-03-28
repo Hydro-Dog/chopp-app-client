@@ -1,3 +1,14 @@
+import { useTranslation } from 'react-i18next';
+import { ChoppShadowCard, ChoppSubPage } from '@shared/components';
+import { UserProfileForm } from './components';
 export const UserPage = () => {
-  return <div className="">UserProfile</div>;
+  const { t } = useTranslation();
+
+  return (
+    <ChoppSubPage title={t('PROFILE')} path="/">
+      <ChoppShadowCard>
+        <UserProfileForm />
+      </ChoppShadowCard>
+    </ChoppSubPage>
+  );
 };
