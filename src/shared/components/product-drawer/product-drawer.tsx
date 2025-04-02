@@ -10,7 +10,6 @@ type Props = {
 };
 
 export const ProductDrawer = ({ isOpened, onClose, product }: Props) => {
-
   return (
     <ChoppBottomDrawer open={isOpened} onClose={onClose} title={product?.title}>
       <Flex
@@ -19,7 +18,7 @@ export const ProductDrawer = ({ isOpened, onClose, product }: Props) => {
         <div className="w-full md:w-1/2  flex h-74 sm:h-[380px] items-center justify-center">
           <div className="rounded-lg overflow-hidden">
             <img
-              className="aspect-video object-cover"
+              className="aspect-video object-contain h-full w-full"
               alt={product?.title}
               src={import.meta.env.VITE_BASE_URL_FILES + product?.images[0].path}
             />
@@ -33,6 +32,7 @@ export const ProductDrawer = ({ isOpened, onClose, product }: Props) => {
             gap={20}
             className="w-full "
             align="center"
+            justify="center"
             rootClassName="absolute bottom-0  pb-10">
             <Title className="!font-bold !m-0" level={2}>
               {product?.price}₽

@@ -55,12 +55,12 @@ export const AddToCartButton = ({ product, showDelete }: Props) => {
 
   return isShoppingCartItem ? (
     <Flex style={{ background: 'transparent' }} justify="space-between" align="center" gap={16}>
-      <Flex gap={4}>
+      <Flex gap={4} align="center" justify="center">
         <Button
           onClick={onRemoveFromCartClick}
-          className="rounded-r-none !w-6 h-8"
+          className="rounded-r-none !w-12 h-12"
           type="primary"
-          icon={<MinusOutlined style={{ fontSize: 12 }} />}
+          icon={<MinusOutlined />}
           size="small"
         />
         <Text strong className="text-lg px-2" type="secondary">
@@ -68,9 +68,9 @@ export const AddToCartButton = ({ product, showDelete }: Props) => {
         </Text>
         <Button
           onClick={onAddToCartClick}
-          className="rounded-l-none !w-6 h-8"
+          className="rounded-l-none !w-12 h-12"
           type="primary"
-          icon={<PlusOutlined style={{ fontSize: 12 }} />}
+          icon={<PlusOutlined />}
           size="small"
         />
       </Flex>
@@ -88,7 +88,8 @@ export const AddToCartButton = ({ product, showDelete }: Props) => {
     <Button
       onClick={onAddToCartClick}
       type="primary"
-      icon={<PlusOutlined style={{ fontSize: 12 }} />}
+      className="!w-12 !h-12 rounded-full"
+      icon={<PlusOutlined />}
     />
   );
 };

@@ -26,7 +26,7 @@ export const ProductCard = ({ product, onClick }: Props) => {
       cover={
         <div className="flex h-40 items-center justify-center overflow-hidden">
           <img
-            className="aspect-video object-cover"
+            className="aspect-video object-contain h-full w-full"
             alt={product.title}
             src={import.meta.env.VITE_BASE_URL_FILES + product.images[0].path}
           />
@@ -37,7 +37,7 @@ export const ProductCard = ({ product, onClick }: Props) => {
           {product.title}
         </Text>
 
-        <Paragraph type='secondary' ellipsis={{ rows: 3 }} className="h-14 overflow-hidden text-sm">
+        <Paragraph type="secondary" ellipsis={{ rows: 3 }} className="overflow-hidden text-sm">
           {product.description}
         </Paragraph>
 
