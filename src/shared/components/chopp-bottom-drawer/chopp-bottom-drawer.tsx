@@ -26,8 +26,7 @@ export const ChoppBottomDrawer = ({
       height={'auto'}
       onClose={onClose}
       open={open}
-      title={<Title className="!m-0 !text-2xl md:!text-4xl">{title}</Title>}
-      className="chopp-drawer-bottom max-h-[90vh] overflow-y-scroll"
+      className="chopp-drawer-bottom max-h-auto overflow-y-scroll"
       closeIcon={null}>
       <Flex vertical>
         <Button
@@ -37,6 +36,7 @@ export const ChoppBottomDrawer = ({
           icon={<CloseOutlined style={{ color: themeToken.colorBgBase }} />}
           className="absolute right-5 -top-12"
         />
+        {title && <Title className='!text-xl sm:!text-3xl'>{title}</Title>}
         {children}
       </Flex>
     </Drawer>
