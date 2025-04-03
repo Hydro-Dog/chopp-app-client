@@ -1,28 +1,21 @@
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  CarOutlined,
-  HomeOutlined,
   ProfileOutlined,
   ShoppingCartOutlined,
   TruckOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+
 import { ChoppShadowButton, useLoginGuard, useThemeSwitcher, useThemeToken } from '@shared/index';
-import { Button, Flex } from 'antd';
 import { RootState } from '@store/store';
-import { useRootContext } from '@widgets/root-container/root-provider';
-import { useSelector } from 'react-redux';
+import { Flex } from 'antd';
 
 export const Navigation = () => {
-  const themeToken = useThemeToken();
   const navigate = useNavigate();
   const location = useLocation();
   const isLocation = (path: string) => location.pathname.includes(path);
   const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
-
-  const onIconClick = (value: string) => {
-    navigate(value);
-  };
   const isEmpty = 0;
   const hasCurrentOrder = 0;
   const { loginGuard } = useLoginGuard();
