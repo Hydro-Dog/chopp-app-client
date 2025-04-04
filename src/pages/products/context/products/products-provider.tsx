@@ -1,7 +1,7 @@
 import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Product, PropsWithChildrenOnly } from '@shared/index';
-
+//Для отладки скролла
 export const LIMIT = 5;
 
 type ProductsContextType = {

@@ -97,7 +97,7 @@ export const ProductsGrid = () => {
         next={loadMore}
         hasMore={!isLoading && page < totalPages}
         loader={null}
-        dataLength={totalItems}
+        dataLength={pageProducts?.length || 0}
         scrollableTarget="scrollable-container">
         <Row
           id="scrollable-container"
