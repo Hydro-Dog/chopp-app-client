@@ -1,16 +1,14 @@
 import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { PRODUCT_STATE, Product, PropsWithChildrenOnly } from '@shared/index';
+import { Product, PropsWithChildrenOnly } from '@shared/index';
 
-export const LIMIT = 10;
+export const LIMIT = 5;
 
 type ProductsContextType = {
   pageProducts: Product[];
   setPageProducts: Dispatch<SetStateAction<Product[]>>;
   categoryId: string;
   setCategoryId: Dispatch<SetStateAction<string>>;
-  page: number;
-  setPage: Dispatch<SetStateAction<number>>;
   limit: number;
   setLimit: Dispatch<SetStateAction<number>>;
   totalPages: number;
@@ -27,10 +25,9 @@ const ProductsContext = createContext<ProductsContextType | undefined>(undefined
 
 export const ProductsProvider = ({ children }: PropsWithChildrenOnly) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialLimit = Number(searchParams.get('limit')) || LIMIT;
+  //const initialLimit = Number(searchParams.get('limit')) || LIMIT;
   const initialSearch = searchParams.get('search') || '';
   const initialCategoryId = searchParams.get('categoryId') || '';
-  const initialPage = searchParams.get('page') || '';
   // const initialProductsState = [PRODUCT_STATE.DEFAULT, PRODUCT_STATE.HIDDEN];
 
   const [pageProducts, setPageProducts] = useState<Product[]>([]);
@@ -38,19 +35,16 @@ export const ProductsProvider = ({ children }: PropsWithChildrenOnly) => {
   const [search, setSearch] = useState(initialSearch);
   const [categoryId, setCategoryId] = useState(initialCategoryId);
   // const [productsState, setProductsState] = useState(initialProductsState);
-  const [page, setPage] = useState(initialPage || 1);
-  const [limit, setLimit] = useState(initialLimit);
+  const [limit, setLimit] = useState(LIMIT);
   const [totalPages, setTotalPages] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
-    params.set('limit', String(limit));
     params.set('search', String(search));
     params.set('categoryId', String(categoryId));
-    params.set('page', String(page));
     setSearchParams(params);
-  }, [limit, search, categoryId, page, setSearchParams]);
+  }, [limit, search, categoryId, setSearchParams]);
 
   return (
     <ProductsContext.Provider
@@ -59,8 +53,6 @@ export const ProductsProvider = ({ children }: PropsWithChildrenOnly) => {
         setPageProducts,
         categoryId,
         setCategoryId,
-        page,
-        setPage,
         // productsState,
         // setProductsState,
         limit,

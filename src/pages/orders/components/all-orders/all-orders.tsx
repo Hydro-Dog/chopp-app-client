@@ -1,16 +1,13 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 import { useSuperDispatch } from '@shared/hooks';
+import { ChoppShadowCollapse } from '@shared/index';
 import { Order } from '@shared/types';
 import { fetchOrders } from '@store/slices';
 import { RootState } from '@store/store';
-import { Card, Collapse, Dropdown, Flex, Spin, Typography } from 'antd';
+import { Flex, Spin } from 'antd';
 import { OrderCard } from '../order-card';
-import { ChoppShadowCard, ChoppShadowCollapse } from '@shared/index';
-
-const { Title } = Typography;
 
 type Props = {
   arrayOrders: Order[] | undefined;
@@ -21,7 +18,6 @@ type Props = {
 
 export const AllOrders = ({ arrayOrders, updateOrders, setPage, page }: Props) => {
   const { orders } = useSelector((state: RootState) => state.orders);
-  const { t } = useTranslation();
   const superDispatch = useSuperDispatch();
   const [isLoading, setIsLoading] = useState(false);
 

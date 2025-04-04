@@ -8,7 +8,6 @@ import {
 } from '@shared/index';
 import { axiosPrivate } from '@store/middleware';
 import axios from 'axios';
-import { UpdateProductVisibilityDTO } from './types';
 
 export const fetchProducts = createAsyncThunk<
   PaginationResponse<Product>,
@@ -30,7 +29,6 @@ export const fetchProducts = createAsyncThunk<
   ) => {
     try {
       const params = new URLSearchParams();
-
       if (page) params.append('page', String(page));
       if (limit) params.append('limit', String(limit));
       if (search) params.append('search', search);
