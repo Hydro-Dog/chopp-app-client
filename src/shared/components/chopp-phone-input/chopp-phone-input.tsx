@@ -39,7 +39,7 @@ export const ChoppPhoneInput = ({
         background: themeToken.colorBgBase,
         // eslint-disable-next-line max-len
         border: `1px solid ${errors.phoneNumber ? themeToken.colorError : numberInputIsFocus ? themeToken.colorPrimary : themeToken.colorBorder}`,
-        transition: 'border-color 0.7s ease',
+        transition: 'border-color 0.5s ease',
       }}></InputMask>
   );
 };
