@@ -8,11 +8,18 @@ export const useUserProfileFormSchema = () => {
       .string()
       .min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`)
       .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, `${t('FORM_ERRORS.INVALID_PHONE_NUMBER')}`),
-    fullName: z
-      .string()
-      .min(8, `${t('FORM_ERRORS.MIN_LENGTH', { count: 8 })}`)
-      .max(15, `${t('FORM_ERRORS.MAX_LENGTH', { count: 15 })}`),
-    email: z.string().email(`${t('FORM_ERRORS.INVALID_EMAIL')}`),
+    fullName: z.preprocess(
+      (val) => (typeof val === 'string' && val.trim() === '' ? null : val),
+      z
+        .string()
+        .min(8, t('FORM_ERRORS.MIN_LENGTH', { count: 8 }))
+        .max(15, t('FORM_ERRORS.MAX_LENGTH', { count: 15 }))
+        .nullish(),
+    ),
+    email: z.preprocess(
+      (val) => (typeof val === 'string' && val.trim() === '' ? null : val),
+      z.string().email(t('FORM_ERRORS.INVALID_EMAIL')).nullish(),
+    ),
     //birthday: z.string().regex(/\d{4}-\d{2}-\d{2}/, `${t('FORM_ERRORS.INVALID_DATE')}`),
   });
 };

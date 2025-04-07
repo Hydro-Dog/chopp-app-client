@@ -22,3 +22,4 @@ export * from './chopp-back-button';
 export * from './chopp-subpage';
 export * from './product-drawer';
 export * from './chopp-shadow-collapse';
+export * from './chopp-phone-input';

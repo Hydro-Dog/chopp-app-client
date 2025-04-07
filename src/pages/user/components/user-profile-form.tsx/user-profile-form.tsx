@@ -12,6 +12,7 @@ import { updateCurrentUser } from '@store/slices';
 import { RootState } from '@store/store';
 import { Button, Flex, Form, Input } from 'antd';
 import { z } from 'zod';
+import { ChoppPhoneInput } from '@shared/components';
 const { Item } = Form;
 
 export const UserProfileForm = () => {
@@ -35,8 +36,8 @@ export const UserProfileForm = () => {
     resolver: zodResolver(userProfileFormSchema),
     defaultValues: {
       phoneNumber: '',
-      fullName: currentUser?.fullName,
-      email: currentUser?.email,
+      fullName: '',
+      email: '',
     },
   });
   useEffect(() => {
@@ -49,6 +50,7 @@ export const UserProfileForm = () => {
     }
   }, [currentUser, reset]);
   const onSubmit: SubmitHandler<userProfileFormSchemaType> = (data) => {
+    console.log('data', data);
     if (isEdit) {
       superDispatch({
         action: updateCurrentUser({
@@ -91,8 +93,7 @@ export const UserProfileForm = () => {
             name="phoneNumber"
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <InputMask
-                mask="+7 (999) 999-99-99"
+              <ChoppPhoneInput
                 value={value}
                 onChange={(event) => {
                   setEdit(
@@ -106,16 +107,10 @@ export const UserProfileForm = () => {
                   setNumberInputFocus(false);
                   onBlur();
                 }}
-                onFocus={() => setNumberInputFocus(true)}
-                maskChar="_"
-                //Я понимаю что практика не очень хорошая, но чтоб стили были одинаковые - пришлось
-                className="w-full outline-none text-[18px] px-[11px] py-[6px] rounded-lg"
-                style={{
-                  background: themeToken.colorBgBase,
-                  // eslint-disable-next-line max-len
-                  border: `1px solid ${errors.phoneNumber ? themeToken.colorError : numberInputIsFocus ? themeToken.colorPrimary : themeToken.colorBorder}`,
-                  transition: 'border-color 0.7s ease',
-                }}></InputMask>
+                errors={errors}
+                setNumberInputFocus={setNumberInputFocus}
+                numberInputIsFocus={numberInputIsFocus}
+              />
             )}
           />
         </Item>
@@ -138,7 +133,7 @@ export const UserProfileForm = () => {
           />
         </Item>
         <Button disabled={!isEdit} type="primary" onClick={handleSubmit(onSubmit)}>
-          {t('ACCEPT')}
+          {t('SAVE')}
         </Button>
       </Flex>
     </Form>
