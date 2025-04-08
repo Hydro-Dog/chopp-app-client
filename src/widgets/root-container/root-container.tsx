@@ -1,19 +1,26 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import {
+  ChoppAnimatedIcon,
   ClientAppConfig,
   Order,
+  STORAGE_KEYS,
   useSuperDispatch,
   useThemeToken,
   useWsNotification,
 } from '@shared/index';
 import { ShoppingCart } from '@shared/types/shopping-cart';
-import { fetchClientAppConfig } from '@store/slices';
+import { fetchClientAppConfig, fetchCurrentUser } from '@store/slices';
 import { fetchShoppingCart } from '@store/slices/shopping-cart-slice';
 import { RootHeader } from '@widgets/root-header/root-header';
-import { Button, Flex, Layout, message } from 'antd';
+import { Button, Flex, Layout, message, Space, Typography } from 'antd';
+import { AppDispatch } from '@store/store';
+import { useDispatch } from 'react-redux';
+import { RocketOutlined } from '@ant-design/icons';
+import { Stack } from '@mui/material';
 
 const { Content, Footer } = Layout;
+const { Text } = Typography;
 
 export const RootContainer = () => {
   const themeToken = useThemeToken();
@@ -22,6 +29,7 @@ export const RootContainer = () => {
     ClientAppConfig,
     void
   >();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [messageApi, contextHolder] = message.useMessage();
   const { lastMessage: orderStatusChangeNotification } = useWsNotification<Order>('orderStatus');
@@ -33,14 +41,24 @@ export const RootContainer = () => {
     if (orderStatusChangeNotification) {
       messageApi.open({
         type: 'success',
-        content: `Статус заказа обновлен - ${orderStatusChangeNotification.payload?.orderStatus}`,
+        duration: 3000,
+        content: (
+          <Space>
+            {`Статус заказа: ${orderStatusChangeNotification.payload?.orderStatus}`}
+
+            <ChoppAnimatedIcon animation='rotate' icon={<RocketOutlined rotate={50} />} />
+          </Space>
+        ),
       });
     }
   }, [messageApi, orderStatusChangeNotification]);
 
   useEffect(() => {
-    fetchShoppingCartDispatch({ action: fetchShoppingCart() });
-    fetchClientAppConfigCartDispatch({ action: fetchClientAppConfig() });
+    if (localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN)) {
+      fetchShoppingCartDispatch({ action: fetchShoppingCart() });
+      fetchClientAppConfigCartDispatch({ action: fetchClientAppConfig() });
+      dispatch(fetchCurrentUser());
+    }
   }, []);
 
   return (
@@ -49,7 +67,6 @@ export const RootContainer = () => {
         <div className="sticky top-0 z-50">
           <RootHeader className="h-14" />
         </div>
-
         <Content style={{ background: themeToken.colorBgBase }} className="px-4 pt-6 flex-auto">
           <Outlet />
         </Content>

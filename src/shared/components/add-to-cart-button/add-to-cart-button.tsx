@@ -88,7 +88,8 @@ export const AddToCartButton = ({ product, showDelete }: Props) => {
     <Button
       onClick={onAddToCartClick}
       type="primary"
-      icon={<PlusOutlined style={{ fontSize: 12 }} />}
+      className="!w-9 !h-9"
+      icon={<PlusOutlined />}
     />
   );
 };
