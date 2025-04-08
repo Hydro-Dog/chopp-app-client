@@ -37,7 +37,10 @@ export const ProductCard = ({ product, onClick }: Props) => {
           {product.title}
         </Text>
 
-        <Paragraph type='secondary' ellipsis={{ rows: 3 }} className="h-14 overflow-hidden text-sm">
+        <Paragraph
+          type="secondary"
+          ellipsis={{ rows: 3 }}
+          className=" h-14 overflow-hidden text-sm">
           {product.description}
         </Paragraph>
 
