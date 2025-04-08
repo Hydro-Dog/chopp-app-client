@@ -1,16 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  ErrorResponse,
-  sanitizedUser,
-  PaginationRequestQuery,
-  PaginationResponse,
-  User,
-  sanitizePhoneNumber,
-} from '@shared/index';
+import { ErrorResponse, User, sanitizePhoneNumber } from '@shared/index';
 import { axiosPrivate } from '@store/middleware';
 import axios from 'axios';
-import { use } from 'node_modules/i18next';
-import { UserAuthorization, UserLoginDTO, UserRegisterDTO } from './types';
+import { UserAuthorization } from './types';
 
 export const fetchCurrentUser = createAsyncThunk<User, void, { rejectValue: ErrorResponse }>(
   '/fetchCurrentUser',
@@ -50,7 +42,7 @@ export const updateCurrentUser = createAsyncThunk<User, User, { rejectValue: Err
   '/updateCurrentUser',
   async (userData, thunkAPI) => {
     try {
-      const response = await axiosPrivate.put<User>('/user', userData);
+      const response = await axiosPrivate.put<User>('/users/currentUser', userData);
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -167,7 +159,7 @@ export const verifyByCode = createAsyncThunk<
   try {
     const response = await axiosPrivate.post<UserAuthorization>(`/auth/verify`, {
       phoneNumber: sanitizePhoneNumber(body.phoneNumber),
-      code: body.code
+      code: body.code,
     });
     return response.data;
   } catch (error) {
