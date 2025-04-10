@@ -30,7 +30,7 @@ export const ChoppPhoneInput = ({
   const themeToken = useThemeToken();
   return (
     <InputMask
-      ref={ref && undefined}
+      inputRef={ref}
       mask="+7 (999) 999-99-99"
       value={value}
       onChange={onChange}
