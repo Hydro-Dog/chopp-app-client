@@ -1,16 +1,14 @@
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import InputMask from 'react-input-mask';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ChoppPhoneInput } from '@shared/components';
 import { useAutoFocus, useSuperDispatch } from '@shared/hooks';
 import { User } from '@shared/types';
-import { sanitizePhoneNumber } from '@shared/utils';
 import { getVerificationCode } from '@store/slices';
-import { Button, Flex, Form, Modal, Typography } from 'antd';
+import { Button, Flex, Form, Typography } from 'antd';
 import { z } from 'zod';
 import { VIEW_MODE } from '../../enum/view-mode';
-import { ChoppPhoneInput } from '@shared/components';
 
 const { Item } = Form;
 
@@ -66,7 +64,6 @@ export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
   };
 
   useAutoFocus({ open: true, inputRef });
-  const [numberInputIsFocus, setNumberInputFocus] = useState(false);
 
   return (
     <Flex vertical>
@@ -95,17 +92,9 @@ export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
               <ChoppPhoneInput
                 ref={inputRef}
                 value={value}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log('val', event.target.value);
-                  onChange(event.target.value);
-                }}
-                onBlur={() => {
-                  setNumberInputFocus(false);
-                  onBlur();
-                }}
-                errors={errors}
-                setNumberInputFocus={setNumberInputFocus}
-                numberInputIsFocus={numberInputIsFocus}
+                onChange={onChange}
+                onBlur={onBlur}
+                errors={errors.phoneNumber}
               />
             )}
           />

@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useThemeToken } from '@shared/hooks';
 import { ChoppPhoneInput, ChoppShadowCard } from '@shared/index';
 import { Flex, Form, Input } from 'antd';
 
@@ -34,7 +32,6 @@ type Props = {
 };
 
 export const CreateOrderForm = ({ errors, control }: Props) => {
-  const [numberInputIsFocus, setNumberInputFocus] = useState(false);
   const { t } = useTranslation();
 
   return (
@@ -70,13 +67,8 @@ export const CreateOrderForm = ({ errors, control }: Props) => {
                 <ChoppPhoneInput
                   value={value}
                   onChange={onChange}
-                  onBlur={() => {
-                    setNumberInputFocus(false);
-                    onBlur();
-                  }}
-                  errors={errors}
-                  setNumberInputFocus={setNumberInputFocus}
-                  numberInputIsFocus={numberInputIsFocus}
+                  onBlur={onBlur}
+                  errors={errors.phoneNumber}
                 />
               )}
             />

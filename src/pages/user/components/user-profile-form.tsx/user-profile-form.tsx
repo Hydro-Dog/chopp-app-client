@@ -4,20 +4,19 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useUserProfileFormSchema } from '@pages/user/hooks';
-import { useSuperDispatch, useThemeToken } from '@shared/hooks';
+import { ChoppPhoneInput } from '@shared/components';
+import { useSuperDispatch } from '@shared/hooks';
 import { User } from '@shared/types';
 import { formatPhoneNumber, sanitizePhoneNumber } from '@shared/utils';
 import { updateCurrentUser } from '@store/slices';
 import { RootState } from '@store/store';
 import { Button, Flex, Form, Input } from 'antd';
 import { z } from 'zod';
-import { ChoppPhoneInput } from '@shared/components';
 const { Item } = Form;
 
 export const UserProfileForm = () => {
   const { t } = useTranslation();
   const { currentUser } = useSelector((state: RootState) => state.user);
-  const [numberInputIsFocus, setNumberInputFocus] = useState(false);
   const [isEdit, setEdit] = useState(false);
 
   const { superDispatch } = useSuperDispatch<User, unknown>();
@@ -101,13 +100,8 @@ export const UserProfileForm = () => {
                   );
                   onChange(event);
                 }}
-                onBlur={() => {
-                  setNumberInputFocus(false);
-                  onBlur();
-                }}
-                errors={errors}
-                setNumberInputFocus={setNumberInputFocus}
-                numberInputIsFocus={numberInputIsFocus}
+                onBlur={onBlur}
+                errors={errors.phoneNumber}
               />
             )}
           />
