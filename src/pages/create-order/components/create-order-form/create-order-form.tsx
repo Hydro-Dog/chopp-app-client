@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import InputMask from 'react-input-mask';
-import { useThemeToken } from '@shared/hooks';
-import { ChoppShadowCard } from '@shared/index';
+import { ChoppPhoneInput, ChoppShadowCard } from '@shared/index';
 import { Flex, Form, Input } from 'antd';
 
 const { Item } = Form;
@@ -35,8 +32,6 @@ type Props = {
 };
 
 export const CreateOrderForm = ({ errors, control }: Props) => {
-  const themeToken = useThemeToken();
-  const [numberInputIsFocus, setNumberInputFocus] = useState(false);
   const { t } = useTranslation();
 
   return (
@@ -69,23 +64,12 @@ export const CreateOrderForm = ({ errors, control }: Props) => {
               control={control}
               name="phoneNumber"
               render={({ field: { onChange, onBlur, value } }) => (
-                <InputMask
-                  mask="+7 (999) 999-99-99"
+                <ChoppPhoneInput
                   value={value}
                   onChange={onChange}
-                  onBlur={() => {
-                    setNumberInputFocus(false);
-                    onBlur();
-                  }}
-                  onFocus={() => setNumberInputFocus(true)}
-                  maskChar="_"
-                  className="w-full outline-none text-[18px] px-[11px] py-[6px] rounded-lg"
-                  style={{
-                    background: themeToken.colorBgBase,
-                    // eslint-disable-next-line max-len
-                    border: `1px solid ${errors.phoneNumber ? themeToken.colorError : numberInputIsFocus ? themeToken.colorPrimary : themeToken.colorBorder}`,
-                    transition: 'border-color 0.7s ease',
-                  }}></InputMask>
+                  onBlur={onBlur}
+                  errors={errors.phoneNumber}
+                />
               )}
             />
           </Item>

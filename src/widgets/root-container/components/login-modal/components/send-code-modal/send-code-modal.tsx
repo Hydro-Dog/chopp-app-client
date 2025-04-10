@@ -1,13 +1,12 @@
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import InputMask from 'react-input-mask';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ChoppPhoneInput } from '@shared/components';
 import { useAutoFocus, useSuperDispatch } from '@shared/hooks';
 import { User } from '@shared/types';
-import { sanitizePhoneNumber } from '@shared/utils';
 import { getVerificationCode } from '@store/slices';
-import { Button, Flex, Form, Modal, Typography } from 'antd';
+import { Button, Flex, Form, Typography } from 'antd';
 import { z } from 'zod';
 import { VIEW_MODE } from '../../enum/view-mode';
 
@@ -89,18 +88,13 @@ export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
           <Controller
             name="phoneNumber"
             control={control}
-            render={({ field }) => (
-              <InputMask
-                {...field}
-                onChange={(val) => {
-                  console.log('val', val);
-                  field.onChange(val);
-                }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ChoppPhoneInput
                 ref={inputRef}
-                mask="+7 (999) 999-99-99"
-                maskChar="_"
-                className="w-full p-2 border rounded-md mt-5"
-                placeholder="+7 (___) ___-__-__"
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                errors={errors.phoneNumber}
               />
             )}
           />
