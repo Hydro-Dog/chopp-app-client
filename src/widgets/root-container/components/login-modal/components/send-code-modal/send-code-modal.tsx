@@ -10,6 +10,7 @@ import { getVerificationCode } from '@store/slices';
 import { Button, Flex, Form, Modal, Typography } from 'antd';
 import { z } from 'zod';
 import { VIEW_MODE } from '../../enum/view-mode';
+import { ChoppPhoneInput } from '@shared/components';
 
 const { Item } = Form;
 
@@ -65,6 +66,7 @@ export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
   };
 
   useAutoFocus({ open: true, inputRef });
+  const [numberInputIsFocus, setNumberInputFocus] = useState(false);
 
   return (
     <Flex vertical>
@@ -89,18 +91,21 @@ export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
           <Controller
             name="phoneNumber"
             control={control}
-            render={({ field }) => (
-              <InputMask
-                {...field}
-                onChange={(val) => {
-                  console.log('val', val);
-                  field.onChange(val);
-                }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ChoppPhoneInput
                 ref={inputRef}
-                mask="+7 (999) 999-99-99"
-                maskChar="_"
-                className="w-full p-2 border rounded-md mt-5"
-                placeholder="+7 (___) ___-__-__"
+                value={value}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  console.log('val', event.target.value);
+                  onChange(event.target.value);
+                }}
+                onBlur={() => {
+                  setNumberInputFocus(false);
+                  onBlur();
+                }}
+                errors={errors}
+                setNumberInputFocus={setNumberInputFocus}
+                numberInputIsFocus={numberInputIsFocus}
               />
             )}
           />

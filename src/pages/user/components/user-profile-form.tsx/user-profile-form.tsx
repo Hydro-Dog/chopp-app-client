@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import InputMask from 'react-input-mask';
 import { useSelector } from 'react-redux';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useUserProfileFormSchema } from '@pages/user/hooks';
@@ -18,7 +17,6 @@ const { Item } = Form;
 export const UserProfileForm = () => {
   const { t } = useTranslation();
   const { currentUser } = useSelector((state: RootState) => state.user);
-  const themeToken = useThemeToken();
   const [numberInputIsFocus, setNumberInputFocus] = useState(false);
   const [isEdit, setEdit] = useState(false);
 
