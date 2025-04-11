@@ -12,22 +12,14 @@ import {
   SlidersFilled,
   SlidersOutlined,
 } from '@ant-design/icons';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import ChatRoundedIcon from '@mui/icons-material/ChatRounded';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import RoomServiceIcon from '@mui/icons-material/RoomService';
-import SettingsIcon from '@mui/icons-material/Settings';
-import StoreIcon from '@mui/icons-material/Store';
-import { useChatsContext } from '@pages/chats/chats-context';
 import { ROUTES } from '@shared/enum';
 import { useFetchChatStats } from '@shared/hooks/use-fetch-chats-stats copy';
 import { useNotificationContext, useTheme } from '@shared/index';
 import { FETCH_STATUS } from '@shared/index';
 import { logoutUser } from '@store/slices';
 import { AppDispatch, RootState } from '@store/store';
-import { Badge, Layout, Menu, Tooltip } from 'antd';
+import { Layout, Menu } from 'antd';
 import { SiderTheme } from 'antd/es/layout/Sider';
 import { useGetMenuItemByUrl } from './hooks/index';
 
@@ -40,7 +32,6 @@ export const MainMenuWidget = ({ children }: PropsWithChildren<Record<never, any
   const dispatch = useDispatch<AppDispatch>();
   const { logoutStatus } = useSelector((state: RootState) => state.user);
   const { selectedMenuKeys } = useGetMenuItemByUrl();
-  const { chatsStats } = useChatsContext();
   const { showNotification } = useNotificationContext();
 
   const onMenuItemClick = (path: string) => {
@@ -56,7 +47,6 @@ export const MainMenuWidget = ({ children }: PropsWithChildren<Record<never, any
       showNotification({ type: 'error', message: 'Ошибка', description: 'Неудачный логаут' });
     } else if (logoutStatus === FETCH_STATUS.SUCCESS) {
       navigate(ROUTES.SIGN_IN);
-      // dispatch(setLogoutStatus(FETCH_STATUS.IDLE));
     }
   }, [dispatch, logoutStatus, navigate, showNotification]);
 
@@ -96,31 +86,12 @@ export const MainMenuWidget = ({ children }: PropsWithChildren<Record<never, any
       ),
       onClick: () => onMenuItemClick(ROUTES.PAYMENTS),
     },
-    // {
-    //   key: ROUTES.CHATS,
-    //   icon: <ChatRoundedIcon />,
-    //   label: (
-    //     <Tooltip title={JSON.stringify(chatsStats)}>
-    //       <div className="flex items-center gap-1">
-    //         <div>{t('CHATS')}</div>
-    //         <Badge size="default" count={0} />
-    //       </div>
-    //     </Tooltip>
-    //   ),
-    //   onClick: () => onMenuItemClick(ROUTES.CHATS),
-    // },
     {
       key: ROUTES.SETTINGS,
       icon: selectedMenuKeys.includes(ROUTES.SETTINGS) ? <SlidersFilled /> : <SlidersOutlined />,
       label: t('SETTINGS'),
       onClick: () => onMenuItemClick(ROUTES.SETTINGS),
     },
-    // {
-    //   key: ROUTES.ANALYTICS,
-    //   icon: <AnalyticsIcon />,
-    //   label: t('ANALYTICS'),
-    //   onClick: () => onMenuItemClick(ROUTES.ANALYTICS),
-    // },
     {
       key: 'logout',
       icon: <LogoutRoundedIcon rotate={180} />,

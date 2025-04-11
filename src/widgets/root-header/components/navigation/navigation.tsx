@@ -28,18 +28,6 @@ export const Navigation = () => {
 
   return (
     <div className="flex justify-end my-2 gap-2">
-      {/* <Button
-        shape="circle"
-        variant="outlined"
-        icon={<HomeOutlined />}
-        style={{
-          fontWeight: 'bold',
-          background: isLocation('/') ? themeToken.colorPrimaryBg : themeToken.colorBgBase,
-        }}
-        onClick={() => {
-            navigate('/');
-        }}
-      /> */}
       <Flex align="center" gap={12}>
         {themeSwitcher}
         <ChoppShadowButton
