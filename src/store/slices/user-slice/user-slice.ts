@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ErrorResponse, PaginationResponse, STORAGE_KEYS, User } from '@shared/index';
+import { ErrorResponse, STORAGE_KEYS, User } from '@shared/index';
 import { FETCH_STATUS } from '@shared/types/fetch-status';
 import {
   updateCurrentUser,
@@ -23,8 +23,6 @@ export type UserState = {
   updateCurrentUserError: ErrorResponse | null;
   logoutStatus: FETCH_STATUS;
   logoutError: ErrorResponse | null;
-  loginStatus: FETCH_STATUS;
-  loginError: ErrorResponse | null;
   getVerificationCodeStatus: FETCH_STATUS;
   getVerificationCodeError: ErrorResponse | null;
   verifyByCodeStatus: FETCH_STATUS;
@@ -39,8 +37,6 @@ const initialState: UserState = {
   updateCurrentUserError: null,
   logoutStatus: FETCH_STATUS.IDLE,
   logoutError: null,
-  loginStatus: FETCH_STATUS.IDLE,
-  loginError: null,
   getVerificationCodeStatus: FETCH_STATUS.IDLE,
   getVerificationCodeError: null,
   verifyByCodeStatus: FETCH_STATUS.IDLE,
@@ -51,9 +47,6 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setLoginStatus: (state, action: PayloadAction<FETCH_STATUS>) => {
-      state.loginStatus = action.payload;
-    },
     setLogoutStatus: (state, action: PayloadAction<FETCH_STATUS>) => {
       state.logoutStatus = action.payload;
     },
@@ -155,7 +148,7 @@ export const userSlice = createSlice({
       .addCase(getVerificationCode.pending, (state) => {
         state.getVerificationCodeStatus = FETCH_STATUS.LOADING;
       })
-      .addCase(getVerificationCode.fulfilled, (state, action) => {
+      .addCase(getVerificationCode.fulfilled, (state) => {
         state.getVerificationCodeStatus = FETCH_STATUS.SUCCESS;
 
         // localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, action.payload.accessToken);
@@ -186,4 +179,4 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setLoginStatus, setLogoutStatus } = userSlice.actions;
+export const { setLogoutStatus } = userSlice.actions;
