@@ -5,7 +5,7 @@ import {
   updateCurrentUser,
   fetchCurrentUser,
   // loginUser,
-  logoutUser,
+  logout,
   // loginByCode,
   verifyByCode,
   getVerificationCode,
@@ -23,6 +23,8 @@ export type UserState = {
   updateCurrentUserError: ErrorResponse | null;
   logoutStatus: FETCH_STATUS;
   logoutError: ErrorResponse | null;
+  loginStatus: FETCH_STATUS;
+  loginError: ErrorResponse | null;
   getVerificationCodeStatus: FETCH_STATUS;
   getVerificationCodeError: ErrorResponse | null;
   verifyByCodeStatus: FETCH_STATUS;
@@ -37,6 +39,8 @@ const initialState: UserState = {
   updateCurrentUserError: null,
   logoutStatus: FETCH_STATUS.IDLE,
   logoutError: null,
+  loginStatus: FETCH_STATUS.IDLE,
+  loginError: null,
   getVerificationCodeStatus: FETCH_STATUS.IDLE,
   getVerificationCodeError: null,
   verifyByCodeStatus: FETCH_STATUS.IDLE,
@@ -47,12 +51,12 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // setLoginStatus: (state, action: PayloadAction<FETCH_STATUS>) => {
-    //   state.loginStatus = action.payload;
-    // },
-    // setLogoutStatus: (state, action: PayloadAction<FETCH_STATUS>) => {
-    //   state.logoutStatus = action.payload;
-    // },
+    setLoginStatus: (state, action: PayloadAction<FETCH_STATUS>) => {
+      state.loginStatus = action.payload;
+    },
+    setLogoutStatus: (state, action: PayloadAction<FETCH_STATUS>) => {
+      state.logoutStatus = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -135,14 +139,16 @@ export const userSlice = createSlice({
       //   state.loginStatus = FETCH_STATUS.ERROR;
       //   state.loginError = action.payload ?? { message: 'Failed to login user' };
       // })
-      .addCase(logoutUser.pending, (state) => {
+      .addCase(logout.pending, (state) => {
         state.logoutStatus = FETCH_STATUS.LOADING;
       })
-      .addCase(logoutUser.fulfilled, (state) => {
+      .addCase(logout.fulfilled, (state) => {
         state.logoutStatus = FETCH_STATUS.SUCCESS;
-        localStorage.removeItem(STORAGE_KEYS.TOKEN);
+        localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+        localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+        window.location.reload();
       })
-      .addCase(logoutUser.rejected, (state, action) => {
+      .addCase(logout.rejected, (state, action) => {
         state.logoutStatus = FETCH_STATUS.ERROR;
         state.logoutError = action.payload ?? { message: 'Failed to logout user' };
       })
@@ -180,4 +186,4 @@ export const userSlice = createSlice({
   },
 });
 
-// export const { setLoginStatus, setLogoutStatus } = userSlice.actions;
+export const { setLoginStatus, setLogoutStatus } = userSlice.actions;
