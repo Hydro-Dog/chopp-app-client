@@ -17,10 +17,10 @@ export const UserPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { logoutStatus } = useSelector((state: RootState) => state.user);
   const { showNotification } = useNotificationContext();
-  const superDispatch = useSuperDispatch();
+  const { superDispatch } = useSuperDispatch();
 
   const onLogout = () => {
-    superDispatch.superDispatch({
+    superDispatch({
       action: logout({ refreshToken: String(localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN)) }),
       thenHandler: () => {
         if (logoutStatus === FETCH_STATUS.ERROR) {
