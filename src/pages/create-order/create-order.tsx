@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useLoginGuard, useSuperDispatch } from '@shared/hooks';
 import { ChoppSubPage } from '@shared/index';
 import { Order } from '@shared/types';
-import { formatPhoneNumber } from '@shared/utils';
+import { formatPhoneNumber, sanitizePhoneNumber } from '@shared/utils';
 import { createOrder } from '@store/slices';
 import { CreateOrderDTO } from '@store/slices/orders-slice/types';
 import { resetShoppingCart } from '@store/slices/shopping-cart-slice';
@@ -66,7 +66,7 @@ export const CreateOrder = () => {
         comment: data?.comment,
         address,
         name: data.name,
-        phoneNumber: data.phoneNumber,
+        phoneNumber: sanitizePhoneNumber(data.phoneNumber),
       } as CreateOrderDTO),
       thenHandler: (order) => {
         dispatch(resetShoppingCart());

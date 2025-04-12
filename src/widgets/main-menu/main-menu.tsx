@@ -13,14 +13,13 @@ import {
   SlidersOutlined,
 } from '@ant-design/icons';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import { useChatsContext } from '@pages/chats/chats-context';
 import { ROUTES, STORAGE_KEYS } from '@shared/enum';
 import { useFetchChatStats } from '@shared/hooks/use-fetch-chats-stats copy';
 import { useNotificationContext, useTheme } from '@shared/index';
 import { FETCH_STATUS } from '@shared/index';
-import { logout, setLogoutStatus } from '@store/slices';
+import { logout } from '@store/slices';
 import { AppDispatch, RootState } from '@store/store';
-import { Badge, Layout, Menu, Tooltip } from 'antd';
+import { Layout, Menu } from 'antd';
 import { SiderTheme } from 'antd/es/layout/Sider';
 import { useGetMenuItemByUrl } from './hooks/index';
 
@@ -33,7 +32,6 @@ export const MainMenuWidget = ({ children }: PropsWithChildren<Record<never, any
   const dispatch = useDispatch<AppDispatch>();
   const { logoutStatus } = useSelector((state: RootState) => state.user);
   const { selectedMenuKeys } = useGetMenuItemByUrl();
-  const { chatsStats } = useChatsContext();
   const { showNotification } = useNotificationContext();
 
   const onMenuItemClick = (path: string) => {
@@ -48,7 +46,7 @@ export const MainMenuWidget = ({ children }: PropsWithChildren<Record<never, any
     if (logoutStatus === FETCH_STATUS.ERROR) {
       showNotification({ type: 'error', message: 'Ошибка', description: 'Неудачный логаут' });
     } else if (logoutStatus === FETCH_STATUS.SUCCESS) {
-      dispatch(setLogoutStatus(FETCH_STATUS.IDLE));
+      navigate(ROUTES.SIGN_IN);
     }
   }, [dispatch, logoutStatus, navigate, showNotification]);
 
@@ -88,31 +86,12 @@ export const MainMenuWidget = ({ children }: PropsWithChildren<Record<never, any
       ),
       onClick: () => onMenuItemClick(ROUTES.PAYMENTS),
     },
-    // {
-    //   key: ROUTES.CHATS,
-    //   icon: <ChatRoundedIcon />,
-    //   label: (
-    //     <Tooltip title={JSON.stringify(chatsStats)}>
-    //       <div className="flex items-center gap-1">
-    //         <div>{t('CHATS')}</div>
-    //         <Badge size="default" count={0} />
-    //       </div>
-    //     </Tooltip>
-    //   ),
-    //   onClick: () => onMenuItemClick(ROUTES.CHATS),
-    // },
     {
       key: ROUTES.SETTINGS,
       icon: selectedMenuKeys.includes(ROUTES.SETTINGS) ? <SlidersFilled /> : <SlidersOutlined />,
       label: t('SETTINGS'),
       onClick: () => onMenuItemClick(ROUTES.SETTINGS),
     },
-    // {
-    //   key: ROUTES.ANALYTICS,
-    //   icon: <AnalyticsIcon />,
-    //   label: t('ANALYTICS'),
-    //   onClick: () => onMenuItemClick(ROUTES.ANALYTICS),
-    // },
     {
       key: 'logout',
       icon: <LogoutRoundedIcon rotate={180} />,
