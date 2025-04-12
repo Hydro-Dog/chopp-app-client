@@ -46,11 +46,7 @@ const initialState: UserState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    setLogoutStatus: (state, action: PayloadAction<FETCH_STATUS>) => {
-      state.logoutStatus = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCurrentUser.pending, (state) => {
@@ -178,5 +174,3 @@ export const userSlice = createSlice({
     // });
   },
 });
-
-export const { setLogoutStatus } = userSlice.actions;
