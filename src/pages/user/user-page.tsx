@@ -1,10 +1,13 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { HomeOutlined } from '@ant-design/icons';
 import { ChoppShadowCard, ChoppSubPage } from '@shared/components';
 import { useNotificationContext } from '@shared/context';
 import { STORAGE_KEYS } from '@shared/enum';
 import { useSuperDispatch } from '@shared/hooks';
 import { logout } from '@store/slices';
+import { RootState } from '@store/store';
 import { Button, Flex, Typography } from 'antd';
 import { UserProfileForm } from './components';
 const { Title } = Typography;
@@ -13,6 +16,8 @@ export const UserPage = () => {
   const { t } = useTranslation();
   const { showNotification } = useNotificationContext();
   const { superDispatch } = useSuperDispatch();
+  const { currentUser } = useSelector((state: RootState) => state.user);
+  const [isAuth, setAuth] = useState<boolean>(currentUser !== null);
 
   const onLogout = () => {
     superDispatch({
@@ -22,6 +27,13 @@ export const UserPage = () => {
       },
     });
   };
+  useEffect(() => {
+    if (!currentUser) {
+      setAuth(false);
+    } else {
+      setAuth(true);
+    }
+  }, [currentUser]);
 
   return (
     <ChoppSubPage
@@ -30,9 +42,11 @@ export const UserPage = () => {
           <Title level={3} className="!m-0 !font-bold">
             {t('PROFILE')}
           </Title>
-          <Button onClick={onLogout} danger size="large">
-            {t('EXIT')}
-          </Button>
+          {isAuth && (
+            <Button onClick={onLogout} danger size="large">
+              {t('EXIT')}{' '}
+            </Button>
+          )}
         </Flex>
       }
       path="/"
