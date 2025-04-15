@@ -14,18 +14,25 @@ const { Title } = Typography;
 
 export const UserPage = () => {
   const { t } = useTranslation();
-  const { showNotification } = useNotificationContext();
+  const { showErrorNotification } = useNotificationContext();
   const { superDispatch } = useSuperDispatch();
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [isAuth, setAuth] = useState<boolean>(currentUser !== null);
 
   const onLogout = () => {
-    superDispatch({
-      action: logout({ refreshToken: String(localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN)) }),
-      catchHandler: () => {
-        showNotification({ type: 'error', message: 'Ошибка', description: 'Неудачный логаут' });
-      },
-    });
+    if (!localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN))
+      showErrorNotification({ type: 'error', message: 'Ошибка', description: 'Неудачный логаут' });
+    else
+      superDispatch({
+        action: logout({ refreshToken: String(localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN)) }),
+        catchHandler: () => {
+          showErrorNotification({
+            type: 'error',
+            message: 'Ошибка',
+            description: 'Неудачный логаут',
+          });
+        },
+      });
   };
   useEffect(() => {
     if (!currentUser) {
