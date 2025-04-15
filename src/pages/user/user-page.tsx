@@ -22,7 +22,6 @@ export const UserPage = () => {
   const onLogout = () => {
     if (!localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN))
       showErrorNotification({
-        type: 'error',
         message: t('ERROR'),
         description: t('ERRORS.ERROR_OF_LOGOUT'),
       });
@@ -31,7 +30,6 @@ export const UserPage = () => {
         action: logout({ refreshToken: String(localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN)) }),
         catchHandler: () => {
           showErrorNotification({
-            type: 'error',
             message: t('ERROR'),
             description: t('ERRORS.ERROR_OF_LOGOUT'),
           });
