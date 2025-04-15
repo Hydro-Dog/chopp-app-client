@@ -21,15 +21,19 @@ export const UserPage = () => {
 
   const onLogout = () => {
     if (!localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN))
-      showErrorNotification({ type: 'error', message: 'Ошибка', description: 'Неудачный логаут' });
+      showErrorNotification({
+        type: 'error',
+        message: t('ERROR'),
+        description: t('ERRORS.ERROR_OF_LOGOUT'),
+      });
     else
       superDispatch({
         action: logout({ refreshToken: String(localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN)) }),
         catchHandler: () => {
           showErrorNotification({
             type: 'error',
-            message: 'Ошибка',
-            description: 'Неудачный логаут',
+            message: t('ERROR'),
+            description: t('ERRORS.ERROR_OF_LOGOUT'),
           });
         },
       });
