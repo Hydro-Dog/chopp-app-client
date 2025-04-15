@@ -51,7 +51,8 @@
     "IMAGE_INVALID_FORMAT": "Принимаемый формат изображения {{format}}",
     "IMAGE_TOO_BIG": "Объем изображения не должен превышать {{mb}}MB",
     "CATEGORY_NAME_NOT_THE_SAME": "Название категории не совпадает с выбранной: \"{{categoryTitle}}\"",
-    "PRODUCT_ID_IS_REQUIRED": "Недоступен ID товара"
+    "PRODUCT_ID_IS_REQUIRED": "Недоступен ID товара",
+    "ERROR_OF_LOGOUT": "Неудачный логаут"
   },
   "NAME": "Имя",
   "FULL_NAME": "ФИО",

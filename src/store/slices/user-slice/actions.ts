@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ErrorResponse, User, sanitizePhoneNumber } from '@shared/index';
 import { axiosPrivate } from '@store/middleware';
 import axios from 'axios';
-import { UserAuthorization } from './types';
+import { UserAuthorization, UserLogout } from './types';
 
 export const fetchCurrentUser = createAsyncThunk<User, void, { rejectValue: ErrorResponse }>(
   '/fetchCurrentUser',
@@ -90,21 +90,22 @@ export const updateCurrentUser = createAsyncThunk<User, User, { rejectValue: Err
 //   }
 // });
 
-export const logoutUser = createAsyncThunk<void, void, { rejectValue: ErrorResponse }>(
-  '/logoutUser',
-  async (_, thunkAPI) => {
-    try {
-      const response = await axiosPrivate.get<void>(`/logout`);
-      return response.data;
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
-      } else {
-        return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
-      }
+export const logout = createAsyncThunk<
+  { message: string },
+  UserLogout,
+  { rejectValue: ErrorResponse }
+>('/logout', async (data, thunkAPI) => {
+  try {
+    const response = await axiosPrivate.post<{ message: string }>(`/auth/logout`, data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return thunkAPI.rejectWithValue(error.response.data as ErrorResponse);
+    } else {
+      return thunkAPI.rejectWithValue({ message: 'An unknown error occurred' });
     }
-  },
-);
+  }
+});
 
 // export const fetchUsers = createAsyncThunk<
 //   PaginationResponse<User>, // Тип возвращаемого значения
