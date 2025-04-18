@@ -1,19 +1,16 @@
-import { useRef, useState } from 'react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import InputMask from 'react-input-mask';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSuperDispatch } from '@shared/hooks';
 import { User } from '@shared/types';
-import { Button, Flex, Form, Modal, Typography } from 'antd';
+import { Modal, Typography } from 'antd';
 import { z } from 'zod';
+import { InputCodeModal } from './components/input-code-modal';
 import { SendCodeModal } from './components/send-code-modal/send-code-modal';
 import { VIEW_MODE } from './enum/view-mode';
-import { InputCodeModal } from './components/input-code-modal';
 
-const { Item } = Form;
-
-const { Text, Title, Link } = Typography;
+const { Title } = Typography;
 
 type Props = {
   isOpen: boolean;
@@ -49,7 +46,7 @@ export const LoginModal = ({ isOpen, close }: Props) => {
   const handleClose = () => {
     reset();
     close();
-    setViewMode(VIEW_MODE.INITIAL)
+    setViewMode(VIEW_MODE.INITIAL);
   };
 
   return (

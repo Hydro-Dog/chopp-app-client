@@ -1,14 +1,12 @@
-import { useRef, useState } from 'react';
+import { KeyboardEventHandler, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useAutoFocus, useSuperDispatch } from '@shared/hooks';
 import { useNotificationContext } from '@shared/index';
 import { User } from '@shared/types';
-import { fetchCurrentUser, UserAuthorization, verifyByCode, wsConnect } from '@store/slices';
-import { Button, Flex, Input, Typography } from 'antd';
 import { AppDispatch } from '@store/index';
-import { useDispatch } from 'react-redux';
+import { fetchCurrentUser, UserAuthorization, verifyByCode, wsConnect } from '@store/slices';
 import { fetchShoppingCart } from '@store/slices/shopping-cart-slice';
-
-const { Text, Title, Link } = Typography;
+import { Button, Flex, Input } from 'antd';
 
 type Props = {
   phoneNumber: string;
@@ -28,7 +26,7 @@ export const InputCodeModal = ({ closeModal, phoneNumber }: Props) => {
     { code: string }
   >();
   const { superDispatch: superDispatchFetchCurrentUser } = useSuperDispatch<User, void>();
-  const { showErrorNotification, showSuccessNotification } = useNotificationContext();
+  const { showSuccessNotification } = useNotificationContext();
   const dispatch = useDispatch<AppDispatch>();
 
   const onSubmit = (code: string) => {
@@ -52,11 +50,15 @@ export const InputCodeModal = ({ closeModal, phoneNumber }: Props) => {
       },
     });
   };
-
+  const onEnter: KeyboardEventHandler<HTMLDivElement> = (e) => {
+    if (e.key === 'Enter' && code.length === 6) {
+      onSubmit(code);
+    }
+  };
   return (
     <Flex vertical gap={20}>
       <Flex justify="center">
-        <Input.OTP onChange={setCode} />
+        <Input.OTP onKeyDown={onEnter} onChange={setCode} />
       </Flex>
       <Button onClick={() => onSubmit(code)} disabled={code.length < 6} size="large" type="primary">
         Отправить
