@@ -83,7 +83,7 @@ export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
         </Flex>
       </Flex>
 
-      <Form>
+      <Form onFinish={handleSubmit(onSubmitTelegram)}>
         <Item validateStatus={errors.phoneNumber ? 'error' : ''} help={errors.phoneNumber?.message}>
           <Controller
             name="phoneNumber"
