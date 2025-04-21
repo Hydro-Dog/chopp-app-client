@@ -8,7 +8,7 @@ export const useWsNotification = <T>(type: keyof NotificationsState) => {
   );
 
   // Получаем последнее сообщение из отфильтрованных
-  const lastMessage = notification[notification.length - 1] || null;
+  const lastMessage = notification?.[notification?.length - 1] || null;
 
   return { notification, lastMessage };
 };

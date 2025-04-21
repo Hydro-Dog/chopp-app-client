@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Order } from '@shared/types';
+import { ClientAppConfig, Order } from '@shared/types';
 import { WsMessage } from '@shared/types/ws-message';
 import { WS_MESSAGE_TYPE } from '@shared/types/ws-message-type';
 
@@ -8,6 +8,7 @@ export type NotificationsState = {
   newPayment: WsMessage[];
   orderStatus: WsMessage<Order>[];
   paymentStatus: WsMessage[];
+  clientAppConfigStatus: WsMessage<ClientAppConfig>[];
 };
 
 const initialState: NotificationsState = {
@@ -15,6 +16,7 @@ const initialState: NotificationsState = {
   newPayment: [],
   orderStatus: [],
   paymentStatus: [],
+  clientAppConfigStatus: [],
 };
 
 export const notificationsSlice = createSlice({
@@ -38,6 +40,10 @@ export const notificationsSlice = createSlice({
             break;
           case WS_MESSAGE_TYPE.PAYMENT_STATUS:
             state.paymentStatus.push(action.payload);
+            break;
+          case WS_MESSAGE_TYPE.CLIENT_APP_CONFIG_STATUS:
+            console.log('CLIENT_APP_CONFIG_STATUS', action.payload);
+            state.clientAppConfigStatus.push(action.payload);
             break;
           default:
             console.error('Нет обработчика для WS cообщения с типом action.payload?.type');

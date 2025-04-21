@@ -19,6 +19,7 @@ export const axiosDefault = axios.create({ baseURL: import.meta.env.VITE_BASE_UR
 const refreshAccessToken = async () => {
   try {
     const refreshToken = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
+    console.log('-----refreshToken: ', refreshToken)
     const response = await axiosDefault.post('auth/refresh', { refreshToken });
     localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, response.data.accessToken);
     localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, response.data.refreshToken);

@@ -1,32 +1,20 @@
 import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ORDER_STATUS } from '@shared/enum';
-import { Order, Product, PropsWithChildrenOnly } from '@shared/types';
-import { LoginModal } from './components';
+import { useWsNotification } from '@shared/index';
+import { ClientAppConfig, Order, Product, PropsWithChildrenOnly } from '@shared/types';
+import { WS_MESSAGE_TYPE } from '@shared/types/ws-message-type';
 import { useBoolean } from 'usehooks-ts';
+import { LoginModal } from './components';
+import { AppConfig } from 'antd/es/app/context';
 
 type RootContextType = {
   isLoginModalOpen: boolean;
   openLoginModal: () => void;
   closeLoginModal: () => void;
-  //   pageOrders: Order[];
-  //   setPageOrders: Dispatch<SetStateAction<Order[]>>;
-  //   status: string[];
-  //   setStatus: Dispatch<SetStateAction<string[]>>;
-  //   limit: number;
-  //   setLimit: Dispatch<SetStateAction<number>>;
-  //   totalPages: number;
-  //   setTotalPages: Dispatch<SetStateAction<number>>;
-  //   totalItems: number;
-  //   setTotalItems: Dispatch<SetStateAction<number>>;
-  //   search: string;
-  //   setSearch: Dispatch<SetStateAction<string>>;
-  //   page: number;
-  //   setPage: Dispatch<SetStateAction<number>>;
-  //   endDate: string;
-  //   setEndDate: Dispatch<SetStateAction<string>>;
-  //   startDate: string;
-  //   setStartDate: Dispatch<SetStateAction<string>>;
+  isAppDisabled: boolean;
+  disableApp: () => void;
+  enableApp: () => void;
 };
 
 const RootContext = createContext<RootContextType | undefined>(undefined);
@@ -38,41 +26,24 @@ export const RootProvider = ({ children }: PropsWithChildrenOnly) => {
     setFalse: closeLoginModal,
   } = useBoolean();
 
-  //   const [searchParams, setSearchParams] = useSearchParams();
-  //   const initialLimit = Number(searchParams.get('limit')) || 20;
-  //   const initialSearch = searchParams.get('search') || '';
-  //   const initialOrdersStatus =
-  //     searchParams.get('status') !== null
-  //       ? searchParams
-  //           .get('status')!
-  //           .split(',')
-  //           .filter((status) => Object.values(ORDER_STATUS).includes(status as ORDER_STATUS))
-  //       : Object.values(ORDER_STATUS);
-  //   const initialPage = searchParams.get('page') || '';
-  //   const initialStartDate = searchParams.get('startDate') || '';
-  //   const initialEndDate = searchParams.get('endDate') || '';
+  const { value: isAppDisabled, setTrue: disableApp, setFalse: enableApp } = useBoolean();
 
-  //   const [limit, setLimit] = useState(initialLimit);
-  //   const [endDate, setEndDate] = useState(initialEndDate);
-  //   const [startDate, setStartDate] = useState(initialStartDate);
-  //   const [status, setStatus] = useState(initialOrdersStatus);
+  const { lastMessage: appConfigNotification } = useWsNotification<ClientAppConfig>(
+    WS_MESSAGE_TYPE.CLIENT_APP_CONFIG_STATUS,
+  );
 
-  //   const [search, setSearch] = useState(initialSearch);
-  //   const [pageOrders, setPageOrders] = useState<Order[]>([]);
-  //   const [page, setPage] = useState(Number(initialPage) || 1);
-  //   const [totalPages, setTotalPages] = useState(0);
-  //   const [totalItems, setTotalItems] = useState(0);
-
-  //   useEffect(() => {
-  //     const params = new URLSearchParams(searchParams);
-  //     params.set('limit', String(limit));
-  //     params.set('search', String(search));
-  //     params.set('status', String(status));
-  //     params.set('startDate', String(startDate));
-  //     params.set('endDate', String(endDate));
-  //     params.set('page', String(page));
-  //     setSearchParams(params);
-  //   }, [limit, search, page, startDate, endDate, status, setSearchParams]);
+  useEffect(() => {
+    console.log('appConfigNotification: ', appConfigNotification)
+    if(appConfigNotification?.payload) {
+      if (appConfigNotification?.payload?.disabled) {
+        console.log('!!! disableApp !!!');
+        disableApp()
+      } else {
+        console.log('!!! enableApp !!!');
+        enableApp()
+      }
+    }
+  }, [appConfigNotification, appConfigNotification?.payload?.disabled, disableApp, enableApp]);
 
   return (
     <RootContext.Provider
@@ -80,24 +51,9 @@ export const RootProvider = ({ children }: PropsWithChildrenOnly) => {
         isLoginModalOpen,
         openLoginModal,
         closeLoginModal,
-        // pageOrders,
-        // setPageOrders,
-        // page,
-        // setPage,
-        // totalPages,
-        // setTotalPages,
-        // totalItems,
-        // setTotalItems,
-        // search,
-        // setSearch,
-        // limit,
-        // setLimit,
-        // endDate,
-        // setEndDate,
-        // startDate,
-        // setStartDate,
-        // status,
-        // setStatus,
+        isAppDisabled,
+        disableApp,
+        enableApp,
       }}>
       {children}
       <LoginModal close={closeLoginModal} isOpen={isLoginModalOpen} />
