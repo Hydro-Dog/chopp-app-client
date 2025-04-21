@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ErrorResponse, PaginationResponse, STORAGE_KEYS, User } from '@shared/index';
+import { ErrorResponse, STORAGE_KEYS, User } from '@shared/index';
 import { FETCH_STATUS } from '@shared/types/fetch-status';
 import {
   updateCurrentUser,
   fetchCurrentUser,
   // loginUser,
-  logoutUser,
+  logout,
   // loginByCode,
   verifyByCode,
   getVerificationCode,
@@ -46,14 +46,7 @@ const initialState: UserState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    // setLoginStatus: (state, action: PayloadAction<FETCH_STATUS>) => {
-    //   state.loginStatus = action.payload;
-    // },
-    // setLogoutStatus: (state, action: PayloadAction<FETCH_STATUS>) => {
-    //   state.logoutStatus = action.payload;
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCurrentUser.pending, (state) => {
@@ -135,21 +128,23 @@ export const userSlice = createSlice({
       //   state.loginStatus = FETCH_STATUS.ERROR;
       //   state.loginError = action.payload ?? { message: 'Failed to login user' };
       // })
-      .addCase(logoutUser.pending, (state) => {
+      .addCase(logout.pending, (state) => {
         state.logoutStatus = FETCH_STATUS.LOADING;
       })
-      .addCase(logoutUser.fulfilled, (state) => {
+      .addCase(logout.fulfilled, (state) => {
         state.logoutStatus = FETCH_STATUS.SUCCESS;
-        localStorage.removeItem(STORAGE_KEYS.TOKEN);
+        localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+        localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+        window.location.reload();
       })
-      .addCase(logoutUser.rejected, (state, action) => {
+      .addCase(logout.rejected, (state, action) => {
         state.logoutStatus = FETCH_STATUS.ERROR;
         state.logoutError = action.payload ?? { message: 'Failed to logout user' };
       })
       .addCase(getVerificationCode.pending, (state) => {
         state.getVerificationCodeStatus = FETCH_STATUS.LOADING;
       })
-      .addCase(getVerificationCode.fulfilled, (state, action) => {
+      .addCase(getVerificationCode.fulfilled, (state) => {
         state.getVerificationCodeStatus = FETCH_STATUS.SUCCESS;
 
         // localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, action.payload.accessToken);
@@ -179,5 +174,3 @@ export const userSlice = createSlice({
     // });
   },
 });
-
-// export const { setLoginStatus, setLogoutStatus } = userSlice.actions;

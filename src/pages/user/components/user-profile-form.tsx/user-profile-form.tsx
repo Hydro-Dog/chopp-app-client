@@ -65,8 +65,8 @@ export const UserProfileForm = () => {
   };
 
   return (
-    <Form>
-      <Flex gap="small" vertical justify="center" className="w-full sm:w-1/2">
+    <Form className="md:w-1/2 w-full">
+      <Flex gap="small" vertical justify="center">
         <Item validateStatus={errors.fullName ? 'error' : ''} help={errors.fullName?.message}>
           <Controller
             name="fullName"

@@ -13,11 +13,11 @@ import {
   SlidersOutlined,
 } from '@ant-design/icons';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import { ROUTES } from '@shared/enum';
+import { ROUTES, STORAGE_KEYS } from '@shared/enum';
 import { useFetchChatStats } from '@shared/hooks/use-fetch-chats-stats copy';
 import { useNotificationContext, useTheme } from '@shared/index';
 import { FETCH_STATUS } from '@shared/index';
-import { logoutUser } from '@store/slices';
+import { logout } from '@store/slices';
 import { AppDispatch, RootState } from '@store/store';
 import { Layout, Menu } from 'antd';
 import { SiderTheme } from 'antd/es/layout/Sider';
@@ -39,7 +39,7 @@ export const MainMenuWidget = ({ children }: PropsWithChildren<Record<never, any
   };
 
   const onLogout = () => {
-    dispatch(logoutUser());
+    dispatch(logout({ refreshToken: String(localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN)) }));
   };
 
   useEffect(() => {
