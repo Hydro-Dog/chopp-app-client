@@ -18,6 +18,7 @@ import { AppDispatch } from '@store/store';
 import { useDispatch } from 'react-redux';
 import { RocketOutlined } from '@ant-design/icons';
 import { Stack } from '@mui/material';
+import { WS_MESSAGE_TYPE } from '@shared/types/ws-message-type';
 
 const { Content, Footer } = Layout;
 const { Text } = Typography;
@@ -32,7 +33,9 @@ export const RootContainer = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [messageApi, contextHolder] = message.useMessage();
-  const { lastMessage: orderStatusChangeNotification } = useWsNotification<Order>('orderStatus');
+  const { lastMessage: orderStatusChangeNotification } = useWsNotification<Order>(
+    WS_MESSAGE_TYPE.ORDER_STATUS,
+  );
 
   // TODO: вынести нотификации в отдельный компонент
   // TODO: сделать обработку разных видов нотификаций
@@ -41,12 +44,11 @@ export const RootContainer = () => {
     if (orderStatusChangeNotification) {
       messageApi.open({
         type: 'success',
-        duration: 3000,
         content: (
           <Space>
             {`Статус заказа: ${orderStatusChangeNotification.payload?.orderStatus}`}
 
-            <ChoppAnimatedIcon animation='rotate' icon={<RocketOutlined rotate={50} />} />
+            <ChoppAnimatedIcon animation="rotate" icon={<RocketOutlined rotate={50} />} />
           </Space>
         ),
       });
