@@ -19,6 +19,8 @@ import { useDispatch } from 'react-redux';
 import { RocketOutlined } from '@ant-design/icons';
 import { Stack } from '@mui/material';
 import { WS_MESSAGE_TYPE } from '@shared/types/ws-message-type';
+import { DisabledAppScreen } from './components';
+import { useRootContext } from './root-provider';
 
 const { Content, Footer } = Layout;
 const { Text } = Typography;
@@ -36,6 +38,8 @@ export const RootContainer = () => {
   const { lastMessage: orderStatusChangeNotification } = useWsNotification<Order>(
     WS_MESSAGE_TYPE.ORDER_STATUS,
   );
+
+  const { isAppDisabled } = useRootContext();
 
   // TODO: вынести нотификации в отдельный компонент
   // TODO: сделать обработку разных видов нотификаций
@@ -94,6 +98,7 @@ export const RootContainer = () => {
         </Footer>
       </Flex>
 
+      <DisabledAppScreen isOpen={isAppDisabled} />
       {/* TODO: вынести нотификации в отдельный компонент */}
       {contextHolder}
     </>

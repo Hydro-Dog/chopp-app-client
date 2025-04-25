@@ -7,6 +7,8 @@ import { WS_MESSAGE_TYPE } from '@shared/types/ws-message-type';
 import { useBoolean } from 'usehooks-ts';
 import { LoginModal } from './components';
 import { AppConfig } from 'antd/es/app/context';
+import { RootState } from '@store/index';
+import { useSelector } from 'react-redux';
 
 type RootContextType = {
   isLoginModalOpen: boolean;
@@ -26,21 +28,34 @@ export const RootProvider = ({ children }: PropsWithChildrenOnly) => {
     setFalse: closeLoginModal,
   } = useBoolean();
 
-  const { value: isAppDisabled, setTrue: disableApp, setFalse: enableApp } = useBoolean();
+  const { clientAppConfig } = useSelector((state: RootState) => state.clientAppConfig);
+  const {
+    value: isAppDisabled,
+    setTrue: disableApp,
+    setFalse: enableApp,
+  } = useBoolean(clientAppConfig?.disabled);
 
   const { lastMessage: appConfigNotification } = useWsNotification<ClientAppConfig>(
     WS_MESSAGE_TYPE.CLIENT_APP_CONFIG_STATUS,
   );
 
   useEffect(() => {
-    console.log('appConfigNotification: ', appConfigNotification)
-    if(appConfigNotification?.payload) {
+    if (clientAppConfig?.disabled) {
+      disableApp();
+    } else {
+      enableApp();
+    }
+  }, [clientAppConfig?.disabled]);
+
+  useEffect(() => {
+    console.log('appConfigNotification: ', appConfigNotification);
+    if (appConfigNotification?.payload) {
       if (appConfigNotification?.payload?.disabled) {
         console.log('!!! disableApp !!!');
-        disableApp()
+        disableApp();
       } else {
         console.log('!!! enableApp !!!');
-        enableApp()
+        enableApp();
       }
     }
   }, [appConfigNotification, appConfigNotification?.payload?.disabled, disableApp, enableApp]);

@@ -241,5 +241,7 @@
   "TOTAL_COST": "Общая стоимость: ",
   "CURRENCY": "₽",
   "HISTORY_ORDERS": "История заказов",
-  "CURRENT_ORDER": "Текущий заказ"
+  "CURRENT_ORDER": "Текущий заказ",
+  "APP_DISABLED_TITLE": "К сожалению, сейчас мы не принимаем заказы",
+  "APP_DISABLED_SUBTITLE": "Скоро вернемся к работе"
 }
