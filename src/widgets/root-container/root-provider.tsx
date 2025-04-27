@@ -33,7 +33,7 @@ export const RootProvider = ({ children }: PropsWithChildrenOnly) => {
     value: isAppDisabled,
     setTrue: disableApp,
     setFalse: enableApp,
-  } = useBoolean(clientAppConfig?.disabled);
+  } = useBoolean(!!clientAppConfig?.disabled);
 
   const { lastMessage: appConfigNotification } = useWsNotification<ClientAppConfig>(
     WS_MESSAGE_TYPE.CLIENT_APP_CONFIG_STATUS,
