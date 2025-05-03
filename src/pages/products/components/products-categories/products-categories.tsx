@@ -30,7 +30,7 @@ export const ProductsCategories = () => {
   }, []);
 
   return (
-    <Flex gap={4} wrap={false} className="overflow-scroll">
+    <Flex gap={4} wrap={true} className="overflow-scroll">
       {categories?.map((item) => (
         <Button
           onClick={() => setCategoryId(item.id)}

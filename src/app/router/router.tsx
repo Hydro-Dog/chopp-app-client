@@ -34,7 +34,6 @@ const RootLayout = () => (
     <InterceptorsWrapper />
     <RootProvider>
       <RootContainer />
-      <Outlet />
     </RootProvider>
   </>
 );
@@ -42,7 +41,7 @@ const RootLayout = () => (
 /* ---------- router ---------- */
 export const router = createBrowserRouter([
   {
-    path: ROUTES.ROOT, // '/'
+    path: ROUTES.ROOT,
     element: <RootLayout />,
 
     children: [
@@ -56,12 +55,11 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: ROUTES.USER, // 'users'
+        path: ROUTES.USER,
         element: guard(suspense(<UserPage />)),
       },
 
       {
-        /* 'cart' пока нет в enum — оставляем строкой */
         path: ROUTES.CART,
         element: guard(<Outlet />),
         children: [
@@ -71,7 +69,7 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: ROUTES.ORDERS, // 'orders'
+        path: ROUTES.ORDERS,
         element: guard(suspense(<OrdersPage />)),
       },
 
