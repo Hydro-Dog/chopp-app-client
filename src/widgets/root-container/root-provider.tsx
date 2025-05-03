@@ -1,14 +1,11 @@
-import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { ORDER_STATUS } from '@shared/enum';
+import { createContext, useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useWsNotification } from '@shared/index';
-import { ClientAppConfig, Order, Product, PropsWithChildrenOnly } from '@shared/types';
+import { ClientAppConfig, PropsWithChildrenOnly } from '@shared/types';
 import { WS_MESSAGE_TYPE } from '@shared/types/ws-message-type';
+import { RootState } from '@store/index';
 import { useBoolean } from 'usehooks-ts';
 import { LoginModal } from './components';
-import { AppConfig } from 'antd/es/app/context';
-import { RootState } from '@store/index';
-import { useSelector } from 'react-redux';
 
 type RootContextType = {
   isLoginModalOpen: boolean;

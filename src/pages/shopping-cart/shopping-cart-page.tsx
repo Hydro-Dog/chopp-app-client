@@ -2,7 +2,7 @@ import { ChoppSubPage } from '@shared/index';
 import { Flex } from 'antd';
 import { CreateOrderBlock, OrderItemsList } from './components';
 
-export const ShoppingCartPage = () => {
+const ShoppingCartPage = () => {
   return (
     <ChoppSubPage title="Корзина">
       <Flex gap={32} className="flex-col-reverse md:flex-row">
@@ -12,3 +12,5 @@ export const ShoppingCartPage = () => {
     </ChoppSubPage>
   );
 };
+
+export default ShoppingCartPage;

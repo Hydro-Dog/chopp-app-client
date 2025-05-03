@@ -1,169 +1,86 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
-import {
-  AnalyticsPage,
-  SignInPage,
-  UsersPage,
-  RegisterPage,
-  ChatsPage,
-  OrdersPage,
-  UserPage,
-  ProductsPage,
-  SettingsPage,
-  DeliveryPage,
-  DescriptionPage,
-  PublicOfferPage,
-} from '@pages/index';
+import { HomeOutlined } from '@ant-design/icons';
 
-import { OrdersProvider } from '@pages/orders/context';
-import { PaymentsPage } from '@pages/payments';
 import { ProductsProvider } from '@pages/products/context';
-import {
-  PricingSettingsPage,
-  VisualSettingsPage,
-  PaymentSettingsPage,
-} from '@pages/settings/pages';
-import { ShoppingCartPage } from '@pages/shopping-cart';
-import { CreateOrder } from '@pages/create-order';
-import { ChoppBackButton, ChoppSubPage, MainMenu, ROUTES } from '@shared/index';
-import { BackLayout } from '@widgets/index';
+import { ChoppSubPage, ROUTES } from '@shared/index';
 import { RootContainer } from '@widgets/root-container/root-container';
 import { RootProvider } from '@widgets/root-container/root-provider';
 import { GuardedRoute } from './utils/guarded-route';
 import { InterceptorsWrapper } from './wrappers/interceptors-wrapper';
-import { CurrentOrderCard } from '@pages/orders/components/current-order';
-import { HomeOutlined } from '@ant-design/icons';
 
+/* ---------- ленивые импорты ---------- */
+const ProductsPage = lazy(() => import('@pages/products/products-page'));
+const UserPage = lazy(() => import('@pages/user/user-page'));
+const ShoppingCartPage = lazy(() => import('@pages/shopping-cart/shopping-cart-page'));
+const CreateOrder = lazy(() => import('@pages/create-order/create-order'));
+const OrdersPage = lazy(() => import('@pages/orders/orders-page'));
+const DeliveryPage = lazy(() => import('@pages/delivery/delivery'));
+const DescriptionPage = lazy(() => import('@pages/description/description'));
+const PublicOfferPage = lazy(() => import('@pages/public-offer/public-offer'));
+
+/* ---------- утилиты ---------- */
+const suspense = (node: React.ReactNode) => <Suspense fallback={null}>{node}</Suspense>;
+const guard = (node: React.ReactNode) => <GuardedRoute>{node}</GuardedRoute>;
+const sub = (title: string, node: React.ReactNode) => (
+  <ChoppSubPage path="/" icon={<HomeOutlined />} title={title}>
+    {node}
+  </ChoppSubPage>
+);
+
+/* ---------- layout корневого сегмента ---------- */
+const RootLayout = () => (
+  <>
+    <InterceptorsWrapper />
+    <RootProvider>
+      <RootContainer />
+      <Outlet />
+    </RootProvider>
+  </>
+);
+
+/* ---------- router ---------- */
 export const router = createBrowserRouter([
-  // {
-  //   path: ROUTES.SIGN_IN,
-  //   element: <SignInPage />,
-  // },
-  // {
-  //   path: ROUTES.REGISTER,
-  //   element: <RegisterPage />,
-  // },
   {
-    path: ROUTES.ROOT,
-    element: (
-      // <GuardedRoute>
-      <>
-        <InterceptorsWrapper />
-        <RootProvider>
-          <RootContainer />
-        </RootProvider>
-      </>
-      // <MainMenu />
-      //  <Navigate to={ROUTES.ORDERS} replace />
-      // </GuardedRoute>
-    ),
+    path: ROUTES.ROOT, // '/'
+    element: <RootLayout />,
+
     children: [
       {
-        path: '',
-        element: (
+        index: true,
+        element: suspense(
           <ProductsProvider>
             <ProductsPage />
-          </ProductsProvider>
-        ),
-      },
-      {
-        path: 'user',
-        element: <UserPage />,
-      },
-      {
-        path: 'cart',
-        element: <Outlet />,
-        children: [
-          { index: true, element: <ShoppingCartPage /> },
-          { path: 'createOrder', element: <CreateOrder /> },
-        ],
-      },
-      {
-        path: 'orders',
-        element: <OrdersPage />,
-      },
-      {
-        path: 'delivery',
-        element: (
-          <ChoppSubPage path={'/'} icon={<HomeOutlined />} title="Доставка и оплата">
-            <DeliveryPage />
-          </ChoppSubPage>
-        ),
-      },
-      {
-        path: 'description',
-        element: (
-          <ChoppSubPage path={'/'} icon={<HomeOutlined />} title="О нас">
-            <DescriptionPage />
-          </ChoppSubPage>
-        ),
-      },
-      {
-        path: 'publicOffer',
-        element: (
-          <ChoppSubPage path={'/'} icon={<HomeOutlined />} title="Публичная оферта">
-            <PublicOfferPage />
-          </ChoppSubPage>
+          </ProductsProvider>,
         ),
       },
 
-      // {
-      //   path: '',
-      //   element: (
-      //     <OrdersProvider>
-      //       <OrdersPage />
-      //     </OrdersProvider>
-      //   ),
-      // },
-      // {
-      //   path: ROUTES.PRODUCTS,
-      //   element: (
-      //     <ProductsProvider>
-      //       <ProductsPage />
-      //     </ProductsProvider>
-      //   ),
-      // },
-      // {
-      //   path: ROUTES.CHATS,
-      //   element: <ChatsPage />,
-      // },
       {
-        path: ROUTES.SETTINGS,
-        element: <Outlet />,
+        path: ROUTES.USER, // 'users'
+        element: guard(suspense(<UserPage />)),
+      },
+
+      {
+        /* 'cart' пока нет в enum — оставляем строкой */
+        path: ROUTES.CART,
+        element: guard(<Outlet />),
         children: [
-          {
-            path: '',
-            element: <SettingsPage />,
-          },
-          {
-            path: ROUTES.VISUAL_SETTINGS,
-            element: <VisualSettingsPage />,
-          },
-          // {
-          //   path: ROUTES.PRICING_SETTINGS,
-          //   element: <PricingSettingsPage />,
-          // },
-          // {
-          //   path: ROUTES.PAYMENT_SETTINGS,
-          //   element: <PaymentSettingsPage />,
-          // },
+          { index: true, element: suspense(<ShoppingCartPage />) },
+          { path: 'createOrder', element: suspense(<CreateOrder />) },
         ],
       },
-      // {
-      //   path: ROUTES.PAYMENTS,
-      //   element: <PaymentsPage />,
-      // },
-      // {
-      //   path: ROUTES.ANALYTICS,
-      //   element: <AnalyticsPage />,
-      // },
-      // {
-      //   path: `${ROUTES.USERS}/:id`, // Updated path for user profiles
-      //   element: <UserPage />,
-      // },
+
+      {
+        path: ROUTES.ORDERS, // 'orders'
+        element: guard(suspense(<OrdersPage />)),
+      },
+
+      { path: 'delivery', element: suspense(sub('Доставка и оплата', <DeliveryPage />)) },
+      { path: 'description', element: suspense(sub('О нас', <DescriptionPage />)) },
+      { path: 'publicOffer', element: suspense(sub('Публичная оферта', <PublicOfferPage />)) },
     ],
   },
-  {
-    path: '*',
-    element: <Navigate to={ROUTES.ORDERS} replace />,
-  },
+
+  /* fallback */
+  { path: '*', element: <Navigate to={ROUTES.ROOT} replace /> },
 ]);

@@ -17,7 +17,7 @@ import { z } from 'zod';
 import { OrderButtonBlock, CreateOrderForm } from './components';
 import { useCreateOrderFormSchema } from './hooks';
 
-export const CreateOrder = () => {
+const CreateOrder = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const { t } = useTranslation();
   const { superDispatch } = useSuperDispatch<Order, unknown>();
@@ -109,3 +109,5 @@ export const CreateOrder = () => {
     </>
   );
 };
+
+export default CreateOrder;

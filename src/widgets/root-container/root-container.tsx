@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import { RocketOutlined } from '@ant-design/icons';
 import {
   ChoppAnimatedIcon,
   ClientAppConfig,
@@ -10,20 +12,16 @@ import {
   useWsNotification,
 } from '@shared/index';
 import { ShoppingCart } from '@shared/types/shopping-cart';
+import { WS_MESSAGE_TYPE } from '@shared/types/ws-message-type';
 import { fetchClientAppConfig, fetchCurrentUser } from '@store/slices';
 import { fetchShoppingCart } from '@store/slices/shopping-cart-slice';
-import { RootHeader } from '@widgets/root-header/root-header';
-import { Button, Flex, Layout, message, Space, Typography } from 'antd';
 import { AppDispatch } from '@store/store';
-import { useDispatch } from 'react-redux';
-import { RocketOutlined } from '@ant-design/icons';
-import { Stack } from '@mui/material';
-import { WS_MESSAGE_TYPE } from '@shared/types/ws-message-type';
+import { RootHeader } from '@widgets/root-header/root-header';
+import { Button, Flex, Layout, message, Space } from 'antd';
 import { DisabledAppScreen } from './components';
 import { useRootContext } from './root-provider';
 
 const { Content, Footer } = Layout;
-const { Text } = Typography;
 
 export const RootContainer = () => {
   const themeToken = useThemeToken();
@@ -40,9 +38,6 @@ export const RootContainer = () => {
   );
 
   const { isAppDisabled } = useRootContext();
-
-  // TODO: вынести нотификации в отдельный компонент
-  // TODO: сделать обработку разных видов нотификаций
 
   useEffect(() => {
     if (orderStatusChangeNotification) {

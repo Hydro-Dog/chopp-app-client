@@ -72,7 +72,7 @@ export const SendCodeModal = ({ setViewMode, setPhoneNumber }: Props) => {
 
         <Flex vertical gap={4}>
           <Text>
-            1. Перейдите в нашего{' '}
+            1. Перейдите в нашего {' '}
             <Link target="_blank" href={`https://t.me/${import.meta.env.VITE_TELEGRAM_BOT_LINK}`}>
               Телеграм-бота
             </Link>

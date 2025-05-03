@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
-import { ChoppShadowButton, useLoginGuard, useThemeSwitcher, useThemeToken } from '@shared/index';
+import { ChoppShadowButton, ROUTES, useLoginGuard, useThemeSwitcher, useThemeToken } from '@shared/index';
 import { RootState } from '@store/store';
 import { Flex } from 'antd';
 
@@ -21,7 +21,9 @@ export const Navigation = () => {
   const { loginGuard } = useLoginGuard();
 
   const onNavigationClick = (path: string) => {
-    loginGuard(() => navigate(path));
+    loginGuard(() => {
+      navigate(path);
+    });
   };
 
   const { themeSwitcher } = useThemeSwitcher();
@@ -34,9 +36,9 @@ export const Navigation = () => {
           shape="circle"
           variant="outlined"
           icon={<UserOutlined />}
-          selected={isLocation('user')}
+          selected={isLocation(ROUTES.USER)}
           onClick={() => {
-            onNavigationClick('user');
+            onNavigationClick(ROUTES.USER);
           }}
         />
 
@@ -45,9 +47,9 @@ export const Navigation = () => {
             shape={isEmpty ? 'circle' : 'round'}
             variant="outlined"
             icon={<ShoppingCartOutlined />}
-            selected={isLocation('cart')}
+            selected={isLocation(ROUTES.CART)}
             onClick={() => {
-              onNavigationClick('cart');
+              onNavigationClick(ROUTES.CART);
             }}>
             {!isEmpty && `${shoppingCart.totalPrice} ₽`}
           </ChoppShadowButton>
@@ -57,9 +59,9 @@ export const Navigation = () => {
           shape={hasCurrentOrder ? 'round' : 'circle'}
           variant="outlined"
           icon={hasCurrentOrder ? <TruckOutlined /> : <ProfileOutlined />}
-          selected={isLocation('order')}
+          selected={isLocation(ROUTES.ORDERS)}
           onClick={() => {
-            onNavigationClick('order');
+            onNavigationClick(ROUTES.ORDERS);
           }}>
           {!!hasCurrentOrder && 'Мой заказ'}
         </ChoppShadowButton>

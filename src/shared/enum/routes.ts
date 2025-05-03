@@ -1,8 +1,9 @@
 export enum ROUTES {
   ROOT = '/',
-  USERS = 'users',
+  USER = 'user',
   CHATS = 'chats',
   ORDERS = 'orders',
+  CART = 'cart',
   PAYMENTS = 'payments',
   SIGN_IN = 'signin',
   REGISTER = 'register',

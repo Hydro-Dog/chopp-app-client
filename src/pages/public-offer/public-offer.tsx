@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@store/store';
 import DOMPurify from 'dompurify';
 
-export const PublicOfferPage = () => {
+const PublicOfferPage = () => {
   const { clientAppConfig } = useSelector((state: RootState) => state.clientAppConfig);
 
   const cleanHtml = DOMPurify.sanitize(
@@ -12,3 +12,5 @@ export const PublicOfferPage = () => {
 
   return <div dangerouslySetInnerHTML={{ __html: cleanHtml }} />;
 };
+
+export default PublicOfferPage;

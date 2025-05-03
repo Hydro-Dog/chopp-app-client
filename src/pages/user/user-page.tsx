@@ -12,7 +12,7 @@ import { Button, Flex, Typography } from 'antd';
 import { UserProfileForm } from './components';
 const { Title } = Typography;
 
-export const UserPage = () => {
+const UserPage = () => {
   const { t } = useTranslation();
   const { showErrorNotification } = useNotificationContext();
   const { superDispatch } = useSuperDispatch();
@@ -66,3 +66,5 @@ export const UserPage = () => {
     </ChoppSubPage>
   );
 };
+
+export  default UserPage;

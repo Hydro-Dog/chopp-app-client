@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from '@store/store';
 import { Flex } from 'antd';
 import { AllOrders, CurrentOrder, OrderCard } from './components';
 
-export const OrdersPage = () => {
+const OrdersPage = () => {
   // const { currentOrder } = useSelector((state: RootState) => state.orders);
   const dispatch = useDispatch<AppDispatch>();
   const superDispatch = useSuperDispatch();
@@ -46,3 +46,5 @@ export const OrdersPage = () => {
     </ChoppSubPage>
   );
 };
+
+export default OrdersPage;

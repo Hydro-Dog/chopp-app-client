@@ -7,5 +7,7 @@ export const GuardedRoute = (props: RouteProps) => {
   // @ts-ignore
   const token = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
 
-  return token ? <>{props.children}</> : <Navigate to="/signin" />;
+  console.log('token: ', token)
+
+  return token ? <>{props.children}</> : <Navigate to="/" />;
 };
