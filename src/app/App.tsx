@@ -24,7 +24,6 @@ import { router } from './router/router';
 import 'dayjs/locale/ru';
 
 import './index.css';
-import { useAxiosInterceptors } from '@store/middleware';
 
 dayjs.extend(utc); // активация плагина
 dayjs.locale('ru'); // установка локали
@@ -55,7 +54,7 @@ export const App = () => {
       colorPrimary: '#30b537',
       colorLink: '#30b537',
       fontFamily: 'Nunito',
-      fontSize: 16
+      fontSize: 16,
     },
   };
 
