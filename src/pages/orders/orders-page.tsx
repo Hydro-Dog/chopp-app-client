@@ -10,13 +10,11 @@ import { Flex } from 'antd';
 import { AllOrders, CurrentOrder } from './components';
 
 const OrdersPage = () => {
-  // const { currentOrder } = useSelector((state: RootState) => state.orders);
   const dispatch = useDispatch<AppDispatch>();
   const superDispatch = useSuperDispatch();
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const [arrayOfOrders, updateArrayOfOrders] = useState<Order[] | undefined>(undefined);
-  const { orderStatus } = useSelector((state: RootState) => state.notifications);
   const { lastMessage: orderStatusChangeNotification } = useWsNotification<Order>('orderStatus');
   const { currentOrder } = useSelector((state: RootState) => state.orders);
 
@@ -42,7 +40,7 @@ const OrdersPage = () => {
         });
       }
     }
-  }, [orderStatus, orderStatusChangeNotification?.payload?.orderStatus, currentOrder]);
+  }, [orderStatusChangeNotification?.payload?.orderStatus]);
 
   useEffect(() => {
     dispatch(fetchLastOrder());
