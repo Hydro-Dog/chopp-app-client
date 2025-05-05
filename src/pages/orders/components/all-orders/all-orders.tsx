@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
 import { useSuperDispatch } from '@shared/hooks';
 import { ChoppShadowCollapse } from '@shared/index';
-import { Order } from '@shared/types';
+import { Order, ORDER_STATUS } from '@shared/types';
 import { fetchOrders } from '@store/slices';
 import { RootState } from '@store/store';
 import { Flex, Spin } from 'antd';
@@ -67,7 +67,9 @@ export const AllOrders = ({ arrayOrders, updateOrders, setPage, page }: Props) =
                 vertical
                 gap={5}
                 style={{ overflowY: 'auto', maxHeight: '300px' }}>
-                {arrayOrders?.map((item) => <OrderCard key={item.id} order={item} />)}
+                {arrayOrders
+                  ?.filter((item) => item.orderStatus === ORDER_STATUS.DELIVERED)
+                  .map((item) => <OrderCard key={item.id} order={item} />)}
               </Flex>
             </InfiniteScroll>
           ),
