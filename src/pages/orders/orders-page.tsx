@@ -19,26 +19,15 @@ const OrdersPage = () => {
   const { currentOrder } = useSelector((state: RootState) => state.orders);
 
   useEffect(() => {
-    if (orderStatusChangeNotification?.payload?.orderStatus) {
-      if (
-        currentOrder &&
-        orderStatusChangeNotification?.payload?.orderStatus === ORDER_STATUS.DELIVERED
-      ) {
-        const deliveredOrder: Order = {
-          ...currentOrder,
-          orderStatus: orderStatusChangeNotification.payload.orderStatus,
-        };
-        updateArrayOfOrders((prev) => (prev ? [deliveredOrder, ...prev] : [deliveredOrder]));
-      } else if (
-        currentOrder &&
-        orderStatusChangeNotification?.payload?.orderStatus !== ORDER_STATUS.DELIVERED &&
-        currentOrder.id === arrayOfOrders?.[0]?.id
-      ) {
-        updateArrayOfOrders((prev) => {
-          if (!prev) return prev;
-          return prev.slice(1);
-        });
-      }
+    if (
+      currentOrder &&
+      orderStatusChangeNotification?.payload?.orderStatus === ORDER_STATUS.DELIVERED
+    ) {
+      const deliveredOrder: Order = {
+        ...currentOrder,
+        orderStatus: orderStatusChangeNotification.payload.orderStatus,
+      };
+      updateArrayOfOrders((prev) => (prev ? [deliveredOrder, ...prev] : [deliveredOrder]));
     }
   }, [orderStatusChangeNotification?.payload?.orderStatus]);
 
