@@ -243,5 +243,6 @@
   "HISTORY_ORDERS": "История заказов",
   "CURRENT_ORDER": "Текущий заказ",
   "APP_DISABLED_TITLE": "К сожалению, сейчас мы не принимаем заказы",
-  "APP_DISABLED_SUBTITLE": "Скоро вернемся к работе"
+  "APP_DISABLED_SUBTITLE": "Скоро вернемся к работе",
+  "PROFILE_UPDATED_SUCCESSFULLY": "Профиль обновлен"
 }

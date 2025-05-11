@@ -8,8 +8,8 @@ export const useCreateOrderFormSchema = () => {
     name: z
       .string()
       .min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`)
-      .min(3, `${t('FORM_ERRORS.MIN_LENGTH', { count: 5 })}`)
-      .max(15, `${t('FORM_ERRORS.MAX_LENGTH', { count: 15 })}`),
+      .min(2, `${t('FORM_ERRORS.MIN_LENGTH', { count: 2 })}`)
+      .max(30, `${t('FORM_ERRORS.MAX_LENGTH', { count: 30 })}`),
     street: z
       .string()
       .min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`)

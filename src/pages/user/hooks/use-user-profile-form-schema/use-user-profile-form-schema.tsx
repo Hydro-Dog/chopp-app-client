@@ -12,7 +12,7 @@ export const useUserProfileFormSchema = () => {
       (val) => (typeof val === 'string' && val.trim() === '' ? null : val),
       z
         .string()
-        .min(8, t('FORM_ERRORS.MIN_LENGTH', { count: 8 }))
+        .min(2, t('FORM_ERRORS.MIN_LENGTH', { count: 2 }))
         .max(15, t('FORM_ERRORS.MAX_LENGTH', { count: 15 }))
         .nullish(),
     ),
@@ -20,6 +20,5 @@ export const useUserProfileFormSchema = () => {
       (val) => (typeof val === 'string' && val.trim() === '' ? null : val),
       z.string().email(t('FORM_ERRORS.INVALID_EMAIL')).nullish(),
     ),
-    //birthday: z.string().regex(/\d{4}-\d{2}-\d{2}/, `${t('FORM_ERRORS.INVALID_DATE')}`),
   });
 };

@@ -12,17 +12,18 @@ import { updateCurrentUser } from '@store/slices';
 import { RootState } from '@store/store';
 import { Button, Flex, Form, Input } from 'antd';
 import { z } from 'zod';
+import { useNotificationContext } from '@shared/index';
 const { Item } = Form;
 
 export const UserProfileForm = () => {
   const { t } = useTranslation();
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [isEdit, setEdit] = useState(false);
-
   const { superDispatch } = useSuperDispatch<User, unknown>();
 
   const userProfileFormSchema = useUserProfileFormSchema();
   type userProfileFormSchemaType = z.infer<typeof userProfileFormSchema>;
+  const { showSuccessNotification } = useNotificationContext();
 
   const {
     handleSubmit,
@@ -37,6 +38,7 @@ export const UserProfileForm = () => {
       email: '',
     },
   });
+
   useEffect(() => {
     if (currentUser?.phoneNumber) {
       reset({
@@ -46,8 +48,8 @@ export const UserProfileForm = () => {
       });
     }
   }, [currentUser, reset]);
+
   const onSubmit: SubmitHandler<userProfileFormSchemaType> = (data) => {
-    console.log('data', data);
     if (isEdit) {
       superDispatch({
         action: updateCurrentUser({
@@ -57,7 +59,7 @@ export const UserProfileForm = () => {
           email: data.email,
         }),
         thenHandler: () => {
-          console.log('ok');
+          showSuccessNotification({ message: t('PROFILE_UPDATED_SUCCESSFULLY') });
           setEdit(false);
         },
       });
@@ -73,7 +75,7 @@ export const UserProfileForm = () => {
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                placeholder={t('FULL_NAME')}
+                placeholder={t('NAME')}
                 value={value ?? ''}
                 onChange={(event) => {
                   setEdit(event.target.value !== (currentUser?.fullName || '') ? true : false);
