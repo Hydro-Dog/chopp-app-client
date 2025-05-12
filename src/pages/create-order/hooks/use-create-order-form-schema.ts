@@ -19,15 +19,14 @@ export const useCreateOrderFormSchema = () => {
       .string()
       .min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`)
       .max(15, `${t('FORM_ERRORS.MAX_LENGTH', { count: 15 })}`),
-    apartment: z
-      .string()
-      .min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`)
-      .max(15, `${t('FORM_ERRORS.MAX_LENGTH', { count: 15 })}`),
-    entrance: z.string().min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`),
-    floor: z
-      .string()
-      .min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`)
-      .max(15, `${t('FORM_ERRORS.MAX_LENGTH', { count: 15 })}`),
+    apartment: z.string(),
+    // .min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`)
+    // .max(15, `${t('FORM_ERRORS.MAX_LENGTH', { count: 15 })}`),
+    entrance: z.string(),
+    // .min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`),
+    floor: z.string(),
+    // .min(1, `${t('FORM_ERRORS.REQUIRED_FIELD')}`)
+    // .max(15, `${t('FORM_ERRORS.MAX_LENGTH', { count: 15 })}`),
     comment: z.string().max(2048, `${t('FORM_ERRORS.MAX_LENGTH', { count: 2048 })}`),
     phoneNumber: z
       .string()

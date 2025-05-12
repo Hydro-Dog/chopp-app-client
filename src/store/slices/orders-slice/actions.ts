@@ -50,7 +50,10 @@ export const fetchLastOrder = createAsyncThunk<Order>('/fetchLastOrder', async (
 
 export const createOrder = createAsyncThunk<Order, CreateOrderDTO>(
   '/createOrder',
-  async ({ returnUrl = window.location.href, comment, address, name, phoneNumber }, thunkAPI) => {
+  async (
+    { returnUrl = `${window.location.origin}/orders`, comment, address, name, phoneNumber },
+    thunkAPI,
+  ) => {
     try {
       const response = await axiosPrivate.post<Order>(`/orders`, {
         returnUrl,

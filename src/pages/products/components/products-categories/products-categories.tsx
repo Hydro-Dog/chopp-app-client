@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
 import { useProductsContext } from '@pages/products/context';
 import { useSuperDispatch } from '@shared/hooks';
 import { Category } from '@shared/types';
@@ -10,33 +11,41 @@ import { Button, Flex, Typography } from 'antd';
 const { Text } = Typography;
 
 export const ProductsCategories = () => {
+  // --- Получение экшена-диспатчера ---
   const { superDispatch } = useSuperDispatch<Category[], unknown>();
+
+  // --- Текущий выбранный ID категории и функция для его изменения ---
   const { categoryId, setCategoryId } = useProductsContext();
+
+  // --- Список категорий из Redux-хранилища ---
   const { categories } = useSelector((state: RootState) => state.productCategory);
 
+  // --- Получение списка категорий при монтировании ---
   useEffect(() => {
     superDispatch({
       action: fetchCategories(),
       thenHandler: (categories) => {
+        // Если категория ещё не выбрана — выбрать первую по порядку
         if (!categoryId) {
-          setCategoryId(
-            categories.find((item) => item.order === 1)?.id ||
-              categories.find((item) => item.order === 0)?.id ||
-              '',
-          );
+          const defaultId =
+            categories.find((item) => item.order === 1)?.id ??
+            categories.find((item) => item.order === 0)?.id ??
+            '';
+          setCategoryId(defaultId);
+        } else {
+          setCategoryId(categoryId);
         }
       },
     });
-  }, []);
+  }, [categoryId]);
 
   return (
-    <Flex gap={4} wrap={true} className="overflow-scroll">
+    <Flex gap={4} wrap className="overflow-scroll">
       {categories?.map((item) => (
         <Button
-          onClick={() => setCategoryId(item.id)}
           key={item.id}
-          //@ts-ignore
-          type={categoryId !== item.id && 'text'}>
+          onClick={() => setCategoryId(item.id)}
+          type={String(categoryId) !== String(item.id) ? 'text' : undefined}>
           <Text strong>{item.title}</Text>
         </Button>
       ))}
