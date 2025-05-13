@@ -33,6 +33,7 @@ export const CreateOrderBlock = () => {
           onClick={() => {
             onNavigationClick('/cart/createOrder');
           }}
+          disabled={shoppingCart.items.length === 0}
           type="primary"
           size="large">
           {t('MAKE_ORDER')}
