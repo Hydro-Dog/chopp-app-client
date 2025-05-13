@@ -6,6 +6,7 @@ import { CreateOrderBlock, EmptyShoppingCart, OrderItemsList } from './component
 
 const ShoppingCartPage = () => {
   const { shoppingCart } = useSelector((state: RootState) => state.shoppingCart);
+
   return (
     <ChoppSubPage title="Корзина">
       <Flex gap={32} className="flex-col-reverse md:flex-row">
