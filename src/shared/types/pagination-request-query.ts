@@ -1,5 +1,3 @@
-import { ORDER_STATUS } from '@shared/enum';
-
 //Синхронизировано с бэком! Менять только во всех местах однвоременно
 export type PaginationRequestQuery = {
   page: number;

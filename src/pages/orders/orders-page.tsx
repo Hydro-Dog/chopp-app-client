@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChoppSubPage } from '@shared/components';
 import { useSuperDispatch, useWsNotification } from '@shared/hooks';
-import { Order, ORDER_STATUS, PaginationResponse } from '@shared/types';
+import { Order, PaginationResponse } from '@shared/types';
 import { fetchLastOrder, fetchOrders } from '@store/slices';
 import { AppDispatch, RootState } from '@store/store';
 import { Flex } from 'antd';
 import { AllOrders, CurrentOrder } from './components';
+import { ORDER_STATUS } from '@shared/index';
 
 const OrdersPage = () => {
   const dispatch = useDispatch<AppDispatch>();

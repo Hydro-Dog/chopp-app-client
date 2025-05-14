@@ -6,4 +6,5 @@ export enum ORDER_STATUS {
   IN_PROGRESS = 'inProgress',
   IN_DELIVERY_PROCESS = 'inDeliveryProcess',
   DELIVERED = 'delivered',
+  REFUNDED = 'refunded',
 }

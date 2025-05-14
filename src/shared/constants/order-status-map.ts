@@ -39,4 +39,9 @@ export const ORDER_STATUS_MAP = {
     title: 'ORDER_STATUS.CANCELED',
     tooltip: 'ORDER_STATUS.CANCELED_TOOLTIP',
   },
+  refunded: {
+    color: 'red',
+    title: 'ORDER_STATUS.REFUNDED',
+    tooltip: 'ORDER_STATUS.REFUNDED_TOOLTIP',
+  },
 };

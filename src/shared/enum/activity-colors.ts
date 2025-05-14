@@ -1,6 +1,8 @@
 import { ORDER_STATUS } from '@shared/enum';
 import { useThemeToken } from '../hooks/use-theme-token';
 
+
+//TODO: удалить? 
 export const ORDER_COLORS = {
   [ORDER_STATUS.IDLE]: 'blue',
   [ORDER_STATUS.PROCESSING]: 'cyan',
