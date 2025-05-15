@@ -41,14 +41,16 @@ export const ProductsCategories = () => {
 
   return (
     <Flex gap={4} wrap className="overflow-scroll">
-      {categories?.map((item) => (
-        <Button
-          key={item.id}
-          onClick={() => setCategoryId(item.id)}
-          type={String(categoryId) !== String(item.id) ? 'text' : undefined}>
-          <Text strong>{item.title}</Text>
-        </Button>
-      ))}
+      {categories
+        ?.filter((item) => item.title !== 'Другое')
+        ?.map((item) => (
+          <Button
+            key={item.id}
+            onClick={() => setCategoryId(item.id)}
+            type={String(categoryId) !== String(item.id) ? 'text' : undefined}>
+            <Text strong>{item.title}</Text>
+          </Button>
+        ))}
     </Flex>
   );
 };
