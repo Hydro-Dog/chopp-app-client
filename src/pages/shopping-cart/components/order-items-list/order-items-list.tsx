@@ -31,7 +31,7 @@ export const OrderItemsList = () => {
 
   return (
     <>
-      <ChoppShadowCard className="md:w-3/4">
+      <ChoppShadowCard className="md:w-3/4 h-fit">
         <Flex gap={32} vertical>
           {shoppingCart?.items?.map((item) => (
             <Flex
