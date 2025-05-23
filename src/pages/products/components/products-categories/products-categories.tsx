@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useProductsContext } from '@pages/products/context';
@@ -7,10 +7,13 @@ import { Category } from '@shared/types';
 import { fetchCategories } from '@store/slices';
 import { RootState } from '@store/store';
 import { Button, Flex, Typography } from 'antd';
+import { ScrollButtons } from './components';
 
 const { Text } = Typography;
 
 export const ProductsCategories = () => {
+  const scrollableContainer = useRef<HTMLDivElement>(null);
+
   // --- Получение экшена-диспатчера ---
   const { superDispatch } = useSuperDispatch<Category[], unknown>();
 
@@ -40,17 +43,25 @@ export const ProductsCategories = () => {
   }, [categoryId]);
 
   return (
-    <Flex gap={4} wrap className="overflow-scroll">
-      {categories
-        ?.filter((item) => item.title !== 'Другое')
-        ?.map((item) => (
-          <Button
-            key={item.id}
-            onClick={() => setCategoryId(item.id)}
-            type={String(categoryId) !== String(item.id) ? 'text' : undefined}>
-            <Text strong>{item.title}</Text>
-          </Button>
-        ))}
-    </Flex>
+    <ScrollButtons scrollableContainerRef={scrollableContainer}>
+      <Flex
+        ref={scrollableContainer}
+        gap={4}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        className="overflow-scroll">
+        {categories
+          ?.filter((item) => item.title !== 'Другое')
+          ?.map((item) => (
+            <Button
+              key={item.id}
+              onClick={() => setCategoryId(item.id)}
+              type={String(categoryId) !== String(item.id) ? 'text' : undefined}>
+              <Text ellipsis strong className="w-24">
+                {item.title}
+              </Text>
+            </Button>
+          ))}
+      </Flex>
+    </ScrollButtons>
   );
 };
