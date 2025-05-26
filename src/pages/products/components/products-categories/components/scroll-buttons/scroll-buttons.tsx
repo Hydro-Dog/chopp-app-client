@@ -1,80 +1,88 @@
-import { ReactNode, RefObject, useEffect, useState } from 'react';
+import { PropsWithChildren, RefObject, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { RootState } from '@store/store';
 import { Button, Flex } from 'antd';
 
 type Props = {
-  children: ReactNode;
   scrollableContainerRef: RefObject<HTMLDivElement>;
 };
+const DEFAULT_SCROLL_PIXELS = 200;
 
-export const ScrollButtons = ({ children, scrollableContainerRef }: Props) => {
-  const [isStart, setStart] = useState(true);
-  const [isEnd, setEnd] = useState(false);
-  const [hasScroll, setScroll] = useState(false);
+export const ScrollButtons = ({ children, scrollableContainerRef }: PropsWithChildren<Props>) => {
+  const [startDisabled, setStartDisabled] = useState(true);
+  const [endDisabled, setEndDisabled] = useState(false);
+  const [isScrollable, setIsScrollable] = useState(false);
+  const { categories } = useSelector((state: RootState) => state.productCategory);
 
-  const handleScroll = (pixels: number) => {
-    scrollableContainerRef.current?.scrollBy({ left: pixels, behavior: 'smooth' });
+  const handleScroll = (scrollOffset: number) => {
+    scrollableContainerRef.current?.scrollBy({ left: scrollOffset, behavior: 'smooth' });
   };
 
-  const checkScroll = () => {
+  const calculateScroll = () => {
     const container = scrollableContainerRef.current;
-    if (!container) return;
-    else {
+
+    if (container) {
       const scrollLeft = container.scrollLeft;
       const windowWidth = container.clientWidth;
       const scrollWidth = container.scrollWidth;
 
-      setStart(scrollLeft <= 10);
-      setEnd(scrollLeft + windowWidth >= scrollWidth - 10);
-
-      setScroll(scrollWidth > windowWidth);
+      setStartDisabled(scrollLeft <= 10);
+      setEndDisabled(scrollLeft + windowWidth >= scrollWidth - 10);
+      setIsScrollable(scrollWidth > windowWidth);
     }
   };
+
   useEffect(() => {
     const container = scrollableContainerRef.current;
-    if (container) {
-      checkScroll();
 
-      container.addEventListener('scroll', checkScroll);
-      window.addEventListener('resize', checkScroll);
+    if (container) {
+      calculateScroll();
+
+      container.addEventListener('scroll', calculateScroll);
+      window.addEventListener('resize', calculateScroll);
 
       return () => {
-        container.removeEventListener('scroll', checkScroll);
-        window.removeEventListener('resize', checkScroll);
+        container.removeEventListener('scroll', calculateScroll);
+        window.removeEventListener('resize', calculateScroll);
       };
     }
   }, []);
 
+  useEffect(() => {
+    calculateScroll();
+  }, [categories]);
+
   return (
     <Flex className="w-full">
-      {hasScroll ? (
+      {isScrollable ? (
         <Button
           className="w-4"
           type="primary"
           ghost
-          disabled={isStart}
+          disabled={startDisabled}
           onClick={() =>
             handleScroll(
               -(scrollableContainerRef.current
                 ? scrollableContainerRef.current?.clientWidth / 2
-                : 200),
+                : DEFAULT_SCROLL_PIXELS),
             )
           }>
           <LeftOutlined />
         </Button>
       ) : null}
       {children}
-      {hasScroll ? (
+      {isScrollable ? (
         <Button
           className="w-5"
           type="primary"
-          disabled={isEnd}
+          disabled={endDisabled}
           ghost
           onClick={() =>
             handleScroll(
               scrollableContainerRef.current
                 ? scrollableContainerRef.current?.clientWidth / 2
-                : 200,
+                : DEFAULT_SCROLL_PIXELS,
             )
           }>
           <RightOutlined />
