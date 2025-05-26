@@ -7,7 +7,7 @@ import { Button, Flex } from 'antd';
 type Props = {
   scrollableContainerRef: RefObject<HTMLDivElement>;
 };
-const DEFAULT_SCROLL_PIXELS = 200;
+const DEFAULT_SCROLL_OFFSET = 200;
 
 export const ScrollButtons = ({ children, scrollableContainerRef }: PropsWithChildren<Props>) => {
   const [startDisabled, setStartDisabled] = useState(true);
@@ -65,7 +65,7 @@ export const ScrollButtons = ({ children, scrollableContainerRef }: PropsWithChi
             handleScroll(
               -(scrollableContainerRef.current
                 ? scrollableContainerRef.current?.clientWidth / 2
-                : DEFAULT_SCROLL_PIXELS),
+                : DEFAULT_SCROLL_OFFSET),
             )
           }>
           <LeftOutlined />
@@ -82,7 +82,7 @@ export const ScrollButtons = ({ children, scrollableContainerRef }: PropsWithChi
             handleScroll(
               scrollableContainerRef.current
                 ? scrollableContainerRef.current?.clientWidth / 2
-                : DEFAULT_SCROLL_PIXELS,
+                : DEFAULT_SCROLL_OFFSET,
             )
           }>
           <RightOutlined />
