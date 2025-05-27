@@ -87,24 +87,24 @@ export const RootContainer = () => {
         </Content>
 
         <Footer
-          className="px-4"
+          className="!p-2"
           style={{
             background: themeToken.colorBgBase,
             borderTop: `1px solid ${themeToken.colorBorder}`,
           }}>
-          <Flex vertical gap={5} align="end">
+          <Flex vertical align="end">
             {clientAppConfig?.phoneNumber && (
-              <Button type="link" href={getTelHref(clientAppConfig?.phoneNumber)}>
+              <Button type="link" href={getTelHref(clientAppConfig?.phoneNumber)} className='text-xs h-fit'>
                 {clientAppConfig?.phoneNumber}
               </Button>
             )}
-            <Button type="link" href="/delivery">
+            <Button type="link" href="/delivery" className='text-xs h-fit'>
               Доставка и оплата
             </Button>
-            <Button type="link" href="/description">
+            <Button type="link" href="/description" className='text-xs h-fit'>
               О нас
             </Button>
-            <Button type="link" href="/publicOffer">
+            <Button type="link" href="/publicOffer" className='text-xs h-fit'>
               Публичная оферта
             </Button>
             {/* <Button type="link">[Политика конфиденциальности]</Button> */}
