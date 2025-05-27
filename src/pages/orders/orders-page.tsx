@@ -28,7 +28,10 @@ const OrdersPage = () => {
         ...currentOrder,
         orderStatus: orderStatusChangeNotification.payload.orderStatus,
       };
-      updateArrayOfOrders((prev) => (prev ? [deliveredOrder, ...prev] : [deliveredOrder]));
+
+      updateArrayOfOrders((prev) => {
+        return prev ? [deliveredOrder, ...prev] : [deliveredOrder];
+      });
     }
   }, [orderStatusChangeNotification?.payload?.orderStatus]);
 
@@ -49,14 +52,17 @@ const OrdersPage = () => {
 
   return (
     <ChoppSubPage title={t('ORDERS')}>
+      {arrayOfOrders?.length}
       <Flex vertical gap={24}>
         <CurrentOrder />
-        <AllOrders
-          updateOrders={updateArrayOfOrders}
-          setPage={setPage}
-          page={page}
-          arrayOrders={arrayOfOrders}
-        />
+        {!!arrayOfOrders?.length && (
+          <AllOrders
+            updateOrders={updateArrayOfOrders}
+            setPage={setPage}
+            page={page}
+            arrayOrders={arrayOfOrders}
+          />
+        )}
       </Flex>
     </ChoppSubPage>
   );

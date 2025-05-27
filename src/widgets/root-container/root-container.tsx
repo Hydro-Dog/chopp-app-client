@@ -55,9 +55,10 @@ export const RootContainer = () => {
   }, [messageApi, orderStatusChangeNotification]);
 
   useEffect(() => {
+    fetchClientAppConfigCartDispatch({ action: fetchClientAppConfig() });
+
     if (localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN)) {
       fetchShoppingCartDispatch({ action: fetchShoppingCart() });
-      fetchClientAppConfigCartDispatch({ action: fetchClientAppConfig() });
       dispatch(fetchCurrentUser());
     }
   }, []);
