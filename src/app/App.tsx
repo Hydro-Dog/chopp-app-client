@@ -16,6 +16,7 @@ import { ConfigProvider, theme as antTheme } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import ruRU from 'antd/lib/locale/ru_RU';
 import dayjs from 'dayjs';
+import tz from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -26,6 +27,7 @@ import 'dayjs/locale/ru';
 import './index.css';
 
 dayjs.extend(utc); // активация плагина
+dayjs.extend(tz);
 dayjs.locale('ru'); // установка локали
 
 i18n
@@ -51,8 +53,8 @@ export const App = () => {
   const themeConfig = {
     algorithm: theme === THEME.DARK ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
     token: {
-      colorPrimary: '#30b537',
-      colorLink: '#30b537',
+      colorPrimary: '#2773bb',
+      colorLink: '#2773bb',
       fontFamily: 'Nunito',
       fontSize: 16,
     },

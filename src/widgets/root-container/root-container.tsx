@@ -1,11 +1,13 @@
+/* eslint-disable max-len */
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import { RocketOutlined } from '@ant-design/icons';
 import {
   ChoppAnimatedIcon,
   ClientAppConfig,
   Order,
+  ORDER_STATUS_MAP,
   STORAGE_KEYS,
   useSuperDispatch,
   useThemeToken,
@@ -15,16 +17,27 @@ import { ShoppingCart } from '@shared/types/shopping-cart';
 import { WS_MESSAGE_TYPE } from '@shared/types/ws-message-type';
 import { fetchClientAppConfig, fetchCurrentUser } from '@store/slices';
 import { fetchShoppingCart } from '@store/slices/shopping-cart-slice';
-import { AppDispatch } from '@store/store';
+import { AppDispatch, RootState } from '@store/store';
 import { RootHeader } from '@widgets/root-header/root-header';
 import { Button, Flex, Layout, message, Space } from 'antd';
 import { DisabledAppScreen } from './components';
 import { useRootContext } from './root-provider';
+import { useTranslation } from 'react-i18next';
 
 const { Content, Footer } = Layout;
 
+const getTelHref = (rawPhone: string) =>
+  rawPhone
+    ? 'tel:' +
+      rawPhone
+        .replace(/\D/g, '') // "89991234567"
+        .replace(/^8/, '+7') // "+79991234567"
+    : undefined;
+
 export const RootContainer = () => {
+  const { t } = useTranslation();
   const themeToken = useThemeToken();
+  const { clientAppConfig } = useSelector((state: RootState) => state.clientAppConfig);
   const { superDispatch: fetchShoppingCartDispatch } = useSuperDispatch<ShoppingCart, void>();
   const { superDispatch: fetchClientAppConfigCartDispatch } = useSuperDispatch<
     ClientAppConfig,
@@ -45,7 +58,7 @@ export const RootContainer = () => {
         type: 'success',
         content: (
           <Space>
-            {`Статус заказа: ${orderStatusChangeNotification.payload?.orderStatus}`}
+            {`${t('ORDER_STATUS_TITLE')}: ${t(ORDER_STATUS_MAP[orderStatusChangeNotification.payload!.orderStatus].title)}`}
 
             <ChoppAnimatedIcon animation="rotate" icon={<RocketOutlined rotate={50} />} />
           </Space>
@@ -80,6 +93,11 @@ export const RootContainer = () => {
             borderTop: `1px solid ${themeToken.colorBorder}`,
           }}>
           <Flex vertical gap={5} align="end">
+            {clientAppConfig?.phoneNumber && (
+              <Button type="link" href={getTelHref(clientAppConfig?.phoneNumber)}>
+                {clientAppConfig?.phoneNumber}
+              </Button>
+            )}
             <Button type="link" href="/delivery">
               Доставка и оплата
             </Button>

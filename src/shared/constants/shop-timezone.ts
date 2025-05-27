@@ -1,0 +1,1 @@
+export const SHOP_TZ = import.meta.env.VITE_SHOP_TZ || 'Europe/Moscow';

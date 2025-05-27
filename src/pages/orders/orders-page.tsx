@@ -52,7 +52,6 @@ const OrdersPage = () => {
 
   return (
     <ChoppSubPage title={t('ORDERS')}>
-      {arrayOfOrders?.length}
       <Flex vertical gap={24}>
         <CurrentOrder />
         {!!arrayOfOrders?.length && (

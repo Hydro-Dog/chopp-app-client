@@ -47,10 +47,8 @@ export const RootProvider = ({ children }: PropsWithChildrenOnly) => {
   useEffect(() => {
     if (appConfigNotification?.payload) {
       if (appConfigNotification?.payload?.disabled) {
-        console.log('!!! disableApp !!!');
         disableApp();
       } else {
-        console.log('!!! enableApp !!!');
         enableApp();
       }
     }

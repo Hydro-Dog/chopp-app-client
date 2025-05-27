@@ -237,7 +237,7 @@
   "COMMENT_TO_DELIVERIES": "Комментарий для доставки",
   "CREATE_ORDER_TITLE": "Оформление заказа",
   "MAKE_ORDER": "Оформить заказ",
-  "SHOP_CLOSED_TOOLTIP": "Магазин принимает заказы с {{open}} до {{close}}",
+  "SHOP_CLOSED_TOOLTIP": "Принимаем заказы с {{open}} до {{close}}",
   "NO_CURRENT_ORDER": "Нет текущих заказов",
   "RUB_PIECE": " руб./шт ",
   "ORDERS_ID": "Номер заказа ",
