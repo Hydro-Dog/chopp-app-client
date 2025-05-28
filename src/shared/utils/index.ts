@@ -8,3 +8,4 @@ export * from './sanitize-user-number';
 export * from './create-fetch-pagination-list-thunk-action';
 export * from './update-list-item-by-id';
 export * from './sanitize-phone-number.ts';
+export * from './sort-by-order';

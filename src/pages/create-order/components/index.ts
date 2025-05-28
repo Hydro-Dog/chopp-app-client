@@ -1,2 +1,2 @@
-export * from './order-button-block';
+export * from './order-summary';
 export * from './create-order-form';

@@ -1,4 +1,3 @@
-/*  CreateOrderBlock.tsx  */
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +6,8 @@ import { ChoppShadowCard, SHOP_TZ } from '@shared/index';
 import { RootState } from '@store/store';
 import { Flex, Button, Typography, Alert } from 'antd';
 import { calculateIsShopOpened } from './utils';
+import { AmountTypography } from './components';
+import { OrderSummaryBlock } from '@widgets/index';
 
 const { Title } = Typography;
 
@@ -22,31 +23,32 @@ export const CreateOrderBlock = () => {
   /* ---------- рабочие часы ---------- */
   const { openTime, closeTime } = clientAppConfig || {};
   const shopIsOpen = calculateIsShopOpened(openTime, closeTime);
-
   const btnDisabled = shoppingCart.items.length === 0 || !shopIsOpen;
+
+  /* ---------- условия доставки ---------- */
+  const deliveryCost = clientAppConfig?.averageDeliveryCost || 0;
+  const freeThreshold = clientAppConfig?.freeDeliveryThreshold || 0;
+  const cartTotal = shoppingCart?.totalPrice || 0;
+  const showDeliveryAlert = clientAppConfig?.freeDeliveryIncluded && cartTotal < freeThreshold;
 
   return (
     <ChoppShadowCard className="md:w-1/4">
       <Flex vertical gap={24}>
-        {/* Итоговая сумма */}
-        <Flex justify="space-between" align="center">
-          <Title level={5} type="secondary" className="!m-0">
-            {t('FINAL_AMOUNT')}
-          </Title>
-          <Title level={5} className="!m-0 !font-extrabold">
-            {shoppingCart.totalPrice}₽
-          </Title>
-        </Flex>
+        <OrderSummaryBlock />
 
         {/* Кнопка оформления заказа */}
-
         <Button
           type="primary"
           size="large"
           disabled={btnDisabled}
           onClick={() => navigateSecure('/cart/createOrder')}>
-          {t('MAKE_ORDER')}
+          {t('MAKE_ORDER')}{' '}
+          <div className="font-extrabold">
+            {showDeliveryAlert ? shoppingCart.totalPrice + deliveryCost : shoppingCart.totalPrice}₽
+          </div>
         </Button>
+
+        {/* Сообщение про график работы */}
         {openTime && closeTime && (
           <Alert
             message={

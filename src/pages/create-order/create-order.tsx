@@ -14,7 +14,7 @@ import { resetShoppingCart } from '@store/slices/shopping-cart-slice';
 import { RootState } from '@store/store';
 import { Flex, Form, message } from 'antd';
 import { z } from 'zod';
-import { OrderButtonBlock, CreateOrderForm } from './components';
+import { OrderSummary, CreateOrderForm } from './components';
 import { useCreateOrderFormSchema } from './hooks';
 
 const CreateOrder = () => {
@@ -102,7 +102,7 @@ const CreateOrder = () => {
         <Form onFinish={handleSubmit(onSubmit)}>
           <Flex gap={32} className="flex-col-reverse  md:flex-row">
             <CreateOrderForm errors={errors} control={control} />
-            <OrderButtonBlock />
+            <OrderSummary />
           </Flex>
         </Form>
       </ChoppSubPage>

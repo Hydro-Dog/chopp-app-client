@@ -8,6 +8,7 @@ import { fetchCategories } from '@store/slices';
 import { RootState } from '@store/store';
 import { Button, Flex, Typography } from 'antd';
 import { ScrollButtons } from './components';
+import { sortByOrder } from '@shared/utils';
 
 const { Text } = Typography;
 
@@ -49,7 +50,7 @@ export const ProductsCategories = () => {
         gap={4}
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         className="overflow-scroll">
-        {categories
+        {sortByOrder(categories)
           ?.filter((item) => item.title !== 'Другое')
           ?.map((item) => (
             <Button

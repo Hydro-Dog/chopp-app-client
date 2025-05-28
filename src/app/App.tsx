@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import { initReactI18next } from 'react-i18next';
 import { Provider as StoreProvider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
@@ -25,6 +25,8 @@ import { router } from './router/router';
 import 'dayjs/locale/ru';
 
 import './index.css';
+import translationEn from '../locales/en/translation.json';
+import translationRu from '../locales/ru/translation.json';
 
 dayjs.extend(utc); // активация плагина
 dayjs.extend(tz);
@@ -35,12 +37,11 @@ i18n
   .use(HttpBackend)
   .use(LanguageDetector)
   .init({
-    fallbackLng: 'en',
-    debug: false, //вывод отладочной информации в консоль
-    ns: ['translation', 'phrases'], // Добавляем namespaces
-    defaultNS: 'translation',
-    backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+    fallbackLng: 'ru',
+    debug: false,
+    resources: {
+      ru: { translation: translationRu },
+      en: { translation: translationEn },
     },
     interpolation: {
       escapeValue: false,
