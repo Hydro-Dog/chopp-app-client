@@ -234,6 +234,7 @@
   "ABOUT_YOU": "Информация о вас",
   "PLACE_DELIVERY": "Место доставки",
   "MAKE_PAYMENT": "Оплатить",
+  "FREE_DELIVERY_REMAINING": "Закажите ещё на {{value}}₽ для бесплатной доставки",
   "FINAL_AMOUNT": "Итого:",
   "COMMENT_TO_DELIVERIES": "Комментарий для доставки",
   "CREATE_ORDER_TITLE": "Оформление заказа",
@@ -249,5 +250,6 @@
   "CURRENT_ORDER": "Текущий заказ",
   "APP_DISABLED_TITLE": "К сожалению, сейчас мы не принимаем заказы",
   "APP_DISABLED_SUBTITLE": "Скоро вернемся к работе",
-  "PROFILE_UPDATED_SUCCESSFULLY": "Профиль обновлен"
+  "PROFILE_UPDATED_SUCCESSFULLY": "Профиль обновлен",
+  "SUCCESS_LOGIN": "Успешный вход"
 }

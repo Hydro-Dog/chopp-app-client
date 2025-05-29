@@ -12,10 +12,9 @@ type Props = {
 };
 
 export const OrderCard = ({ isCurrent, order }: Props) => {
-  const { t } = useTranslation();
-
   return (
     <Flex vertical gap={8}>
+      isCurrent: {String(isCurrent)}
       <Flex className="flex-col sm:flex-row sm:justify-between gap-1">
         <Flex align="center" gap={8}>
           <Title level={5} className="!font-bold !m-0 ml-2">
@@ -28,9 +27,7 @@ export const OrderCard = ({ isCurrent, order }: Props) => {
           <ChoppOrderStatus status={order?.orderStatus} />
         </Flex>
       </Flex>
-
       <OrderCardContent order={order} />
-
       <Flex className="flex-row sm:flex-row-reverse">
         <Title level={5} className="!m-0 !font-extrabold">
           {order?.totalPrice}₽

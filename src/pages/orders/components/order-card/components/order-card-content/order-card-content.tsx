@@ -36,7 +36,7 @@ export const OrderCardContent = ({ order }: Props) => {
   return (
     <>
       <Flex gap={5} className=" overflow-x-scroll">
-        {order?.items.map((item) => (
+        {order?.items?.map((item) => (
           <Card
             key={item.id}
             rootClassName="chopp-card"
@@ -47,7 +47,7 @@ export const OrderCardContent = ({ order }: Props) => {
               <img
                 className="aspect-video object-cover"
                 alt={item.product.title}
-                src={import.meta.env.VITE_BASE_URL_FILES + item.product.images[0].path}
+                src={import.meta.env.VITE_BASE_URL_FILES + item.product.images[0]?.path}
               />
             }>
             <Title level={5} className="!m-0" type="secondary">

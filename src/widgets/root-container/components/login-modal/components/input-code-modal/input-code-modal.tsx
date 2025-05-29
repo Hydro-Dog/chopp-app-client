@@ -7,6 +7,7 @@ import { AppDispatch } from '@store/index';
 import { fetchCurrentUser, UserAuthorization, verifyByCode, wsConnect } from '@store/slices';
 import { fetchShoppingCart } from '@store/slices/shopping-cart-slice';
 import { Button, Flex, Input } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   phoneNumber: string;
@@ -15,6 +16,7 @@ type Props = {
 
 export const InputCodeModal = ({ closeModal, phoneNumber }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const {t} = useTranslation();
 
   //   TODO: выяснить почему не работает автофокус
   useAutoFocus({ open: true, inputRef });
@@ -44,7 +46,7 @@ export const InputCodeModal = ({ closeModal, phoneNumber }: Props) => {
           thenHandler: () => {
             closeModal();
             dispatch(fetchShoppingCart());
-            showSuccessNotification({ message: 'success login' });
+            showSuccessNotification({ message: t('SUCCESS_LOGIN') });
           },
         });
       },

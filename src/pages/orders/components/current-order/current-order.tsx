@@ -30,7 +30,9 @@ export const CurrentOrder = () => {
 
   return (
     <ChoppShadowCard>
-      {order && order?.orderStatus !== ORDER_STATUS.DELIVERED ? (
+      {order &&
+      order?.orderStatus !== ORDER_STATUS.DELIVERED &&
+      order?.orderStatus !== ORDER_STATUS.REFUNDED ? (
         <OrderCard isCurrent order={order} />
       ) : (
         <EmptyOrderPlaceholder />

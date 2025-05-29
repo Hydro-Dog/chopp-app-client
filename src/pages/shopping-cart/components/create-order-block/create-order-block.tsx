@@ -4,12 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useLoginGuard } from '@shared/hooks';
 import { ChoppShadowCard, SHOP_TZ } from '@shared/index';
 import { RootState } from '@store/store';
-import { Flex, Button, Typography, Alert } from 'antd';
-import { calculateIsShopOpened } from './utils';
-import { AmountTypography } from './components';
 import { OrderSummaryBlock } from '@widgets/index';
-
-const { Title } = Typography;
+import { Flex, Button, Alert } from 'antd';
+import { calculateIsShopOpened } from './utils';
 
 export const CreateOrderBlock = () => {
   const { t } = useTranslation();
@@ -25,12 +22,6 @@ export const CreateOrderBlock = () => {
   const shopIsOpen = calculateIsShopOpened(openTime, closeTime);
   const btnDisabled = shoppingCart.items.length === 0 || !shopIsOpen;
 
-  /* ---------- условия доставки ---------- */
-  const deliveryCost = clientAppConfig?.averageDeliveryCost || 0;
-  const freeThreshold = clientAppConfig?.freeDeliveryThreshold || 0;
-  const cartTotal = shoppingCart?.totalPrice || 0;
-  const showDeliveryAlert = clientAppConfig?.freeDeliveryIncluded && cartTotal < freeThreshold;
-
   return (
     <ChoppShadowCard className="md:w-1/4">
       <Flex vertical gap={24}>
@@ -42,10 +33,7 @@ export const CreateOrderBlock = () => {
           size="large"
           disabled={btnDisabled}
           onClick={() => navigateSecure('/cart/createOrder')}>
-          {t('MAKE_ORDER')}{' '}
-          <div className="font-extrabold">
-            {showDeliveryAlert ? shoppingCart.totalPrice + deliveryCost : shoppingCart.totalPrice}₽
-          </div>
+          {t('MAKE_ORDER')}
         </Button>
 
         {/* Сообщение про график работы */}
