@@ -14,7 +14,6 @@ type Props = {
 export const OrderCard = ({ isCurrent, order }: Props) => {
   return (
     <Flex vertical gap={8}>
-      isCurrent: {String(isCurrent)}
       <Flex className="flex-col sm:flex-row sm:justify-between gap-1">
         <Flex align="center" gap={8}>
           <Title level={5} className="!font-bold !m-0 ml-2">
