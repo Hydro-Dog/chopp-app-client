@@ -1,5 +1,6 @@
 import { AddToCartButton, ChoppBottomDrawer, Product } from '@shared/index';
 import { Flex, Typography } from 'antd';
+import { DeliveryAnimatedCover } from './delivery-animated-cover';
 
 const { Paragraph, Title } = Typography;
 
@@ -10,6 +11,12 @@ type Props = {
 };
 
 export const ProductDrawer = ({ isOpened, onClose, product }: Props) => {
+  console.log('product: ', product);
+
+  // return <ChoppBottomDrawer open={isOpened} onClose={onClose} title={product?.title}>
+  //   <DeliveryAnimatedCover />
+  //   </ChoppBottomDrawer>;
+
   return (
     <ChoppBottomDrawer open={isOpened} onClose={onClose} title={product?.title}>
       <Flex gap={12} className="flex-col md:flex-row md:items-start relative">
@@ -21,11 +28,20 @@ export const ProductDrawer = ({ isOpened, onClose, product }: Props) => {
               src={import.meta.env.VITE_BASE_URL_FILES + product?.images[0].path}
               style={{ filter: 'blur(50px)' }}
             /> */}
-            <img
-              className="relative aspect-video object-cover h-full w-full"
-              alt={product?.title}
-              src={import.meta.env.VITE_BASE_URL_FILES + product?.images[0].path}
-            />
+            {product?.id === import.meta.env.VITE_DELIVERY_PRODUCT_ID ? (
+              <DeliveryAnimatedCover
+                isOpened={false}
+                onClose={function (): void {
+                  throw new Error('Function not implemented.');
+                }}
+              />
+            ) : (
+              <img
+                className="relative aspect-video object-cover h-full w-full"
+                alt={product?.title}
+                src={import.meta.env.VITE_BASE_URL_FILES + product?.images[0].path}
+              />
+            )}
           </div>
         </div>
         <Flex
@@ -44,7 +60,9 @@ export const ProductDrawer = ({ isOpened, onClose, product }: Props) => {
             <Title className="!font-bold !m-0" level={2}>
               {product?.price}₽
             </Title>
-            <AddToCartButton product={product} />
+            {product?.id !== import.meta.env.VITE_DELIVERY_PRODUCT_ID && (
+              <AddToCartButton product={product} />
+            )}
           </Flex>
         </Flex>
       </Flex>

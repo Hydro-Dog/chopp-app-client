@@ -6,8 +6,9 @@ import { ChoppShadowCollapse } from '@shared/index';
 import { Order } from '@shared/types';
 import { fetchOrders } from '@store/slices';
 import { RootState } from '@store/store';
-import { Flex, Spin } from 'antd';
+import { Divider, Flex, Spin } from 'antd';
 import { OrderCard } from '../order-card';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   arrayOrders: Order[] | undefined;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 export const AllOrders = ({ arrayOrders, updateOrders, setPage, page }: Props) => {
+  const { t } = useTranslation();
   const { orders } = useSelector((state: RootState) => state.orders);
   const superDispatch = useSuperDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -48,12 +50,11 @@ export const AllOrders = ({ arrayOrders, updateOrders, setPage, page }: Props) =
   }
 
   return (
-    // <ChoppShadowCard>
     <ChoppShadowCollapse
       items={[
         {
           key: '1',
-          label: 'История заказов',
+          label: t('ORDERS_HISTORY'),
           children: (
             <InfiniteScroll
               initialScrollY={0}
@@ -67,12 +68,17 @@ export const AllOrders = ({ arrayOrders, updateOrders, setPage, page }: Props) =
                 vertical
                 gap={5}
                 style={{ overflowY: 'auto', maxHeight: '300px' }}>
-                {arrayOrders?.map((item) => <OrderCard key={item.id} order={item} />)}
+                {arrayOrders?.map((item, index) => (
+                  <div key={item.id}>
+                    <OrderCard order={item} />
+                    {index < arrayOrders.length - 1 && <Divider />}
+                  </div>
+                ))}
               </Flex>
             </InfiniteScroll>
           ),
         },
-      ]}></ChoppShadowCollapse>
-    // </ChoppShadowCard>
+      ]}
+    />
   );
 };
