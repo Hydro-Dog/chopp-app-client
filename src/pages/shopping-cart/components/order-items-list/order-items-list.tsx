@@ -50,11 +50,11 @@ export const OrderItemsList = () => {
                   className="w-full cursor-pointer"
                   gap={16}>
                   <Flex align="center" gap={24}>
-                    <div className="w-32 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="w-20 sm:w-32  h-20 rounded-lg overflow-hidden flex-shrink-0">
                       <img
                         className="w-full h-full object-cover"
                         alt={item.product?.title}
-                        src={import.meta.env.VITE_BASE_URL_FILES + item.product?.images[0].path}
+                        src={import.meta.env.VITE_BASE_URL_FILES + item.product?.images?.[0].path}
                       />
                     </div>
                   </Flex>

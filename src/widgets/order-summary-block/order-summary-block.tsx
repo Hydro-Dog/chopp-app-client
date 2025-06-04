@@ -22,7 +22,7 @@ export const OrderSummaryBlock = ({ bottomSlot }: Props) => {
     <Flex vertical gap={24}>
       <Flex vertical gap={8}>
         <AmountTypography title={t('PRODUCTS')} amount={cartTotal} />
-        {showDeliveryAlert && <AmountTypography title={t('DELIVERY')} amount={deliveryCost} />}
+        {!!cartTotal && showDeliveryAlert && <AmountTypography title={t('DELIVERY')} amount={deliveryCost} />}
       </Flex>
       {bottomSlot}
     </Flex>

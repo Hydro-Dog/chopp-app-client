@@ -63,11 +63,7 @@ export const AllOrders = ({ arrayOrders, updateOrders, setPage, page }: Props) =
               loader={null}
               dataLength={arrayOrders?.length || 0}
               scrollableTarget="scrollable-container">
-              <Flex
-                id="scrollable-container"
-                vertical
-                gap={5}
-                style={{ overflowY: 'auto', maxHeight: '300px' }}>
+              <Flex id="scrollable-container" vertical gap={5}>
                 {arrayOrders?.map((item, index) => (
                   <div key={item.id}>
                     <OrderCard order={item} />
