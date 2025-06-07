@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLoginGuard } from '@shared/hooks';
-import { ChoppShadowCard, SHOP_TZ } from '@shared/index';
+import { ChoppExplosionButton, ChoppGradientButton, ChoppShadowCard, SHOP_TZ } from '@shared/index';
 import { RootState } from '@store/store';
 import { OrderSummaryBlock } from '@widgets/index';
 import { Flex, Button, Alert } from 'antd';
@@ -28,13 +28,13 @@ export const CreateOrderBlock = () => {
         <OrderSummaryBlock />
 
         {/* Кнопка оформления заказа */}
-        <Button
+        <ChoppGradientButton
           type="primary"
           size="large"
           disabled={btnDisabled}
           onClick={() => navigateSecure('/cart/createOrder')}>
           {t('MAKE_ORDER')}
-        </Button>
+        </ChoppGradientButton>
 
         {/* Сообщение про график работы */}
         {openTime && closeTime && (

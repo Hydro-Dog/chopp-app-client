@@ -24,3 +24,5 @@ export * from './product-drawer';
 export * from './chopp-shadow-collapse';
 export * from './chopp-phone-input';
 export * from './chopp-animated-icon';
+export * from './chopp-gradient-button';
+export * from './chopp-explosion-button';

@@ -8,7 +8,7 @@ import {
   useLoginGuard,
   useThemeToken,
 } from '@shared/hooks';
-import { Product } from '@shared/index';
+import { ChoppExplosionButton, ChoppGradientButton, Product } from '@shared/index';
 import { RootState } from '@store/store';
 import { Flex, Button, Typography } from 'antd';
 
@@ -56,19 +56,21 @@ export const AddToCartButton = ({ product, showDelete }: Props) => {
   return isShoppingCartItem ? (
     <Flex style={{ background: 'transparent' }} justify="space-between" align="center" gap={16}>
       <Flex gap={4}>
-        <Button
+        <ChoppExplosionButton
+        gradient
           onClick={onRemoveFromCartClick}
-          className="rounded-r-none !w-6 h-8"
+          className="rounded-r-none !w-6 h-9"
           type="primary"
           icon={<MinusOutlined style={{ fontSize: 12 }} />}
           size="small"
         />
-        <Text strong className="text-lg px-2" type="secondary">
+        <Text className="text-lg px-1 pt-1" type="secondary">
           {shoppingCart.items.find((el) => el.product.id === product.id)?.quantity}
         </Text>
-        <Button
+        <ChoppGradientButton
+        gradient
           onClick={onAddToCartClick}
-          className="rounded-l-none !w-6 h-8"
+          className="rounded-l-none !w-6 h-9"
           type="primary"
           icon={<PlusOutlined style={{ fontSize: 12 }} />}
           size="small"

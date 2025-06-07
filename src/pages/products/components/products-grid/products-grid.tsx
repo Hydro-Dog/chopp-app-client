@@ -111,7 +111,7 @@ export const ProductsGrid = () => {
         initialScrollY={0}>
         <Row
           id="scrollable-container"
-          className="max-h-screen pb-8 overflow-y-auto"
+          className="pb-8 overflow-y-auto"
           gutter={[16, 16]}>
           {pageProducts?.map((product) => (
             <Col key={product.id} xs={24} sm={12} md={8} lg={6} xl={6}>

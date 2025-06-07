@@ -1,0 +1,43 @@
+/* ───── базовый вид ───── */
+.button {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* сама полоса */
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 20%;
+  height: 100%;
+  background: rgba(255,255,255,.45);
+  transform: skewX(-25deg);
+  pointer-events: none;
+}
+
+/* ───── классы для анимаций ───── */
+.hoverIn::before  { animation: shineIn   0.25s ease-out forwards; }
+.hoverOut::before { animation: shineOut  0.25s ease-out forwards; }
+.glow::before     { animation: shineClick 0.25s ease-in-out forwards; }
+
+/* курсор-hover, чтобы сразу «рука» появлялась */
+.button:hover { cursor: pointer; }
+
+/* ───── keyframes ───── */
+@keyframes shineIn {
+  from { left: -80%; }
+  to   { left: 30%; }          /* выглядывает на треть кнопки */
+}
+
+@keyframes shineOut {
+  from { left: 30%; }
+  to   { left: -80%; }         /* уезжает назад */
+}
+
+@keyframes shineClick {
+  from { left: -80%; }
+  to   { left: 140%; }         /* проходит всю кнопку */
+}
